@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workstream A · The numbers · that's clevermx.</title>
+<meta name="description" content="Workstream A of marketing's pre-IPO readiness: CAC, LTV, payback, attribution and marketing-sourced revenue. The data layer that feeds finance's disclosed KPIs and survives the reporting accountants' challenge.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+
+<style>
+  /* === DESIGN TOKENS (shared with index.html) === */
+  :root {
+    --slate: #204640;
+    --slate-deep: #163029;
+    --slate-deeper: #0e201c;
+    --cream: #FAF6EC;
+    --cream-warm: #F2EBD8;
+    --mint: #B8E5DE;
+    --mint-dim: #98C8C0;
+    --gold: #B8902E;
+    --gold-bright: #D4A82E;
+    --ink: #1A2F2C;
+    --ink-soft: #3A4A47;
+    --muted: #6B7A78;
+    --rule: #D9D2BE;
+    --rule-soft: #ECE4D0;
+
+    --display: 'Nunito', system-ui, sans-serif;
+    --body: 'Source Serif 4', Georgia, serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--mint); color: var(--slate-deep); }
+
+  /* === NAV === */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(250, 246, 236, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule-soft);
+    z-index: 100;
+    transition: all 0.3s ease;
+  }
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+  }
+  .logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--slate);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: baseline;
+  }
+  .logo .lo-light {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--gold);
+    margin-right: 4px;
+    transform: translateY(-6px);
+    display: inline-block;
+  }
+  .logo .lo-mx { color: var(--gold); }
+  .logo .lo-dot { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.cta {
+    background: var(--slate);
+    color: var(--cream);
+    padding: 10px 20px;
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .nav-links a.cta:hover {
+    background: var(--slate-deep);
+    color: var(--mint);
+  }
+
+  /* === LAYOUT === */
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+  .wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 120px 0; position: relative; }
+
+  /* === HERO === */
+  .hero {
+    background: var(--slate-deep);
+    color: var(--cream);
+    padding: 180px 0 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(184, 229, 222, 0.12), transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mint-dim);
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: all 0.2s;
+  }
+  .back-link:hover { color: var(--mint); }
+  .back-link .arrow { transition: transform 0.2s; display: inline-block; }
+  .back-link:hover .arrow { transform: translateX(-5px); }
+
+  .hero-eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gold-bright);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-eyebrow .letter {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--slate-deep);
+    background: var(--gold-bright);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(48px, 7vw, 84px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    color: var(--cream);
+  }
+  .hero h1 em {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--mint);
+  }
+  .hero-lede {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--cream);
+    opacity: 0.88;
+    max-width: 680px;
+    margin-bottom: 56px;
+    font-weight: 400;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-top: 40px;
+    border-top: 1px solid rgba(250, 246, 236, 0.15);
+  }
+  .hero-meta-item {
+    font-family: var(--display);
+    font-size: 14px;
+    max-width: 240px;
+  }
+  .hero-meta-item .label {
+    color: var(--mint-dim);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .hero-meta-item .value {
+    color: var(--cream);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.3;
+  }
+
+  /* === SECTION HEADINGS === */
+  .eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(34px, 4.2vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--slate-deep);
+    margin-bottom: 28px;
+  }
+  .section-title em {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+  .section-lede {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 56px;
+    max-width: 720px;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* === BODY PROSE === */
+  .prose p {
+    font-size: 19px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .prose p.large {
+    font-size: 22px;
+    line-height: 1.55;
+  }
+  .prose strong { font-weight: 600; color: var(--slate-deep); }
+  .prose em { font-style: italic; }
+
+  /* === DIVIDER === */
+  .gold-rule {
+    width: 60px;
+    height: 4px;
+    background: var(--gold);
+    margin: 0 0 48px;
+    border: none;
+  }
+
+  /* === GOLD STANDARD: BENCHMARK STATS === */
+  .benchmarks { background: var(--cream); }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule-soft);
+    margin-top: 56px;
+  }
+  .stat-cell {
+    background: var(--cream);
+    padding: 40px 28px;
+    transition: background 0.2s;
+  }
+  .stat-cell:hover { background: var(--cream-warm); }
+  .stat-cell .figure {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 40px;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .stat-cell .figure span {
+    font-size: 20px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .stat-cell h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--slate-deep);
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+  .stat-cell p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .benchmark-note {
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 24px;
+    font-weight: 600;
+  }
+
+  /* === CONDITIONS (shared pattern) === */
+  .conditions { background: var(--cream-warm); }
+  .conditions-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--rule);
+  }
+  .condition {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+    padding-right: 32px;
+    display: flex;
+    gap: 24px;
+  }
+  .condition:nth-child(2n) {
+    padding-left: 32px;
+    padding-right: 0;
+    border-left: 1px solid var(--rule);
+  }
+  .condition .num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 50px;
+  }
+  .condition h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--slate-deep);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .condition p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  /* === ARTEFACTS === */
+  .artefacts { background: var(--cream); }
+  .artefact-list {
+    margin-top: 56px;
+    border-top: 1px solid var(--rule);
+  }
+  .artefact-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 28px;
+    align-items: start;
+    padding: 34px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .artefact-mark {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--gold);
+    line-height: 1;
+    border: 2px solid var(--gold);
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+  }
+  .artefact-row h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 21px;
+    color: var(--slate-deep);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .artefact-row p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 760px;
+  }
+
+  /* === EVIDENCE QUANTUM: CLAIM / PROOF === */
+  .evidence { background: var(--cream-warm); }
+  .claim-list {
+    margin-top: 56px;
+    border-top: 1px solid var(--rule);
+  }
+  .claim-row {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 48px;
+    padding: 34px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .claim-said {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.35;
+    color: var(--slate-deep);
+  }
+  .claim-said .who {
+    display: block;
+    font-family: var(--display);
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .claim-proof {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .claim-proof .who {
+    display: block;
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  /* === TASKS (methodology level) === */
+  .tasks { background: var(--slate-deep); color: var(--cream); }
+  .tasks .eyebrow { color: var(--gold-bright); }
+  .tasks .section-title { color: var(--cream); }
+  .tasks .section-title em { color: var(--mint); }
+  .tasks .section-lede { color: var(--mint-dim); }
+  .task-list {
+    margin-top: 56px;
+    border-top: 1px solid rgba(184, 229, 222, 0.15);
+  }
+  .task-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 28px;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(184, 229, 222, 0.15);
+    align-items: start;
+  }
+  .task-num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--gold-bright);
+    line-height: 1;
+  }
+  .task-row h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 23px;
+    color: var(--cream);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .task-row > div > p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--mint-dim);
+    max-width: 700px;
+    margin-bottom: 18px;
+  }
+  .task-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chip {
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cream);
+    background: rgba(184, 229, 222, 0.1);
+    border: 1px solid rgba(184, 229, 222, 0.22);
+    padding: 7px 14px;
+    border-radius: 100px;
+  }
+  .chip b {
+    color: var(--gold-bright);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-right: 6px;
+  }
+
+  /* === ENGAGEMENT CALLOUT === */
+  .engagement-callout {
+    background: var(--slate-deeper);
+    border: 1px solid rgba(184, 229, 222, 0.15);
+    border-radius: 20px;
+    padding: 48px 44px;
+    margin-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .engagement-callout::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(184, 229, 222, 0.1), transparent 70%);
+    pointer-events: none;
+  }
+  .engagement-callout .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 16px;
+    position: relative; z-index: 2;
+  }
+  .engagement-callout p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--cream);
+    opacity: 0.9;
+    max-width: 680px;
+    position: relative; z-index: 2;
+  }
+
+  /* === CLOSING === */
+  .closing { background: var(--cream); padding-bottom: 140px; }
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+    margin-top: 24px;
+  }
+  .closing-grid-left p {
+    font-size: 19px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+  .closing-grid-right {
+    background: var(--slate-deep);
+    color: var(--cream);
+    border-radius: 20px;
+    padding: 40px 32px;
+    height: fit-content;
+  }
+  .closing-grid-right .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 16px;
+  }
+  .closing-grid-right h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.25;
+  }
+  .closing-grid-right p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--cream);
+    opacity: 0.88;
+    margin-bottom: 28px;
+  }
+  .contact-link {
+    display: inline-block;
+    background: var(--mint);
+    color: var(--slate-deep);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { background: var(--cream); color: var(--slate-deep); }
+
+  /* === WORKSTREAM PAGINATION === */
+  .ws-pagination { background: var(--cream-warm); padding: 80px 0; }
+  .ws-pagination .eyebrow { text-align: center; margin-bottom: 40px; }
+  .ws-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .ws-nav-item {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 24px 20px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: block;
+  }
+  .ws-nav-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  .ws-nav-item.current {
+    background: var(--slate-deep);
+    border-color: var(--slate-deep);
+  }
+  .ws-nav-item .ws-nav-letter {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .ws-nav-item.current .ws-nav-letter { color: var(--gold-bright); }
+  .ws-nav-item .ws-nav-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--slate-deep);
+    line-height: 1.25;
+  }
+  .ws-nav-item.current .ws-nav-name { color: var(--cream); }
+  .ws-nav-item .ws-nav-tag {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-top: 6px;
+    display: block;
+  }
+  .ws-nav-item.current .ws-nav-tag { color: var(--mint-dim); }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--slate-deeper);
+    color: var(--cream);
+    padding: 60px 0 40px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--cream);
+    display: flex;
+    align-items: baseline;
+  }
+  .footer-logo .lo-light {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--gold-bright);
+    margin-right: 4px;
+    transform: translateY(-5px);
+    display: inline-block;
+  }
+  .footer-logo .lo-mx, .footer-logo .lo-dot { color: var(--gold-bright); }
+  .footer-meta {
+    font-family: var(--display);
+    font-size: 13px;
+    color: var(--mint-dim);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 14px 20px; gap: 16px; }
+    .nav-links { gap: 0; }
+    .nav-links a:not(.cta) { display: none; }
+    .nav-links a.cta { padding: 9px 16px; font-size: 13px; white-space: nowrap; }
+    .logo { font-size: 19px; }
+    .wrap, .wrap-narrow { padding: 0 24px; }
+    section { padding: 80px 0; }
+    .hero { padding: 120px 0 80px; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: 0.14em; }
+    .hero-lede { font-size: 18px; }
+    .hero-meta { gap: 24px 32px; }
+    .section-lede { font-size: 19px; }
+    .prose p.large { font-size: 19px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .conditions-list { grid-template-columns: 1fr; }
+    .condition:nth-child(2n) { padding-left: 0; border-left: none; }
+    .claim-row { grid-template-columns: 1fr; gap: 14px; }
+    .claim-said { font-size: 19px; }
+    .engagement-callout { padding: 36px 28px; }
+    .closing-grid { grid-template-columns: 1fr; gap: 40px; }
+    .ws-pagination { padding: 56px 0; }
+    .ws-nav-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .ws-nav-grid { grid-template-columns: 1fr; }
+    .artefact-row { grid-template-columns: 1fr; gap: 14px; }
+    .task-row { grid-template-columns: 1fr; gap: 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#whole-ipo">The journey</a></li>
+      <li><a href="index.html#marketing-place">Marketing's place</a></li>
+      <li><a href="index.html#workstreams">Workstreams</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact" class="cta">Start a conversation</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <a href="index.html#workstreams" class="back-link"><span class="arrow">←</span> The five marketing workstreams</a>
+    <div class="hero-eyebrow"><span class="letter">A</span> Workstream A · Commercial readiness · Tier two</div>
+    <h1>The <em>numbers.</em></h1>
+    <p class="hero-lede">
+      CAC, LTV, payback, attribution, marketing-sourced revenue. This is the data layer that feeds finance's disclosed KPIs and has to hold up when the reporting accountants pull on it. It is also where most marketing functions discover their numbers were never built to be looked at this closely.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="label">What it feeds</span>
+        <span class="value">Finance's audited KPI disclosures</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Evidence floor</span>
+        <span class="value">Eight quarters of consistent data</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">The real test</span>
+        <span class="value">Does it reconcile to the audited P&amp;L</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============== GOLD STANDARD ============== -->
+<section class="benchmarks">
+  <div class="wrap">
+    <div class="eyebrow">What good looks like</div>
+    <h1 class="section-title">Numbers that <em>reconcile,</em> not numbers that impress.</h1>
+    <p class="section-lede">
+      The gold standard here is boring on purpose. Marketing and finance answer the same question the same way, every headline figure traces back to a system someone can open, and the unit economics survive a stranger asking how they were built.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="prose">
+      <p class="large">
+        Before an investor pays a multiple, someone independent checks whether your growth is efficient or just expensive. They do it with four or five numbers that have become the shared language of the market. You do not have to hit every benchmark. You do have to know where you sit against each one, and be able to explain it without flinching.
+      </p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="figure">3:1</div>
+        <h4>LTV to CAC</h4>
+        <p>The ratio investors reach for first. Below it and you are buying growth inefficiently. Far above it and you are probably underinvesting.</p>
+      </div>
+      <div class="stat-cell">
+        <div class="figure">12-18<span> mo</span></div>
+        <h4>CAC payback</h4>
+        <p>The band the market expects a B2B business to recover acquisition cost in. Drift past it and the growth model gets questioned.</p>
+      </div>
+      <div class="stat-cell">
+        <div class="figure">40<span>+</span></div>
+        <h4>Rule of 40</h4>
+        <p>Growth rate plus profit margin. The single figure that frames whether your growth is worth what it costs to buy.</p>
+      </div>
+      <div class="stat-cell">
+        <div class="figure">7.7<span>%</span></div>
+        <h4>Marketing as % of revenue</h4>
+        <p>Gartner's cross-industry average. A sanity check on whether spend is in a normal range, never a target to chase.</p>
+      </div>
+    </div>
+    <p class="benchmark-note">The numbers move by sector and stage. The discipline of knowing yours, and defending it, does not.</p>
+  </div>
+</section>
+
+<!-- ============== CONDITIONS ============== -->
+<section class="conditions">
+  <div class="wrap">
+    <div class="eyebrow">What has to be true</div>
+    <h1 class="section-title">Four conditions the numbers <em>have to meet.</em></h1>
+    <p class="section-lede">
+      These are not nice-to-haves. They are the state a marketing function's data has to be in before it walks into formal scrutiny. Miss one and the whole workstream is exposed.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="conditions-list">
+      <div class="condition">
+        <div class="num">01</div>
+        <div>
+          <h4>One number, one source</h4>
+          <p>Marketing and finance produce the same answer to the same question. CAC, LTV, pipeline, attribution. No second set of numbers living in a deck somewhere.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">02</div>
+        <div>
+          <h4>Eight quarters of clean data</h4>
+          <p>Two years minimum, built on one consistent methodology. Reporting accountants and bookrunners are not checking a snapshot. They are checking whether the trend can be trusted.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">03</div>
+        <div>
+          <h4>Documented attribution</h4>
+          <p>The method is written down, short enough to read in one sitting, applied the same way every month, and reconciled against the audited financials at close.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">04</div>
+        <div>
+          <h4>Defensible unit economics</h4>
+          <p>CAC carries its full cost, LTV comes off real retention curves rather than hope, payback sits within benchmark. The method survives someone competent pushing on it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ARTEFACTS ============== -->
+<section class="artefacts">
+  <div class="wrap">
+    <div class="eyebrow">What has to exist</div>
+    <h1 class="section-title">Six things you could <em>pull out of a drawer.</em></h1>
+    <p class="section-lede">
+      A capability you can describe is not the same as an artefact someone can inspect. By the time bookrunners arrive, the numbers workstream has to have produced concrete, finished things. These are them.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="artefact-list">
+      <div class="artefact-row">
+        <div class="artefact-mark">01</div>
+        <div>
+          <h4>KPI definitions register</h4>
+          <p>Every reported marketing number, defined once, with its owning source system and the calculation behind it. The document that ends the argument about whose figure is right.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">02</div>
+        <div>
+          <h4>Unit economics methodology</h4>
+          <p>Fully-loaded CAC, LTV from actual retention, payback period. Written so a reporting accountant can follow every step without a meeting to explain it.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">03</div>
+        <div>
+          <h4>Attribution methodology document</h4>
+          <p>The model, its rules, and its honest limits, set out in two pages. Long enough to be real, short enough that nobody can claim it is unknowable.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">04</div>
+        <div>
+          <h4>Marketing-sourced revenue reconciliation</h4>
+          <p>Marketing's revenue claim tied back to closed-won in the CRM and to the audited P&amp;L, refreshed at month-end. The bridge between what marketing says it did and what finance can sign.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">05</div>
+        <div>
+          <h4>Eight-quarter restated dataset</h4>
+          <p>Two years of history rebuilt onto the single agreed methodology, with every restatement documented and dated. The proof that the trend is real and not redrawn to flatter.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">06</div>
+        <div>
+          <h4>Monthly close pack</h4>
+          <p>The working papers and sign-offs that show the numbers were produced through a process, not assembled the night before. The thing that turns a figure into evidence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== EVIDENCE QUANTUM ============== -->
+<section class="evidence">
+  <div class="wrap">
+    <div class="eyebrow">Evidence quantum</div>
+    <h1 class="section-title">Evidence is what survives the <em>challenge.</em></h1>
+    <p class="section-lede">
+      A number existing is not the same as a number being provable. Evidence quantum is the weight and kind of proof each claim has to carry before it is allowed into a disclosure. Here is what each claim actually costs to make.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="claim-list">
+      <div class="claim-row">
+        <div class="claim-said">
+          <span class="who">What marketing says</span>
+          "Our CAC is X."
+        </div>
+        <div class="claim-proof">
+          <span class="who">What has to back it</span>
+          A fully-loaded cost build that includes the cost most people leave out, extracted from the source systems, broken out month by month, and reconciled to the ledger. Not a media-spend figure wearing a CAC label.
+        </div>
+      </div>
+      <div class="claim-row">
+        <div class="claim-said">
+          "Marketing sourced Y of revenue."
+        </div>
+        <div class="claim-proof">
+          <span class="who">What has to back it</span>
+          Opportunity-level data with documented attribution rules, tied to closed-won in the CRM and through to the audited P&amp;L. The rules have to be the same ones used last quarter and the quarter before.
+        </div>
+      </div>
+      <div class="claim-row">
+        <div class="claim-said">
+          "Payback is Z months."
+        </div>
+        <div class="claim-proof">
+          <span class="who">What has to back it</span>
+          Cohort-level retention behaviour, not a single blended assumption applied across everyone. The shape of the curve is the argument, and the curve has to come from real data.
+        </div>
+      </div>
+      <div class="claim-row">
+        <div class="claim-said">
+          "The trend is reliable."
+        </div>
+        <div class="claim-proof">
+          <span class="who">What has to back it</span>
+          Eight quarters built on one methodology, with every restatement logged and dated. If the method changed halfway through, the trend is decoration, and a good adviser will say so.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TASKS ============== -->
+<section class="tasks">
+  <div class="wrap">
+    <div class="eyebrow">The work, named</div>
+    <h1 class="section-title">Seven tasks. <em>The playbook stays in the room.</em></h1>
+    <p class="section-lede">
+      This is the methodology, not the method. The tasks that make up the numbers workstream are named here in full. How each one is actually done, the models, the allocation logic, the order of operations, is what an engagement is for.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="task-list">
+      <div class="task-row">
+        <div class="task-num">1</div>
+        <div>
+          <h4>Define the numbers once</h4>
+          <p>Agree a single definition and a single owning source for every reported marketing figure, signed off by finance, not just by marketing.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>KPI definitions register</span>
+            <span class="chip"><b>Evidence</b>Source mapping per metric</span>
+            <span class="chip"><b>Owner</b>Marketing ops, signed by finance</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">2</div>
+        <div>
+          <h4>Rebuild CAC fully loaded</h4>
+          <p>Move from a spend-based number to a cost-based one that carries everything it should, so the figure stops shrinking the moment someone looks under it.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Unit economics methodology</span>
+            <span class="chip"><b>Evidence</b>Cost build, ledger-reconciled</span>
+            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">3</div>
+        <div>
+          <h4>Derive LTV from real retention</h4>
+          <p>Replace the assumed lifetime value with one built off actual cohort behaviour, so the most quoted number in the deck is also the most defensible.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Cohort LTV model</span>
+            <span class="chip"><b>Evidence</b>Retention curves from source data</span>
+            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">4</div>
+        <div>
+          <h4>Establish and reconcile marketing-sourced revenue</h4>
+          <p>Stand up the bridge from marketing activity to closed-won revenue to the audited P&amp;L, and run it every month so it is never a one-off heroic effort.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Revenue reconciliation</span>
+            <span class="chip"><b>Evidence</b>CRM to P&amp;L tie-out</span>
+            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">5</div>
+        <div>
+          <h4>Document attribution to a two-page standard</h4>
+          <p>Write the model down properly: what it does, what it cannot do, and why it is the right call. Short, honest, and the same every month.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Attribution methodology</span>
+            <span class="chip"><b>Evidence</b>Consistent monthly application</span>
+            <span class="chip"><b>Owner</b>Marketing ops</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">6</div>
+        <div>
+          <h4>Restate eight quarters onto one methodology</h4>
+          <p>Rebuild two years of history so the trend is consistent end to end, with every adjustment logged. This is the slow task, and the one that cannot be done in a hurry at the end.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Restated dataset</span>
+            <span class="chip"><b>Evidence</b>Dated restatement log</span>
+            <span class="chip"><b>Owner</b>Marketing ops</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">7</div>
+        <div>
+          <h4>Stand up the monthly close</h4>
+          <p>Put the numbers on a repeatable monthly rhythm with working papers and sign-offs, so the data stays true between now and the listing rather than going stale.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Monthly close pack</span>
+            <span class="chip"><b>Evidence</b>Working papers and sign-off trail</span>
+            <span class="chip"><b>Owner</b>Marketing ops, reviewed by finance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="engagement-callout">
+      <div class="label">Where an engagement comes in</div>
+      <p>
+        Naming the tasks is the easy part, and you have just read all of them. Doing them is where it gets real: deciding what loads into CAC and what does not, choosing an attribution model your sector will accept, untangling two years of history that was never kept tidy. That is the work clevermx is built to lead, alongside your team and your finance function, on a timeline that has the listing date working backwards into it.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WORKSTREAM PAGINATION ============== -->
+<section class="ws-pagination">
+  <div class="wrap">
+    <div class="eyebrow">The other four workstreams</div>
+    <div class="ws-nav-grid">
+      <a href="workstream-numbers.html" class="ws-nav-item current">
+        <div class="ws-nav-letter">A</div>
+        <div class="ws-nav-name">The numbers</div>
+        <span class="ws-nav-tag">You are here</span>
+      </a>
+      <a href="workstream-operations.html" class="ws-nav-item">
+        <div class="ws-nav-letter">B</div>
+        <div class="ws-nav-name">The operations spine</div>
+        <span class="ws-nav-tag">Stack, lineage, close</span>
+      </a>
+      <a href="workstream-narrative.html" class="ws-nav-item">
+        <div class="ws-nav-letter">C</div>
+        <div class="ws-nav-name">The narrative</div>
+        <span class="ws-nav-tag">The equity story</span>
+      </a>
+      <a href="workstream-alignment.html" class="ws-nav-item">
+        <div class="ws-nav-letter">D</div>
+        <div class="ws-nav-name">Sales and marketing</div>
+        <span class="ws-nav-tag">Shared definitions</span>
+      </a>
+      <a href="workstream-team.html" class="ws-nav-item">
+        <div class="ws-nav-letter">E</div>
+        <div class="ws-nav-name">Team and capability</div>
+        <span class="ws-nav-tag">Ready for public life</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CLOSING ============== -->
+<section class="closing">
+  <div class="wrap">
+    <div class="eyebrow">Start a conversation</div>
+    <h1 class="section-title">The numbers are usually <em>where the work starts.</em></h1>
+    <hr class="gold-rule">
+    <div class="closing-grid">
+      <div class="closing-grid-left">
+        <p>
+          In most marketing functions, the numbers are the first thing to look impressive and the first thing to fall apart under scrutiny. They are built to win budget meetings, not to survive a reporting accountant. That is normal. It is also fixable, with enough runway.
+        </p>
+        <p>
+          The honest framing matters here. Marketing is tier two in an IPO. It rarely stops a listing on its own. But the quality of these numbers directly shapes what finance can disclose with confidence, and what investors are willing to pay. Getting the numbers right is how marketing earns its place in the room.
+        </p>
+        <p>
+          If you are somewhere on the road to a listing, or any other moment where the numbers are about to be looked at properly, the most useful first step is a short scoping conversation. No pitch deck. No pressure.
+        </p>
+      </div>
+      <div class="closing-grid-right">
+        <div class="label">Start a conversation</div>
+        <h4>Forty-five minutes, no obligation.</h4>
+        <p>
+          Bring your current marketing numbers and we will talk through where they would hold up and where they would not. You will leave the call with a clearer picture either way.
+        </p>
+        <a href="mailto:hello@thatsclevermx.com" class="contact-link">hello@thatsclevermx.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo" style="text-decoration:none;">
+        <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
+      </a>
+      <div class="footer-meta">
+        Workstream A of five · Marketing operations, IPO readiness · United Kingdom
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

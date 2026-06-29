@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found · that's clevermx.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --slate-deep: #163029;
+    --cream: #FAF6EC;
+    --mint: #B8E5DE;
+    --mint-dim: #98C8C0;
+    --gold-bright: #D4A82E;
+    --display: 'Nunito', system-ui, sans-serif;
+    --body: 'Source Serif 4', Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--body);
+    background: var(--slate-deep);
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 520px; }
+  .code {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 96px;
+    color: var(--gold-bright);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  h1 em {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--mint);
+  }
+  p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--cream);
+    opacity: 0.85;
+    margin-bottom: 36px;
+  }
+  a.home {
+    display: inline-block;
+    background: var(--mint);
+    color: var(--slate-deep);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 26px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  a.home:hover { background: var(--cream); }
+  .logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 18px;
+    margin-top: 48px;
+    display: inline-flex;
+    align-items: baseline;
+    color: var(--cream);
+    text-decoration: none;
+  }
+  .logo .lo-light { font-weight: 400; font-size: 11px; color: var(--gold-bright); margin-right: 4px; transform: translateY(-5px); display: inline-block; }
+  .logo .lo-mx, .logo .lo-dot { color: var(--gold-bright); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="code">404</div>
+    <h1>This page <em>wandered off.</em></h1>
+    <p>The link is broken or the page has moved. The way back is short.</p>
+    <a href="/" class="home">Back to the start</a>
+    <div>
+      <a href="/" class="logo"><span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span></a>
+    </div>
+  </div>
+</body>
+</html>

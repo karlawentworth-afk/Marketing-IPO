@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workstream D &middot; Sales and marketing alignment &middot; that's clevermx.</title>
+<meta name="description" content="Workstream D of marketing's pre-IPO readiness: shared definitions, joint pipeline and documented handoffs that turn marketing into a co-owner of growth.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+
+<style>
+  /* === DESIGN TOKENS (shared with index.html) === */
+  :root {
+    --slate: #204640;
+    --slate-deep: #163029;
+    --slate-deeper: #0e201c;
+    --cream: #FAF6EC;
+    --cream-warm: #F2EBD8;
+    --mint: #B8E5DE;
+    --mint-dim: #98C8C0;
+    --gold: #B8902E;
+    --gold-bright: #D4A82E;
+    --ink: #1A2F2C;
+    --ink-soft: #3A4A47;
+    --muted: #6B7A78;
+    --rule: #D9D2BE;
+    --rule-soft: #ECE4D0;
+
+    --display: 'Nunito', system-ui, sans-serif;
+    --body: 'Source Serif 4', Georgia, serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--mint); color: var(--slate-deep); }
+
+  /* === NAV === */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(250, 246, 236, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule-soft);
+    z-index: 100;
+    transition: all 0.3s ease;
+  }
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+  }
+  .logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--slate);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: baseline;
+  }
+  .logo .lo-light {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--gold);
+    margin-right: 4px;
+    transform: translateY(-6px);
+    display: inline-block;
+  }
+  .logo .lo-mx { color: var(--gold); }
+  .logo .lo-dot { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.cta {
+    background: var(--slate);
+    color: var(--cream);
+    padding: 10px 20px;
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .nav-links a.cta:hover {
+    background: var(--slate-deep);
+    color: var(--mint);
+  }
+
+  /* === LAYOUT === */
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+  .wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 120px 0; position: relative; }
+
+  /* === HERO === */
+  .hero {
+    background: var(--slate-deep);
+    color: var(--cream);
+    padding: 180px 0 120px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(184, 229, 222, 0.12), transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mint-dim);
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: all 0.2s;
+  }
+  .back-link:hover { color: var(--mint); }
+  .back-link .arrow { transition: transform 0.2s; display: inline-block; }
+  .back-link:hover .arrow { transform: translateX(-5px); }
+
+  .hero-eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gold-bright);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-eyebrow .letter {
+    font-size: 15px;
+    font-weight: 900;
+    color: var(--slate-deep);
+    background: var(--gold-bright);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(48px, 7vw, 84px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    color: var(--cream);
+  }
+  .hero h1 em {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--mint);
+  }
+  .hero-lede {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--cream);
+    opacity: 0.88;
+    max-width: 680px;
+    margin-bottom: 56px;
+    font-weight: 400;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-top: 40px;
+    border-top: 1px solid rgba(250, 246, 236, 0.15);
+  }
+  .hero-meta-item {
+    font-family: var(--display);
+    font-size: 14px;
+    max-width: 240px;
+  }
+  .hero-meta-item .label {
+    color: var(--mint-dim);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .hero-meta-item .value {
+    color: var(--cream);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.3;
+  }
+
+  /* === SECTION HEADINGS === */
+  .eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(34px, 4.2vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--slate-deep);
+    margin-bottom: 28px;
+  }
+  .section-title em {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+  .section-lede {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 56px;
+    max-width: 720px;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* === BODY PROSE === */
+  .prose p {
+    font-size: 19px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .prose p.large {
+    font-size: 22px;
+    line-height: 1.55;
+  }
+  .prose strong { font-weight: 600; color: var(--slate-deep); }
+  .prose em { font-style: italic; }
+
+  /* === DIVIDER === */
+  .gold-rule {
+    width: 60px;
+    height: 4px;
+    background: var(--gold);
+    margin: 0 0 48px;
+    border: none;
+  }
+
+  /* === GOLD STANDARD: BENCHMARK STATS === */
+  .benchmarks { background: var(--cream); }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule-soft);
+    margin-top: 56px;
+  }
+  .stat-cell {
+    background: var(--cream);
+    padding: 40px 28px;
+    transition: background 0.2s;
+  }
+  .stat-cell:hover { background: var(--cream-warm); }
+  .stat-cell .figure {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 40px;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .stat-cell .figure span {
+    font-size: 20px;
+    color: var(--muted);
+    font-weight: 700;
+  }
+  .stat-cell h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--slate-deep);
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+  .stat-cell p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .benchmark-note {
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 24px;
+    font-weight: 600;
+  }
+
+  /* === CONDITIONS (shared pattern) === */
+  .conditions { background: var(--cream-warm); }
+  .conditions-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--rule);
+  }
+  .condition {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+    padding-right: 32px;
+    display: flex;
+    gap: 24px;
+  }
+  .condition:nth-child(2n) {
+    padding-left: 32px;
+    padding-right: 0;
+    border-left: 1px solid var(--rule);
+  }
+  .condition .num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 50px;
+  }
+  .condition h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--slate-deep);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .condition p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  /* === ARTEFACTS === */
+  .artefacts { background: var(--cream); }
+  .artefact-list {
+    margin-top: 56px;
+    border-top: 1px solid var(--rule);
+  }
+  .artefact-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 28px;
+    align-items: start;
+    padding: 34px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .artefact-mark {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--gold);
+    line-height: 1;
+    border: 2px solid var(--gold);
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4px;
+  }
+  .artefact-row h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 21px;
+    color: var(--slate-deep);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .artefact-row p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 760px;
+  }
+
+  /* === EVIDENCE QUANTUM: CLAIM / PROOF === */
+  .evidence { background: var(--cream-warm); }
+  .claim-list {
+    margin-top: 56px;
+    border-top: 1px solid var(--rule);
+  }
+  .claim-row {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 48px;
+    padding: 34px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
+  }
+  .claim-said {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 21px;
+    line-height: 1.35;
+    color: var(--slate-deep);
+  }
+  .claim-said .who {
+    display: block;
+    font-family: var(--display);
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .claim-proof {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .claim-proof .who {
+    display: block;
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  /* === TASKS (methodology level) === */
+  .tasks { background: var(--slate-deep); color: var(--cream); }
+  .tasks .eyebrow { color: var(--gold-bright); }
+  .tasks .section-title { color: var(--cream); }
+  .tasks .section-title em { color: var(--mint); }
+  .tasks .section-lede { color: var(--mint-dim); }
+  .task-list {
+    margin-top: 56px;
+    border-top: 1px solid rgba(184, 229, 222, 0.15);
+  }
+  .task-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 28px;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(184, 229, 222, 0.15);
+    align-items: start;
+  }
+  .task-num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--gold-bright);
+    line-height: 1;
+  }
+  .task-row h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 23px;
+    color: var(--cream);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+  .task-row > div > p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--mint-dim);
+    max-width: 700px;
+    margin-bottom: 18px;
+  }
+  .task-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chip {
+    font-family: var(--display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cream);
+    background: rgba(184, 229, 222, 0.1);
+    border: 1px solid rgba(184, 229, 222, 0.22);
+    padding: 7px 14px;
+    border-radius: 100px;
+  }
+  .chip b {
+    color: var(--gold-bright);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-right: 6px;
+  }
+
+  /* === ENGAGEMENT CALLOUT === */
+  .engagement-callout {
+    background: var(--slate-deeper);
+    border: 1px solid rgba(184, 229, 222, 0.15);
+    border-radius: 20px;
+    padding: 48px 44px;
+    margin-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .engagement-callout::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(184, 229, 222, 0.1), transparent 70%);
+    pointer-events: none;
+  }
+  .engagement-callout .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 16px;
+    position: relative; z-index: 2;
+  }
+  .engagement-callout p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--cream);
+    opacity: 0.9;
+    max-width: 680px;
+    position: relative; z-index: 2;
+  }
+
+  /* === CLOSING === */
+  .closing { background: var(--cream); padding-bottom: 140px; }
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+    margin-top: 24px;
+  }
+  .closing-grid-left p {
+    font-size: 19px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+  .closing-grid-right {
+    background: var(--slate-deep);
+    color: var(--cream);
+    border-radius: 20px;
+    padding: 40px 32px;
+    height: fit-content;
+  }
+  .closing-grid-right .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 16px;
+  }
+  .closing-grid-right h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.25;
+  }
+  .closing-grid-right p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--cream);
+    opacity: 0.88;
+    margin-bottom: 28px;
+  }
+  .contact-link {
+    display: inline-block;
+    background: var(--mint);
+    color: var(--slate-deep);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { background: var(--cream); color: var(--slate-deep); }
+
+  /* === WORKSTREAM PAGINATION === */
+  .ws-pagination { background: var(--cream-warm); padding: 80px 0; }
+  .ws-pagination .eyebrow { text-align: center; margin-bottom: 40px; }
+  .ws-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .ws-nav-item {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 24px 20px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: block;
+  }
+  .ws-nav-item:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+  .ws-nav-item.current {
+    background: var(--slate-deep);
+    border-color: var(--slate-deep);
+  }
+  .ws-nav-item .ws-nav-letter {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .ws-nav-item.current .ws-nav-letter { color: var(--gold-bright); }
+  .ws-nav-item .ws-nav-name {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--slate-deep);
+    line-height: 1.25;
+  }
+  .ws-nav-item.current .ws-nav-name { color: var(--cream); }
+  .ws-nav-item .ws-nav-tag {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-top: 6px;
+    display: block;
+  }
+  .ws-nav-item.current .ws-nav-tag { color: var(--mint-dim); }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--slate-deeper);
+    color: var(--cream);
+    padding: 60px 0 40px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--cream);
+    display: flex;
+    align-items: baseline;
+  }
+  .footer-logo .lo-light {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--gold-bright);
+    margin-right: 4px;
+    transform: translateY(-5px);
+    display: inline-block;
+  }
+  .footer-logo .lo-mx, .footer-logo .lo-dot { color: var(--gold-bright); }
+  .footer-meta {
+    font-family: var(--display);
+    font-size: 13px;
+    color: var(--mint-dim);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 14px 20px; gap: 16px; }
+    .nav-links { gap: 0; }
+    .nav-links a:not(.cta) { display: none; }
+    .nav-links a.cta { padding: 9px 16px; font-size: 13px; white-space: nowrap; }
+    .logo { font-size: 19px; }
+    .wrap, .wrap-narrow { padding: 0 24px; }
+    section { padding: 80px 0; }
+    .hero { padding: 120px 0 80px; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: 0.14em; }
+    .hero-lede { font-size: 18px; }
+    .hero-meta { gap: 24px 32px; }
+    .section-lede { font-size: 19px; }
+    .prose p.large { font-size: 19px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+    .conditions-list { grid-template-columns: 1fr; }
+    .condition:nth-child(2n) { padding-left: 0; border-left: none; }
+    .claim-row { grid-template-columns: 1fr; gap: 14px; }
+    .claim-said { font-size: 19px; }
+    .engagement-callout { padding: 36px 28px; }
+    .closing-grid { grid-template-columns: 1fr; gap: 40px; }
+    .ws-pagination { padding: 56px 0; }
+    .ws-nav-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .ws-nav-grid { grid-template-columns: 1fr; }
+    .artefact-row { grid-template-columns: 1fr; gap: 14px; }
+    .task-row { grid-template-columns: 1fr; gap: 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
+
+  /* === STANDARD CARDS (qualitative gold standard) === */
+  .standard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .standard-card {
+    background: var(--cream);
+    border: 1px solid var(--rule-soft);
+    border-top: 6px solid var(--gold);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 1px 0 rgba(26, 47, 44, 0.04);
+  }
+  .standard-card .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .standard-card h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--slate-deep);
+    margin-bottom: 14px;
+    line-height: 1.25;
+  }
+  .standard-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .standard-note {
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 24px;
+    font-weight: 600;
+  }
+  @media (max-width: 900px) {
+    .standard-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#whole-ipo">The journey</a></li>
+      <li><a href="index.html#marketing-place">Marketing's place</a></li>
+      <li><a href="index.html#workstreams">Workstreams</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact" class="cta">Start a conversation</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <a href="index.html#workstreams" class="back-link"><span class="arrow">&larr;</span> The five marketing workstreams</a>
+    <div class="hero-eyebrow"><span class="letter">D</span> Workstream D &middot; Commercial readiness &middot; Tier two</div>
+    <h1>Sales and marketing <em>alignment.</em></h1>
+    <p class="hero-lede">Shared definitions, joint pipeline, documented handoffs. The structural work that turns marketing from a sales support function into a co-owner of growth. In a sales-led business this is the hardest of the five, and the most visible when it is missing.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="label">What it fixes</span>
+        <span class="value">Two functions, two sets of numbers</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">Why it matters</span>
+        <span class="value">Pipeline is a disclosed story</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="label">The real test</span>
+        <span class="value">Do sales and marketing agree on one number</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="benchmarks">
+  <div class="wrap">
+    <div class="eyebrow">What good looks like</div>
+    <h1 class="section-title">Two functions, <em>one number.</em></h1>
+    <p class="section-lede">The gold standard is not warmth between teams. It is structural: shared definitions the system enforces, one pipeline both functions trust, and handoffs that work on a bad week as well as a good one.</p>
+    <hr class="gold-rule">
+    <div class="standard-cards">
+      <div class="standard-card">
+        <div class="label">One pipeline</div>
+        <h4>One definition</h4>
+        <p>Sales and marketing read the same number off the same system and mean the same thing by it. The arguments about whose number is right simply stop.</p>
+      </div>
+      <div class="standard-card">
+        <div class="label">Written handoffs</div>
+        <h4>Not folklore</h4>
+        <p>What counts as a lead, when it passes, and what happens when it bounces back, all defined in the CRM rather than carried in someone&rsquo;s head.</p>
+      </div>
+      <div class="standard-card">
+        <div class="label">Shared accountability</div>
+        <h4>For revenue, not activity</h4>
+        <p>Marketing is measured on contribution to closed-won, not on activity nobody downstream can feel. The two functions own the number together.</p>
+      </div>
+    </div>
+    <p class="standard-note">In a sales-led company, alignment is where marketing earns its seat or confirms it never had one.</p>
+  </div>
+</section>
+
+<section class="conditions">
+  <div class="wrap">
+    <div class="eyebrow">What has to be true</div>
+    <h1 class="section-title">Four conditions alignment <em>has to meet.</em></h1>
+    <p class="section-lede">Everyone claims their teams are aligned. Far fewer can prove it. These are the conditions that turn a claim into something diligence can verify.</p>
+    <hr class="gold-rule">
+    <div class="conditions-list">
+      <div class="condition">
+        <div class="num">01</div>
+        <div>
+          <h4>Shared definitions in the CRM</h4>
+          <p>Not aligned definitions, shared ones. Lead, MQL, SQL and opportunity mean one thing, and the system enforces it rather than relying on goodwill.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">02</div>
+        <div>
+          <h4>One pipeline number</h4>
+          <p>Sales and marketing stop bringing different totals to the same meeting. There is one number, from one source, that both functions stand behind.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">03</div>
+        <div>
+          <h4>Documented service-level agreements</h4>
+          <p>Handoffs, response times and what happens when they slip, all in writing and signed by both leaders, not assumed and resented.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">04</div>
+        <div>
+          <h4>Joint accountability</h4>
+          <p>Marketing carries a number the sales leader recognises, and the two functions are measured together rather than pointing at each other.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="artefacts">
+  <div class="wrap">
+    <div class="eyebrow">What has to exist</div>
+    <h1 class="section-title">Six things that prove it is <em>structural, not seasonal.</em></h1>
+    <p class="section-lede">Alignment that lives in a quarterly offsite does not survive diligence. These are the artefacts that show it is built into how the two functions actually operate.</p>
+    <hr class="gold-rule">
+    <div class="artefact-list">
+      <div class="artefact-row">
+        <div class="artefact-mark">01</div>
+        <div>
+          <h4>Shared definitions document</h4>
+          <p>Lead, MQL, SQL, opportunity and pipeline defined once, agreed by both functions and enforced in the CRM.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">02</div>
+        <div>
+          <h4>Pipeline reconciliation</h4>
+          <p>The sales view and the marketing view tied to a single source, so one number survives contact with both teams.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">03</div>
+        <div>
+          <h4>Service-level agreements</h4>
+          <p>Handoff rules, response times and escalation, signed by both the sales and marketing leaders.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">04</div>
+        <div>
+          <h4>Joint pipeline dashboard</h4>
+          <p>One view both functions trust and actually use, rather than two dashboards quietly disagreeing.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">05</div>
+        <div>
+          <h4>Lead-to-revenue process map</h4>
+          <p>The full journey from first touch to closed-won, with a named owner at every stage.</p>
+        </div>
+      </div>
+      <div class="artefact-row">
+        <div class="artefact-mark">06</div>
+        <div>
+          <h4>Alignment cadence record</h4>
+          <p>The standing meeting and the decisions it makes, the routine that keeps alignment true as the business changes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="evidence">
+  <div class="wrap">
+    <div class="eyebrow">Evidence quantum</div>
+    <h1 class="section-title">Alignment is proven in <em>the same number twice.</em></h1>
+    <p class="section-lede">The test of alignment is brutally simple: ask both functions the same question and see if you get the same answer. Every claim here has to survive that.</p>
+    <hr class="gold-rule">
+    <div class="claim-list">
+      <div class="claim-row">
+        <div class="claim-said">
+          <span class="who">What marketing says</span>
+          &ldquo;Sales and marketing are aligned.&rdquo;
+        </div>
+        <div class="claim-proof">
+          <span class="who">What has to back it</span>
+          A shared definitions document enforced in the CRM, not a workshop everyone nodded through and has since quietly forgotten.
+        </div>
+      </div>
+      <div class="claim-row">
+        <div class="claim-said">
+          &ldquo;We have one pipeline number.&rdquo;
+        </div>
+        <div class="claim-proof">
+          <span class="who">What has to back it</span>
+          The same total in both functions&rsquo; reporting, reconciled to one source, rather than two confident numbers that happen to differ.
+        </div>
+      </div>
+      <div class="claim-row">
+        <div class="claim-said">
+          &ldquo;Handoffs work.&rdquo;
+        </div>
+        <div class="claim-proof">
+          <span class="who">What has to back it</span>
+          Written SLAs with response times that are actually met, and a log of what happens when they are not, instead of mutual blame.
+        </div>
+      </div>
+      <div class="claim-row">
+        <div class="claim-said">
+          &ldquo;Marketing contributes to revenue.&rdquo;
+        </div>
+        <div class="claim-proof">
+          <span class="who">What has to back it</span>
+          Marketing&rsquo;s number tied to closed-won and agreed by the sales leader, not a contribution figure marketing asserts on its own.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tasks">
+  <div class="wrap">
+    <div class="eyebrow">The work, named</div>
+    <h1 class="section-title">Seven tasks. <em>The playbook stays in the room.</em></h1>
+    <p class="section-lede">The tasks that build alignment are named here in full. How each one is actually done, the definition work, the CRM enforcement, the negotiation between two proud functions, is what an engagement is for.</p>
+    <hr class="gold-rule">
+    <div class="task-list">
+      <div class="task-row">
+        <div class="task-num">1</div>
+        <div>
+          <h4>Agree shared definitions and enforce them in the CRM</h4>
+          <p>Settle what every pipeline term means, get both functions to own it, and make the system hold the line.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Definitions document</span>
+            <span class="chip"><b>Evidence</b>CRM enforcement</span>
+            <span class="chip"><b>Owner</b>Marketing ops with sales ops</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">2</div>
+        <div>
+          <h4>Reconcile to one pipeline number</h4>
+          <p>Tie the sales and marketing views to a single source so one number leaves the building.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Pipeline reconciliation</span>
+            <span class="chip"><b>Evidence</b>Single-source tie-out</span>
+            <span class="chip"><b>Owner</b>Marketing ops with sales ops</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">3</div>
+        <div>
+          <h4>Write the service-level agreements</h4>
+          <p>Define the handoffs, response times and escalation, and get both leaders to sign.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Signed SLAs</span>
+            <span class="chip"><b>Evidence</b>Both leaders signed</span>
+            <span class="chip"><b>Owner</b>Marketing and sales leadership</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">4</div>
+        <div>
+          <h4>Build the joint pipeline dashboard</h4>
+          <p>Create the one shared view both functions use, replacing the duelling dashboards.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Shared dashboard</span>
+            <span class="chip"><b>Evidence</b>Used by both functions</span>
+            <span class="chip"><b>Owner</b>Marketing ops with sales ops</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">5</div>
+        <div>
+          <h4>Map lead to revenue with owners</h4>
+          <p>Lay out the full journey with a named owner at every stage, so nothing falls between the teams.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Process map</span>
+            <span class="chip"><b>Evidence</b>Owner at each stage</span>
+            <span class="chip"><b>Owner</b>Marketing ops with sales ops</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">6</div>
+        <div>
+          <h4>Establish the alignment cadence</h4>
+          <p>Put a standing rhythm in place that keeps definitions and numbers true as the business shifts.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Cadence and decisions log</span>
+            <span class="chip"><b>Evidence</b>Standing meeting record</span>
+            <span class="chip"><b>Owner</b>Marketing and sales leadership</span>
+          </div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-num">7</div>
+        <div>
+          <h4>Tie marketing to closed-won</h4>
+          <p>Build the contribution model that the sales leader recognises, so marketing&rsquo;s number is shared, not asserted.</p>
+          <div class="task-chips">
+            <span class="chip"><b>Artefact</b>Contribution model</span>
+            <span class="chip"><b>Evidence</b>Agreed by sales leader</span>
+            <span class="chip"><b>Owner</b>Marketing with finance</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="engagement-callout">
+      <div class="label">Where an engagement comes in</div>
+      <p>Naming the tasks is the easy part. The work is in the room: getting two functions that have counted things their own way for years to agree on one set of definitions and live by them. That is as much negotiation as it is process, and it is what clevermx is built to lead, with both leaders at the table and the listing date concentrating minds.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ws-pagination">
+  <div class="wrap">
+    <div class="eyebrow">The five marketing workstreams</div>
+    <div class="ws-nav-grid">
+      <a href="workstream-numbers.html" class="ws-nav-item">
+        <div class="ws-nav-letter">A</div>
+        <div class="ws-nav-name">The numbers</div>
+        <span class="ws-nav-tag">Unit economics</span>
+      </a>
+      <a href="workstream-operations.html" class="ws-nav-item">
+        <div class="ws-nav-letter">B</div>
+        <div class="ws-nav-name">The operations spine</div>
+        <span class="ws-nav-tag">Stack, lineage, close</span>
+      </a>
+      <a href="workstream-narrative.html" class="ws-nav-item">
+        <div class="ws-nav-letter">C</div>
+        <div class="ws-nav-name">The narrative</div>
+        <span class="ws-nav-tag">The equity story</span>
+      </a>
+      <a href="workstream-alignment.html" class="ws-nav-item current">
+        <div class="ws-nav-letter">D</div>
+        <div class="ws-nav-name">Sales and marketing</div>
+        <span class="ws-nav-tag">You are here</span>
+      </a>
+      <a href="workstream-team.html" class="ws-nav-item">
+        <div class="ws-nav-letter">E</div>
+        <div class="ws-nav-name">Team and capability</div>
+        <span class="ws-nav-tag">Ready for public life</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <div class="eyebrow">Start a conversation</div>
+    <h1 class="section-title">In a sales-led business, this is <em>the hard one.</em></h1>
+    <hr class="gold-rule">
+    <div class="closing-grid">
+      <div class="closing-grid-left">
+        <p>Alignment is easy to claim and hard to prove. Everyone says sales and marketing are aligned. Far fewer can show one pipeline number, shared definitions enforced in the CRM, and handoffs that work on a bad week as well as a good one. At an IPO, the gap between the claim and the proof is exactly what gets found.</p>
+        <p>The honest framing matters. Marketing is tier two in an IPO, and in a sales-led company alignment is where marketing either earns its seat or confirms it never had one. Get this right and marketing becomes a co-owner of the growth story. Get it wrong and it stays a cost line.</p>
+        <p>If sales and marketing currently bring different numbers to the same meeting, that is common and it is fixable. The most useful first step is a short scoping conversation. No pitch deck. No pressure.</p>
+      </div>
+      <div class="closing-grid-right">
+        <div class="label">Start a conversation</div>
+        <h4>Forty-five minutes, no obligation.</h4>
+        <p>Bring how sales and marketing currently count pipeline and we will talk through where the two views would reconcile and where they would not.</p>
+        <a href="mailto:hello@thatsclevermx.com" class="contact-link">hello@thatsclevermx.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo" style="text-decoration:none;">
+        <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
+      </a>
+      <div class="footer-meta">
+        Workstream D of five &middot; Marketing operations, IPO readiness &middot; United Kingdom
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
