@@ -98,16 +98,47 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--gold); }
-  .nav-links a.cta {
-    background: var(--slate);
-    color: var(--cream);
-    padding: 10px 20px;
-    border-radius: 100px;
-    transition: all 0.2s;
+  .has-dropdown {
+    position: relative;
   }
-  .nav-links a.cta:hover {
-    background: var(--slate-deep);
-    color: var(--mint);
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--cream);
+    border: 1px solid var(--rule-soft);
+    border-radius: 8px;
+    padding: 8px 0;
+    min-width: 220px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    list-style: none;
+    z-index: 100;
+  }
+  .has-dropdown:hover .dropdown {
+    display: block;
+  }
+  .dropdown li a {
+    display: block;
+    padding: 8px 20px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+  .dropdown li a:hover {
+    color: var(--gold);
+    background: var(--cream-warm);
+  }
+  .dd-letter {
+    display: inline-block;
+    font-weight: 800;
+    font-size: 11px;
+    color: var(--gold);
+    margin-right: 8px;
+    letter-spacing: 0.05em;
   }
 
   /* === LAYOUT === */
@@ -719,9 +750,6 @@
   /* === RESPONSIVE === */
   @media (max-width: 900px) {
     .nav-inner { padding: 14px 20px; gap: 16px; }
-    .nav-links { gap: 0; }
-    .nav-links a:not(.cta) { display: none; }
-    .nav-links a.cta { padding: 9px 16px; font-size: 13px; white-space: nowrap; }
     .logo img { height: 32px; }
     .wrap, .wrap-narrow { padding: 0 24px; }
     section { padding: 80px 0; }
@@ -807,14 +835,21 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="logo">
-      <img src="clevermx-logo.png" alt="that's clevermx." height="28">
+      <img src="clevermx-logo.png" alt="that's clevermx." height="40">
     </a>
     <ul class="nav-links">
-      <li><a href="index.html#whole-ipo">The journey</a></li>
+      <li><a href="index.html#whole-ipo">The whole picture</a></li>
       <li><a href="index.html#marketing-place">Marketing's place</a></li>
-      <li><a href="index.html#workstreams">Workstreams</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="index.html#contact" class="cta">Start a conversation</a></li>
+      <li class="has-dropdown">
+        <a href="index.html#workstreams">The five workstreams</a>
+        <ul class="dropdown">
+          <li><a href="workstream-numbers.html"><span class="dd-letter">A</span>The numbers</a></li>
+          <li><a href="workstream-operations.html"><span class="dd-letter">B</span>Operations spine</a></li>
+          <li><a href="workstream-narrative.html"><span class="dd-letter">C</span>Narrative</a></li>
+          <li><a href="workstream-alignment.html"><span class="dd-letter">D</span>Sales and marketing</a></li>
+          <li><a href="workstream-team.html"><span class="dd-letter">E</span>Team</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>
@@ -1144,7 +1179,7 @@
 
 <section class="closing">
   <div class="wrap">
-    <div class="eyebrow">Start a conversation</div>
+    <div class="eyebrow">Get in touch</div>
     <h1 class="section-title">In a sales-led business, this is <em>the hard one.</em></h1>
     <hr class="gold-rule">
     <div class="closing-grid">
@@ -1154,8 +1189,7 @@
         <p>If sales and marketing currently bring different numbers to the same meeting, that is common and it is fixable. The most useful first step is a short scoping conversation. No pitch deck. No pressure.</p>
       </div>
       <div class="closing-grid-right">
-        <div class="label">Start a conversation</div>
-        <h4>Forty-five minutes, no obligation.</h4>
+        <div class="label">Get in touch</div>
         <p>Bring how sales and marketing currently count pipeline and we will talk through where the two views would reconcile and where they would not.</p>
         <a href="mailto:hello@thatsclevermx.com" class="contact-link">hello@thatsclevermx.com</a>
       </div>
