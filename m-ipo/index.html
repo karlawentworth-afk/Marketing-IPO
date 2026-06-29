@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>that's clevermx. Marketing operations for serious moments.</title>
+<meta name="description" content="clevermx is a marketing operations consultancy. We help marketing functions get ready for moments that matter, including IPO readiness.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+
+<style>
+  /* === DESIGN TOKENS === */
+  :root {
+    --slate: #204640;
+    --slate-deep: #163029;
+    --slate-deeper: #0e201c;
+    --cream: #FAF6EC;
+    --cream-warm: #F2EBD8;
+    --mint: #B8E5DE;
+    --mint-dim: #98C8C0;
+    --gold: #B8902E;
+    --gold-bright: #D4A82E;
+    --ink: #1A2F2C;
+    --ink-soft: #3A4A47;
+    --muted: #6B7A78;
+    --rule: #D9D2BE;
+    --rule-soft: #ECE4D0;
+
+    --display: 'Nunito', system-ui, sans-serif;
+    --body: 'Source Serif 4', Georgia, serif;
+    --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: var(--mint); color: var(--slate-deep); }
+
+  /* === NAV === */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(250, 246, 236, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule-soft);
+    z-index: 100;
+    transition: all 0.3s ease;
+  }
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+  }
+  .logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  .logo img { height: 40px; width: auto; }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    align-items: center;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .has-dropdown {
+    position: relative;
+  }
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--cream);
+    border: 1px solid var(--rule-soft);
+    border-radius: 8px;
+    padding: 8px 0;
+    min-width: 220px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    list-style: none;
+    z-index: 100;
+  }
+  .has-dropdown:hover .dropdown {
+    display: block;
+  }
+  .dropdown li a {
+    display: block;
+    padding: 8px 20px;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+  .dropdown li a:hover {
+    color: var(--gold);
+    background: var(--cream-warm);
+  }
+  .dd-letter {
+    display: inline-block;
+    font-weight: 800;
+    font-size: 11px;
+    color: var(--gold);
+    margin-right: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* === LAYOUT === */
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
+  .wrap-narrow { max-width: 760px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 120px 0; position: relative; }
+
+  /* === HERO === */
+  .hero {
+    background: var(--slate-deep);
+    color: var(--cream);
+    padding: 200px 0 140px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(184, 229, 222, 0.12), transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--gold-bright);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(48px, 7vw, 88px);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    color: var(--cream);
+  }
+  .hero h1 em {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--mint);
+  }
+  .hero-lede {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--cream);
+    opacity: 0.88;
+    max-width: 640px;
+    margin-bottom: 56px;
+    font-weight: 400;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding-top: 40px;
+    border-top: 1px solid rgba(250, 246, 236, 0.15);
+  }
+  .hero-meta-item {
+    font-family: var(--display);
+    font-size: 14px;
+  }
+  .hero-meta-item .label {
+    color: var(--mint-dim);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .hero-meta-item .value {
+    color: var(--cream);
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  /* === JOURNEY NAV ON LEFT === */
+  .journey-marker {
+    position: sticky;
+    top: 100px;
+    float: left;
+    width: 80px;
+    margin-left: -120px;
+    z-index: 5;
+    display: none;
+  }
+  @media (min-width: 1200px) {
+    .journey-marker { display: block; }
+  }
+  .marker-num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 36px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .marker-of {
+    font-family: var(--display);
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .marker-bar {
+    margin-top: 14px;
+    height: 3px;
+    background: var(--rule);
+    position: relative;
+    border-radius: 2px;
+  }
+  .marker-bar::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+  .marker-bar.l1::after { width: 20%; }
+  .marker-bar.l2::after { width: 40%; }
+  .marker-bar.l3::after { width: 60%; }
+  .marker-bar.l4::after { width: 80%; }
+  .marker-bar.l5::after { width: 100%; }
+
+  /* === SECTION HEADINGS === */
+  .eyebrow {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(36px, 4.5vw, 56px);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--slate-deep);
+    margin-bottom: 28px;
+  }
+  .section-title em {
+    font-family: var(--body);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+  .section-lede {
+    font-size: 22px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 64px;
+    max-width: 720px;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* === BODY PROSE === */
+  .prose p {
+    font-size: 19px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    color: var(--ink);
+  }
+  .prose p.large {
+    font-size: 22px;
+    line-height: 1.55;
+  }
+  .prose strong {
+    font-weight: 600;
+    color: var(--slate-deep);
+  }
+  .prose em {
+    font-style: italic;
+  }
+
+  /* === DIVIDER === */
+  .gold-rule {
+    width: 60px;
+    height: 4px;
+    background: var(--gold);
+    margin: 0 0 48px;
+    border: none;
+  }
+
+  /* === LEVEL ONE: THE WHOLE IPO === */
+  .workstream-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    background: var(--rule-soft);
+    margin-top: 56px;
+    border: 1px solid var(--rule-soft);
+  }
+  .workstream-cell {
+    background: var(--cream);
+    padding: 36px 32px;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .workstream-cell:hover {
+    background: var(--cream-warm);
+  }
+  .workstream-cell .num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .workstream-cell h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--slate-deep);
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+  .workstream-cell p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .workstream-cell .tier {
+    position: absolute;
+    top: 36px; right: 32px;
+    font-family: var(--display);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  .tier-1 { background: #F2D7D7; color: #8B3232; }
+  .tier-2 { background: #F4E5C4; color: #6B5012; }
+  .tier-3 { background: #D6E5D6; color: #3A5A3A; }
+
+  .ws-owner {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 22px;
+    font-family: var(--display);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .ws-owner b {
+    color: var(--gold);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 10px;
+    margin-right: 6px;
+  }
+
+  .workstream-cell.is-marketing {
+    background: var(--slate-deep);
+  }
+  .workstream-cell.is-marketing:hover { background: var(--slate-deep); }
+  .workstream-cell.is-marketing h3,
+  .workstream-cell.is-marketing p { color: var(--cream); }
+  .workstream-cell.is-marketing .num { color: var(--gold-bright); }
+  .workstream-cell.is-marketing .ws-owner {
+    border-top-color: rgba(184, 229, 222, 0.2);
+    color: var(--mint-dim);
+  }
+  .workstream-cell.is-marketing .ws-owner b { color: var(--gold-bright); }
+  .marketing-tag {
+    display: inline-block;
+    font-family: var(--display);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate-deep);
+    background: var(--mint);
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  /* === LEVEL TWO: TIER POSITIONING === */
+  .tier-block {
+    background: var(--cream-warm);
+    padding: 80px 0;
+    margin: 80px 0;
+    position: relative;
+  }
+  .tier-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .tier-card {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border-top: 6px solid;
+    box-shadow: 0 1px 0 rgba(26, 47, 44, 0.04);
+  }
+  .tier-card.t1 { border-color: #8B3232; }
+  .tier-card.t2 { border-color: var(--gold); }
+  .tier-card.t3 { border-color: #5A8A5A; }
+
+  .tier-card .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .tier-card.t1 .label { color: #8B3232; }
+  .tier-card.t2 .label { color: var(--gold); }
+  .tier-card.t3 .label { color: #3A5A3A; }
+
+  .tier-card h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--slate-deep);
+    margin-bottom: 16px;
+    line-height: 1.25;
+  }
+  .tier-card p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .tier-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .tier-card li {
+    font-size: 14px;
+    color: var(--ink);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    font-family: var(--display);
+    font-weight: 600;
+  }
+  .tier-card li:last-child { border-bottom: none; }
+
+  .marketing-position-callout {
+    background: var(--slate-deep);
+    color: var(--cream);
+    border-radius: 20px;
+    padding: 56px 48px;
+    margin-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .marketing-position-callout::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(184, 229, 222, 0.1), transparent 70%);
+    pointer-events: none;
+  }
+  .marketing-position-callout .eyebrow { color: var(--gold-bright); }
+  .marketing-position-callout h3 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    color: var(--cream);
+    letter-spacing: -0.015em;
+    max-width: 720px;
+    position: relative;
+    z-index: 2;
+  }
+  .marketing-position-callout p {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--cream);
+    opacity: 0.88;
+    max-width: 680px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* === LEVEL THREE: CONDITIONS === */
+  .conditions {
+    background: var(--cream);
+  }
+  .conditions-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--rule);
+  }
+  .condition {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--rule);
+    padding-right: 32px;
+    display: flex;
+    gap: 24px;
+  }
+  .condition:nth-child(2n) {
+    padding-left: 32px;
+    padding-right: 0;
+    border-left: 1px solid var(--rule);
+  }
+  .condition .num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 50px;
+  }
+  .condition h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--slate-deep);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .condition p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  /* === LEVEL FOUR: WORKSTREAMS === */
+  .workstreams-section {
+    background: var(--slate-deep);
+    color: var(--cream);
+  }
+  .workstreams-section .eyebrow { color: var(--gold-bright); }
+  .workstreams-section .section-title { color: var(--cream); }
+  .workstreams-section .section-title em { color: var(--mint); }
+  .workstreams-section .section-lede { color: var(--mint-dim); }
+
+  .ws-list {
+    margin-top: 56px;
+    border-top: 1px solid rgba(184, 229, 222, 0.15);
+  }
+  .ws-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 200px;
+    gap: 32px;
+    align-items: start;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(184, 229, 222, 0.15);
+    text-decoration: none;
+    color: inherit;
+    transition: padding 0.2s ease;
+    cursor: pointer;
+  }
+  .ws-row:hover {
+    padding-left: 16px;
+  }
+  .ws-row:hover .ws-arrow {
+    color: var(--mint);
+    transform: translateX(8px);
+  }
+  .ws-row:hover .ws-title {
+    color: var(--mint);
+  }
+  .ws-num {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 32px;
+    color: var(--gold-bright);
+    line-height: 1;
+  }
+  .ws-body .ws-letter {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--mint-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ws-title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+  .ws-desc {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--mint-dim);
+    max-width: 580px;
+  }
+  .ws-meta {
+    text-align: right;
+    font-family: var(--display);
+    font-size: 13px;
+    color: var(--mint-dim);
+    padding-top: 8px;
+  }
+  .ws-meta .count {
+    color: var(--gold-bright);
+    font-weight: 800;
+    font-size: 22px;
+    display: block;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .ws-arrow {
+    font-family: var(--display);
+    font-size: 24px;
+    color: var(--mint-dim);
+    margin-top: 4px;
+    transition: all 0.25s ease;
+    display: inline-block;
+  }
+
+  /* === LEVEL FIVE: TASK FRAMEWORK === */
+  .tasks-section {
+    background: var(--cream-warm);
+  }
+  .tasks-explainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    margin-top: 56px;
+  }
+  .task-axis {
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 32px 28px;
+    border: 1px solid var(--rule);
+  }
+  .task-axis .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .task-axis h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--slate-deep);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .task-axis p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  /* === ABOUT / CLOSING === */
+  .closing {
+    background: var(--cream);
+    padding-bottom: 160px;
+  }
+  .closing .section-title { max-width: 720px; }
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 80px;
+    margin-top: 64px;
+  }
+  .closing-grid-left p {
+    font-size: 19px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+  .closing-grid-right {
+    background: var(--slate-deep);
+    color: var(--cream);
+    border-radius: 20px;
+    padding: 40px 32px;
+    height: fit-content;
+  }
+  .closing-grid-right .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-bright);
+    margin-bottom: 16px;
+  }
+  .closing-grid-right h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--cream);
+    margin-bottom: 20px;
+    line-height: 1.25;
+  }
+  .closing-grid-right p {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--cream);
+    opacity: 0.88;
+    margin-bottom: 28px;
+  }
+  .contact-link {
+    display: inline-block;
+    background: var(--mint);
+    color: var(--slate-deep);
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 24px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .contact-link:hover {
+    background: var(--cream);
+    color: var(--slate-deep);
+  }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--slate-deeper);
+    color: var(--cream);
+    padding: 60px 0 40px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--cream);
+    display: flex;
+    align-items: baseline;
+  }
+  .footer-logo .lo-light {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--gold-bright);
+    margin-right: 4px;
+    transform: translateY(-5px);
+    display: inline-block;
+  }
+  .footer-logo .lo-mx, .footer-logo .lo-dot { color: var(--gold-bright); }
+  .footer-meta {
+    font-family: var(--display);
+    font-size: 13px;
+    color: var(--mint-dim);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 12px 16px; gap: 12px; }
+    .logo { font-size: 19px; }
+    .wrap, .wrap-narrow { padding: 0 24px; }
+    section { padding: 80px 0; }
+    .hero { padding: 130px 0 90px; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: 0.14em; }
+    .hero-lede { font-size: 18px; }
+    .hero-meta { gap: 24px 32px; }
+    .section-lede { font-size: 19px; }
+    .prose p.large { font-size: 19px; }
+    .marketing-position-callout { padding: 36px 28px; }
+    .marketing-position-callout h3 { font-size: 24px; }
+    .workstream-grid { grid-template-columns: 1fr; }
+    .tier-cards { grid-template-columns: 1fr; }
+    .conditions-list { grid-template-columns: 1fr; }
+    .condition:nth-child(2n) { padding-left: 0; border-left: none; }
+    .ws-row { grid-template-columns: 50px 1fr; gap: 16px; }
+    .ws-meta { display: none; }
+    .tasks-explainer { grid-template-columns: 1fr; }
+    .closing-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* === REDUCED MOTION === */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <img src="../clevermx-logo.png" alt="that's clevermx." height="40">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#whole-ipo">The whole picture</a></li>
+      <li><a href="#marketing-place">Marketing's place</a></li>
+      <li class="has-dropdown">
+        <a href="#workstreams">The five workstreams</a>
+        <ul class="dropdown">
+          <li><a href="workstream-numbers.html"><span class="dd-letter">A</span>The numbers</a></li>
+          <li><a href="workstream-operations.html"><span class="dd-letter">B</span>Operations spine</a></li>
+          <li><a href="workstream-narrative.html"><span class="dd-letter">C</span>Narrative</a></li>
+          <li><a href="workstream-alignment.html"><span class="dd-letter">D</span>Sales and marketing</a></li>
+          <li><a href="workstream-team.html"><span class="dd-letter">E</span>Team</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-eyebrow">Marketing operations · IPO readiness · Transaction preparation</div>
+    <h1>Marketing operations<br>for <em>serious</em> moments.</h1>
+    <p class="hero-lede">
+      Some moments in a business demand more of marketing than business-as-usual. An IPO. A transaction. A turnaround. This is a working guide to what marketing has to get right when the scrutiny is real, built around the way an IPO actually examines a business.
+    </p>
+  </div>
+</header>
+
+<!-- ============== LEVEL 1: THE WHOLE IPO ============== -->
+<section id="whole-ipo">
+  <div class="wrap">
+    <div class="journey-marker">
+      <div class="marker-num">01</div>
+      <div class="marker-of">of five</div>
+      <div class="marker-bar l1"></div>
+    </div>
+    <div class="eyebrow">Level one · The whole picture</div>
+    <h1 class="section-title">An IPO is <em>not</em> a marketing project.</h1>
+    <p class="section-lede">
+      It is the most thorough public examination of every part of a business. Eight workstreams run in parallel. Each has standards. Each has scrutiny. Marketing is one of them.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="prose">
+      <p class="large">
+        Twelve to twenty-four months before a company lists on the London Stock Exchange, the work begins across eight distinct workstreams. Some can stop the listing on their own. Others determine what investors pay. Knowing which is which is the foundation of everything that follows.
+      </p>
+    </div>
+
+    <div class="workstream-grid">
+      <div class="workstream-cell">
+        <span class="tier tier-1">Tier 1</span>
+        <span class="num">01</span>
+        <h3>Finance and accounting</h3>
+        <p>Three years of audited financials, working capital, internal close discipline. Without this there is no prospectus.</p>
+        <div class="ws-owner">
+          <span><b>Sponsor</b> CFO</span>
+          <span><b>SME</b> Reporting accountants</span>
+        </div>
+      </div>
+      <div class="workstream-cell">
+        <span class="tier tier-1">Tier 1</span>
+        <span class="num">02</span>
+        <h3>Legal and corporate</h3>
+        <p>Prospectus verification, material contracts, clean corporate structure. The sponsor cannot certify without this complete.</p>
+        <div class="ws-owner">
+          <span><b>Sponsor</b> General Counsel</span>
+          <span><b>SME</b> Corporate law firm</span>
+        </div>
+      </div>
+      <div class="workstream-cell">
+        <span class="tier tier-1">Tier 1</span>
+        <span class="num">03</span>
+        <h3>Governance and board</h3>
+        <p>Board composition, committees, code compliance. Listing eligibility depends on this being right.</p>
+        <div class="ws-owner">
+          <span><b>Sponsor</b> Chair</span>
+          <span><b>SME</b> Company secretary</span>
+        </div>
+      </div>
+      <div class="workstream-cell">
+        <span class="tier tier-2">Tier 2</span>
+        <span class="num">04</span>
+        <h3>Internal controls and risk</h3>
+        <p>Documented control framework, risk register, audit trail. Weak controls knock the valuation hard.</p>
+        <div class="ws-owner">
+          <span><b>Sponsor</b> CFO</span>
+          <span><b>SME</b> Internal audit</span>
+        </div>
+      </div>
+      <div class="workstream-cell">
+        <span class="tier tier-2">Tier 2</span>
+        <span class="num">05</span>
+        <h3>Technology and systems</h3>
+        <p>ERP, security, data lineage, business continuity. The infrastructure that makes everything else reliable.</p>
+        <div class="ws-owner">
+          <span><b>Sponsor</b> CTO</span>
+          <span><b>SME</b> IT and security leads</span>
+        </div>
+      </div>
+      <div class="workstream-cell is-marketing">
+        <span class="tier tier-2">Tier 2</span>
+        <span class="num">06</span>
+        <span class="marketing-tag">Marketing lives here</span>
+        <h3>Commercial readiness</h3>
+        <p>The equity story, market positioning, customer evidence, and the marketing numbers underneath them. This is the one workstream in the whole IPO where marketing is examined directly, and the only one it can lead.</p>
+        <div class="ws-owner">
+          <span><b>Sponsor</b> CRO</span>
+          <span><b>SME</b> Marketing leadership</span>
+        </div>
+      </div>
+      <div class="workstream-cell">
+        <span class="tier tier-3">Tier 3</span>
+        <span class="num">07</span>
+        <h3>People and remuneration</h3>
+        <p>Executive contracts, LTIPs, succession, key person risk. Important but largely recoverable late.</p>
+        <div class="ws-owner">
+          <span><b>Sponsor</b> CHRO</span>
+          <span><b>SME</b> Reward consultants</span>
+        </div>
+      </div>
+      <div class="workstream-cell">
+        <span class="tier tier-3">Tier 3</span>
+        <span class="num">08</span>
+        <h3>ESG and sustainability</h3>
+        <p>TCFD disclosure, SECR, modern slavery. Increasingly material but rarely deal-breaking on its own.</p>
+        <div class="ws-owner">
+          <span><b>Sponsor</b> Company secretary</span>
+          <span><b>SME</b> ESG advisers</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== LEVEL 2: MARKETING'S PLACE ============== -->
+<section id="marketing-place" class="tier-block">
+  <div class="wrap">
+    <div class="journey-marker">
+      <div class="marker-num">02</div>
+      <div class="marker-of">of five</div>
+      <div class="marker-bar l2"></div>
+    </div>
+    <div class="eyebrow">Level two · Where marketing sits</div>
+    <h1 class="section-title">Marketing is <em>tier two,</em> with tier one consequences.</h1>
+    <hr class="gold-rule">
+
+    <div class="prose">
+      <p class="large">
+        Marketing is rarely the workstream that stops a listing. Finance, legal and governance failures do that. But marketing's operational quality directly determines what the finance team can credibly disclose, and marketing's narrative work determines what investors pay. Both flow back into the things that genuinely matter.
+      </p>
+    </div>
+
+    <div class="tier-cards">
+      <div class="tier-card t1">
+        <div class="label">Tier one</div>
+        <h4>Deal-breakers</h4>
+        <p>Gaps here mean the IPO is withdrawn or lists at a heavy discount.</p>
+        <ul>
+          <li>Finance and accounting</li>
+          <li>Legal and corporate</li>
+          <li>Governance and board</li>
+        </ul>
+      </div>
+      <div class="tier-card t2">
+        <div class="label">Tier two, <em>marketing is here</em></div>
+        <h4>Valuation-determining</h4>
+        <p>Gaps don't stop the listing but knock 20-40% off proceeds. Real money.</p>
+        <ul>
+          <li>Internal controls and risk</li>
+          <li>Technology and systems</li>
+          <li>Commercial readiness <em>(includes marketing)</em></li>
+        </ul>
+      </div>
+      <div class="tier-card t3">
+        <div class="label">Tier three</div>
+        <h4>Important but recoverable</h4>
+        <p>Material but addressable in the final months if needed.</p>
+        <ul>
+          <li>People and remuneration</li>
+          <li>ESG and sustainability</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="marketing-position-callout">
+      <div class="eyebrow">The honest position</div>
+      <h3>Marketing won't stop the IPO. Marketing's operational quality will determine what your finance team can disclose with confidence.</h3>
+      <p>
+        That distinction matters. The CRO and CFO don't need to be sold on marketing's importance in the abstract. They need to understand that marketing's numbers feed finance's audited KPI disclosures. If those numbers don't reconcile, the disclosed KPIs get softer, investor confidence drops, and the multiple suffers. This is where marketing earns its seat.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============== LEVEL 3: CONDITIONS ============== -->
+<section id="conditions" class="conditions">
+  <div class="wrap">
+    <div class="journey-marker">
+      <div class="marker-num">03</div>
+      <div class="marker-of">of five</div>
+      <div class="marker-bar l3"></div>
+    </div>
+    <div class="eyebrow">Level three · What needs to be true</div>
+    <h1 class="section-title">The conditions <em>that have to hold.</em></h1>
+    <p class="section-lede">
+      Across every successful pre-IPO marketing function, the same conditions are present. These are not features. They are the standards a marketing function meets before it walks into formal scrutiny.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="conditions-list">
+      <div class="condition">
+        <div class="num">01</div>
+        <div>
+          <h4>One number, one source</h4>
+          <p>Marketing and finance produce the same answer to the same question. CAC, LTV, pipeline, attribution. No parallel sets of numbers.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">02</div>
+        <div>
+          <h4>Eight quarters of clean data</h4>
+          <p>Two years minimum of methodologically consistent data. Reporting accountants and bookrunners look at trend reliability.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">03</div>
+        <div>
+          <h4>Documented attribution</h4>
+          <p>Methodology writable in two pages. Consistent application. Reconciled with audited financials at month-end close.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">04</div>
+        <div>
+          <h4>Defensible unit economics</h4>
+          <p>CAC fully loaded, LTV from real retention curves, payback period within benchmark. Methodology survives challenge.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">05</div>
+        <div>
+          <h4>Sales-marketing alignment</h4>
+          <p>Shared definitions in the CRM, not just aligned ones. One pipeline number. Documented service-level agreements.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">06</div>
+        <div>
+          <h4>Equity story discipline</h4>
+          <p>Marketing-owned narrative aligned with the financial story and operating reality. Tested before bookrunners arrive.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">07</div>
+        <div>
+          <h4>MarTech under five percent</h4>
+          <p>Marketing technology spend under 5% of marketing budget. Architecture documented. Data lineage traceable.</p>
+        </div>
+      </div>
+      <div class="condition">
+        <div class="num">08</div>
+        <div>
+          <h4>Team capable of public life</h4>
+          <p>Marketing operations leadership in place. Succession documented. Senior team ready for investor interactions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== LEVEL 4: WORKSTREAMS ============== -->
+<section id="workstreams" class="workstreams-section">
+  <div class="wrap">
+    <div class="journey-marker">
+      <div class="marker-num">04</div>
+      <div class="marker-of">of five</div>
+      <div class="marker-bar l4"></div>
+    </div>
+    <div class="eyebrow">Level four · The five marketing workstreams</div>
+    <h1 class="section-title">Five workstreams. <em>One methodology.</em></h1>
+    <p class="section-lede">
+      Inside the commercial readiness umbrella, marketing's contribution divides into five workstreams. Each has its own evidence requirements, timelines, and validation routes. Treat them as separate design problems.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="ws-list">
+      <a href="workstream-numbers.html" class="ws-row">
+        <div class="ws-num">A</div>
+        <div class="ws-body">
+          <div class="ws-letter">Workstream A</div>
+          <div class="ws-title">The numbers</div>
+          <p class="ws-desc">CAC, LTV, payback, attribution, marketing-sourced revenue. The data layer that feeds finance's disclosed KPIs and survives the reporting accountants' challenge.</p>
+        </div>
+        <div class="ws-meta">
+          <span class="count">8</span>
+          quarters of data
+          <div class="ws-arrow">→</div>
+        </div>
+      </a>
+      <a href="workstream-operations.html" class="ws-row">
+        <div class="ws-num">B</div>
+        <div class="ws-body">
+          <div class="ws-letter">Workstream B</div>
+          <div class="ws-title">The operations spine</div>
+          <p class="ws-desc">Tech stack, data lineage, monthly close cadence, governance. The infrastructure that makes everything else reliable and the numbers traceable.</p>
+        </div>
+        <div class="ws-meta">
+          <span class="count">12</span>
+          months operating
+          <div class="ws-arrow">→</div>
+        </div>
+      </a>
+      <a href="workstream-narrative.html" class="ws-row">
+        <div class="ws-num">C</div>
+        <div class="ws-body">
+          <div class="ws-letter">Workstream C</div>
+          <div class="ws-title">The narrative</div>
+          <p class="ws-desc">Equity story, market positioning, customer evidence. The words that go into the prospectus, the analyst presentation, and the roadshow deck.</p>
+        </div>
+        <div class="ws-meta">
+          <span class="count">16</span>
+          weeks to build
+          <div class="ws-arrow">→</div>
+        </div>
+      </a>
+      <a href="workstream-alignment.html" class="ws-row">
+        <div class="ws-num">D</div>
+        <div class="ws-body">
+          <div class="ws-letter">Workstream D</div>
+          <div class="ws-title">Sales and marketing alignment</div>
+          <p class="ws-desc">Shared definitions, joint pipeline, documented handoffs. The structural work that turns marketing from a sales support function into a co-owner of growth.</p>
+        </div>
+        <div class="ws-meta">
+          <span class="count">4</span>
+          quarters operating
+          <div class="ws-arrow">→</div>
+        </div>
+      </a>
+      <a href="workstream-team.html" class="ws-row" style="border-bottom: none;">
+        <div class="ws-num">E</div>
+        <div class="ws-body">
+          <div class="ws-letter">Workstream E</div>
+          <div class="ws-title">Team and capability</div>
+          <p class="ws-desc">Marketing operations leadership, succession, public-company readiness. Honest assessment of whether the team that built marketing can take it through scrutiny.</p>
+        </div>
+        <div class="ws-meta">
+          <span class="count">12</span>
+          months ahead
+          <div class="ws-arrow">→</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== LEVEL 5: TASK FRAMEWORK ============== -->
+<section id="tasks" class="tasks-section">
+  <div class="wrap">
+    <div class="journey-marker">
+      <div class="marker-num">05</div>
+      <div class="marker-of">of five</div>
+      <div class="marker-bar l5"></div>
+    </div>
+    <div class="eyebrow">Level five · How the work gets done</div>
+    <h1 class="section-title">Every task answers <em>three questions.</em></h1>
+    <p class="section-lede">
+      Inside each workstream, the work breaks down into specific tasks. The methodology behind those tasks is the same in every case. The detailed playbook stays off the page. The framework is here.
+    </p>
+    <hr class="gold-rule">
+
+    <div class="prose">
+      <p class="large">
+        Each task in each workstream is designed to answer three questions. What artefact has to exist by the time bookrunners arrive. What evidence proves it. Who has signed off on it and when. Get those three things right for every task and the marketing function survives any scrutiny it meets.
+      </p>
+    </div>
+
+    <div class="tasks-explainer">
+      <div class="task-axis">
+        <div class="label">Question one</div>
+        <h4>What artefact has to exist?</h4>
+        <p>Every task produces something concrete. A methodology document. A reconciled report. A trained team. Not a vague capability. A specific artefact someone could pull out of a drawer.</p>
+      </div>
+      <div class="task-axis">
+        <div class="label">Question two</div>
+        <h4>What evidence proves it?</h4>
+        <p>Data with documented lineage. Working papers showing the calculation. Sign-off trails. Audit logs. Evidence that survives the bookrunners' challenge, not internal-only assurance.</p>
+      </div>
+      <div class="task-axis">
+        <div class="label">Question three</div>
+        <h4>Who owns it, and what comes next?</h4>
+        <p>Ownership is a person, not a function. Status is current. Dependencies are visible. The next step is unambiguous. No task drifts because no task is unowned.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
+      </div>
+      <div class="footer-meta">
+        Marketing operations, IPO readiness, transaction preparation · United Kingdom
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>

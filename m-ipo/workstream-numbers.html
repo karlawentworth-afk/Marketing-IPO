@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workstream D &middot; Sales and marketing alignment &middot; that's clevermx.</title>
-<meta name="description" content="Workstream D of marketing's pre-IPO readiness: shared definitions, joint pipeline and documented handoffs that turn marketing into a co-owner of growth.">
+<meta name="robots" content="noindex, nofollow">
+<title>Workstream A · The numbers · that's clevermx.</title>
+<meta name="description" content="Workstream A of marketing's pre-IPO readiness: CAC, LTV, payback, attribution and marketing-sourced revenue. The data layer that feeds finance's disclosed KPIs and survives the reporting accountants' challenge.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,16 +72,6 @@
     align-items: center;
   }
   .logo img { height: 40px; width: auto; }
-  .logo .lo-light {
-    font-weight: 400;
-    font-size: 14px;
-    color: var(--gold);
-    margin-right: 4px;
-    transform: translateY(-6px);
-    display: inline-block;
-  }
-  .logo .lo-mx { color: var(--gold); }
-  .logo .lo-dot { color: var(--gold); }
 
   .nav-links {
     display: flex;
@@ -728,10 +719,13 @@
     gap: 24px;
   }
   .footer-logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--cream);
     display: flex;
-    align-items: center;
+    align-items: baseline;
   }
-  .footer-logo img { height: 32px; width: auto; filter: brightness(0) invert(1); }
   .footer-logo .lo-light {
     font-weight: 400;
     font-size: 12px;
@@ -749,8 +743,8 @@
 
   /* === RESPONSIVE === */
   @media (max-width: 900px) {
-    .nav-inner { padding: 14px 20px; gap: 16px; }
-    .logo img { height: 32px; }
+    .nav-inner { padding: 12px 16px; gap: 12px; }
+    .logo { font-size: 19px; }
     .wrap, .wrap-narrow { padding: 0 24px; }
     section { padding: 80px 0; }
     .hero { padding: 120px 0 80px; }
@@ -780,54 +774,6 @@
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; animation: none !important; }
   }
-
-  /* === STANDARD CARDS (qualitative gold standard) === */
-  .standard-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 56px;
-  }
-  .standard-card {
-    background: var(--cream);
-    border: 1px solid var(--rule-soft);
-    border-top: 6px solid var(--gold);
-    border-radius: 16px;
-    padding: 32px 28px;
-    box-shadow: 0 1px 0 rgba(26, 47, 44, 0.04);
-  }
-  .standard-card .label {
-    font-family: var(--display);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-  .standard-card h4 {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 20px;
-    color: var(--slate-deep);
-    margin-bottom: 14px;
-    line-height: 1.25;
-  }
-  .standard-card p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-  }
-  .standard-note {
-    font-family: var(--display);
-    font-size: 14px;
-    color: var(--muted);
-    margin-top: 24px;
-    font-weight: 600;
-  }
-  @media (max-width: 900px) {
-    .standard-cards { grid-template-columns: 1fr; }
-  }
 </style>
 </head>
 <body>
@@ -835,7 +781,7 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="logo">
-      <img src="clevermx-logo.png" alt="that's clevermx." height="40">
+      <img src="../clevermx-logo.png" alt="that's clevermx." height="40">
     </a>
     <ul class="nav-links">
       <li><a href="index.html#whole-ipo">The whole picture</a></li>
@@ -856,342 +802,317 @@
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <a href="index.html#workstreams" class="back-link"><span class="arrow">&larr;</span> The five marketing workstreams</a>
-    <div class="hero-eyebrow"><span class="letter">D</span> Workstream D &middot; Commercial readiness &middot; Tier two</div>
-    <h1>Sales and marketing <em>alignment.</em></h1>
-    <p class="hero-lede">Shared definitions, joint pipeline, documented handoffs. The structural work that turns marketing from a sales support function into a co-owner of growth. In a sales-led business this is the hardest of the five, and the most visible when it is missing.</p>
+    <a href="index.html#workstreams" class="back-link"><span class="arrow">←</span> The five marketing workstreams</a>
+    <div class="hero-eyebrow"><span class="letter">A</span> Workstream A · Commercial readiness · Tier two</div>
+    <h1>The <em>numbers.</em></h1>
+    <p class="hero-lede">
+      CAC, LTV, payback, attribution, marketing-sourced revenue. This is the data layer that feeds finance's disclosed KPIs and has to hold up when the reporting accountants pull on it. It is also where most marketing functions discover their numbers were never built to be looked at this closely.
+    </p>
     <div class="hero-meta">
       <div class="hero-meta-item">
-        <span class="label">What it fixes</span>
-        <span class="value">Two functions, two sets of numbers</span>
+        <span class="label">What it feeds</span>
+        <span class="value">Finance's audited KPI disclosures</span>
       </div>
       <div class="hero-meta-item">
-        <span class="label">Why it matters</span>
-        <span class="value">Pipeline is a disclosed story</span>
+        <span class="label">Evidence floor</span>
+        <span class="value">Eight quarters of consistent data</span>
       </div>
       <div class="hero-meta-item">
         <span class="label">The real test</span>
-        <span class="value">Do sales and marketing agree on one number</span>
+        <span class="value">Does it reconcile to the audited P&amp;L</span>
       </div>
     </div>
   </div>
 </header>
 
+<!-- ============== GOLD STANDARD ============== -->
 <section class="benchmarks">
   <div class="wrap">
     <div class="eyebrow">What good looks like</div>
-    <h1 class="section-title">Two functions, <em>one number.</em></h1>
-    <p class="section-lede">The gold standard is not warmth between teams. It is structural: shared definitions the system enforces, one pipeline both functions trust, and handoffs that work on a bad week as well as a good one.</p>
+    <h1 class="section-title">Numbers that <em>reconcile,</em> not numbers that impress.</h1>
+    <p class="section-lede">
+      The gold standard here is boring on purpose. Marketing and finance answer the same question the same way, every headline figure traces back to a system someone can open, and the unit economics survive a stranger asking how they were built.
+    </p>
     <hr class="gold-rule">
-    <div class="standard-cards">
-      <div class="standard-card">
-        <div class="label">One pipeline</div>
-        <h4>One definition</h4>
-        <p>Sales and marketing read the same number off the same system and mean the same thing by it. The arguments about whose number is right simply stop.</p>
+
+    <div class="prose">
+      <p class="large">
+        Before an investor pays a multiple, someone independent checks whether your growth is efficient or just expensive. They do it with four or five numbers that have become the shared language of the market. You do not have to hit every benchmark. You do have to know where you sit against each one, and be able to explain it without flinching.
+      </p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="figure">3:1</div>
+        <h4>LTV to CAC</h4>
+        <p>The ratio investors reach for first. Below it and you are buying growth inefficiently. Far above it and you are probably underinvesting.</p>
       </div>
-      <div class="standard-card">
-        <div class="label">Written handoffs</div>
-        <h4>Not folklore</h4>
-        <p>What counts as a lead, when it passes, and what happens when it bounces back, all defined in the CRM rather than carried in someone&rsquo;s head.</p>
+      <div class="stat-cell">
+        <div class="figure">12-18<span> mo</span></div>
+        <h4>CAC payback</h4>
+        <p>The band the market expects a B2B business to recover acquisition cost in. Drift past it and the growth model gets questioned.</p>
       </div>
-      <div class="standard-card">
-        <div class="label">Shared accountability</div>
-        <h4>For revenue, not activity</h4>
-        <p>Marketing is measured on contribution to closed-won, not on activity nobody downstream can feel. The two functions own the number together.</p>
+      <div class="stat-cell">
+        <div class="figure">40<span>+</span></div>
+        <h4>Rule of 40</h4>
+        <p>Growth rate plus profit margin. The single figure that frames whether your growth is worth what it costs to buy.</p>
+      </div>
+      <div class="stat-cell">
+        <div class="figure">7.7<span>%</span></div>
+        <h4>Marketing as % of revenue</h4>
+        <p>Gartner's cross-industry average. A sanity check on whether spend is in a normal range, never a target to chase.</p>
       </div>
     </div>
-    <p class="standard-note">In a sales-led company, alignment is where marketing earns its seat or confirms it never had one.</p>
+    <p class="benchmark-note">The numbers move by sector and stage. The discipline of knowing yours, and defending it, does not.</p>
   </div>
 </section>
 
+<!-- ============== CONDITIONS ============== -->
 <section class="conditions">
   <div class="wrap">
     <div class="eyebrow">What has to be true</div>
-    <h1 class="section-title">Four conditions alignment <em>has to meet.</em></h1>
-    <p class="section-lede">Everyone claims their teams are aligned. Far fewer can prove it. These are the conditions that turn a claim into something diligence can verify.</p>
+    <h1 class="section-title">Four conditions the numbers <em>have to meet.</em></h1>
+    <p class="section-lede">
+      These are not nice-to-haves. They are the state a marketing function's data has to be in before it walks into formal scrutiny. Miss one and the whole workstream is exposed.
+    </p>
     <hr class="gold-rule">
+
     <div class="conditions-list">
       <div class="condition">
         <div class="num">01</div>
         <div>
-          <h4>Shared definitions in the CRM</h4>
-          <p>Not aligned definitions, shared ones. Lead, MQL, SQL and opportunity mean one thing, and the system enforces it rather than relying on goodwill.</p>
+          <h4>One number, one source</h4>
+          <p>Marketing and finance produce the same answer to the same question. CAC, LTV, pipeline, attribution. No second set of numbers living in a deck somewhere.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">02</div>
         <div>
-          <h4>One pipeline number</h4>
-          <p>Sales and marketing stop bringing different totals to the same meeting. There is one number, from one source, that both functions stand behind.</p>
+          <h4>Eight quarters of clean data</h4>
+          <p>Two years minimum, built on one consistent methodology. Reporting accountants and bookrunners are not checking a snapshot. They are checking whether the trend can be trusted.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">03</div>
         <div>
-          <h4>Documented service-level agreements</h4>
-          <p>Handoffs, response times and what happens when they slip, all in writing and signed by both leaders, not assumed and resented.</p>
+          <h4>Documented attribution</h4>
+          <p>The method is written down, short enough to read in one sitting, applied the same way every month, and reconciled against the audited financials at close.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">04</div>
         <div>
-          <h4>Joint accountability</h4>
-          <p>Marketing carries a number the sales leader recognises, and the two functions are measured together rather than pointing at each other.</p>
+          <h4>Defensible unit economics</h4>
+          <p>CAC carries its full cost, LTV comes off real retention curves rather than hope, payback sits within benchmark. The method survives someone competent pushing on it.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ============== ARTEFACTS ============== -->
 <section class="artefacts">
   <div class="wrap">
     <div class="eyebrow">What has to exist</div>
-    <h1 class="section-title">Six things that prove it is <em>structural, not seasonal.</em></h1>
-    <p class="section-lede">Alignment that lives in a quarterly offsite does not survive diligence. These are the artefacts that show it is built into how the two functions actually operate.</p>
+    <h1 class="section-title">Things you could <em>pull out of a drawer.</em></h1>
+    <p class="section-lede">
+      A capability you can describe is not the same as an artefact someone can inspect. By the time bookrunners arrive, the numbers workstream has to have produced concrete, finished things. These are them.
+    </p>
     <hr class="gold-rule">
+
     <div class="artefact-list">
       <div class="artefact-row">
         <div class="artefact-mark">01</div>
         <div>
-          <h4>Shared definitions document</h4>
-          <p>Lead, MQL, SQL, opportunity and pipeline defined once, agreed by both functions and enforced in the CRM.</p>
+          <h4>KPI definitions register</h4>
+          <p>Every reported marketing number, defined once, with its owning source system and the calculation behind it. The document that ends the argument about whose figure is right.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">02</div>
         <div>
-          <h4>Pipeline reconciliation</h4>
-          <p>The sales view and the marketing view tied to a single source, so one number survives contact with both teams.</p>
+          <h4>Unit economics methodology</h4>
+          <p>Fully-loaded CAC, LTV from actual retention, payback period. Written so a reporting accountant can follow every step without a meeting to explain it.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">03</div>
         <div>
-          <h4>Service-level agreements</h4>
-          <p>Handoff rules, response times and escalation, signed by both the sales and marketing leaders.</p>
+          <h4>Attribution methodology document</h4>
+          <p>The model, its rules, and its honest limits, set out in two pages. Long enough to be real, short enough that nobody can claim it is unknowable.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">04</div>
         <div>
-          <h4>Joint pipeline dashboard</h4>
-          <p>One view both functions trust and actually use, rather than two dashboards quietly disagreeing.</p>
+          <h4>Marketing-sourced revenue reconciliation</h4>
+          <p>Marketing's revenue claim tied back to closed-won in the CRM and to the audited P&amp;L, refreshed at month-end. The bridge between what marketing says it did and what finance can sign.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">05</div>
         <div>
-          <h4>Lead-to-revenue process map</h4>
-          <p>The full journey from first touch to closed-won, with a named owner at every stage.</p>
+          <h4>Eight-quarter restated dataset</h4>
+          <p>Two years of history rebuilt onto the single agreed methodology, with every restatement documented and dated. The proof that the trend is real and not redrawn to flatter.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">06</div>
         <div>
-          <h4>Alignment cadence record</h4>
-          <p>The standing meeting and the decisions it makes, the routine that keeps alignment true as the business changes.</p>
+          <h4>Monthly close pack</h4>
+          <p>The working papers and sign-offs that show the numbers were produced through a process, not assembled the night before. The thing that turns a figure into evidence.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ============== EVIDENCE QUANTUM ============== -->
 <section class="evidence">
   <div class="wrap">
     <div class="eyebrow">Evidence quantum</div>
-    <h1 class="section-title">Alignment is proven in <em>the same number twice.</em></h1>
-    <p class="section-lede">The test of alignment is brutally simple: ask both functions the same question and see if you get the same answer. Every claim here has to survive that.</p>
+    <h1 class="section-title">Evidence is what survives the <em>challenge.</em></h1>
+    <p class="section-lede">
+      A number existing is not the same as a number being provable. Evidence quantum is the weight and kind of proof each claim has to carry before it is allowed into a disclosure. Here is what each claim actually costs to make.
+    </p>
     <hr class="gold-rule">
+
     <div class="claim-list">
       <div class="claim-row">
         <div class="claim-said">
           <span class="who">What marketing says</span>
-          &ldquo;Sales and marketing are aligned.&rdquo;
+          "Our CAC is X."
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          A shared definitions document enforced in the CRM, not a workshop everyone nodded through and has since quietly forgotten.
+          A fully-loaded cost build that includes the cost most people leave out, extracted from the source systems, broken out month by month, and reconciled to the ledger. Not a media-spend figure wearing a CAC label.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          &ldquo;We have one pipeline number.&rdquo;
+          "Marketing sourced Y of revenue."
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          The same total in both functions&rsquo; reporting, reconciled to one source, rather than two confident numbers that happen to differ.
+          Opportunity-level data with documented attribution rules, tied to closed-won in the CRM and through to the audited P&amp;L. The rules have to be the same ones used last quarter and the quarter before.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          &ldquo;Handoffs work.&rdquo;
+          "Payback is Z months."
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          Written SLAs with response times that are actually met, and a log of what happens when they are not, instead of mutual blame.
+          Cohort-level retention behaviour, not a single blended assumption applied across everyone. The shape of the curve is the argument, and the curve has to come from real data.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          &ldquo;Marketing contributes to revenue.&rdquo;
+          "The trend is reliable."
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          Marketing&rsquo;s number tied to closed-won and agreed by the sales leader, not a contribution figure marketing asserts on its own.
+          Eight quarters built on one methodology, with every restatement logged and dated. If the method changed halfway through, the trend is decoration, and a good adviser will say so.
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ============== TASKS ============== -->
 <section class="tasks">
   <div class="wrap">
-    <div class="eyebrow">The work, named</div>
-    <h1 class="section-title">Seven tasks. <em>The playbook stays in the room.</em></h1>
-    <p class="section-lede">The tasks that build alignment are named here in full. How each one is actually done, the definition work, the CRM enforcement, the negotiation between two proud functions, is what an engagement is for.</p>
+    <div class="eyebrow">How the work gets done</div>
+    <h1 class="section-title">The tasks, <em>named in full.</em></h1>
+    <p class="section-lede">
+      This is the methodology, not the method. Every task in the numbers workstream is named here. How each one is actually done, the models, the allocation logic, the order of operations, is the work itself, and it stays off the page.
+    </p>
     <hr class="gold-rule">
+
     <div class="task-list">
       <div class="task-row">
         <div class="task-num">1</div>
         <div>
-          <h4>Agree shared definitions and enforce them in the CRM</h4>
-          <p>Settle what every pipeline term means, get both functions to own it, and make the system hold the line.</p>
+          <h4>Define the numbers once</h4>
+          <p>Agree a single definition and a single owning source for every reported marketing figure, signed off by finance, not just by marketing.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Definitions document</span>
-            <span class="chip"><b>Evidence</b>CRM enforcement</span>
-            <span class="chip"><b>Owner</b>Marketing ops with sales ops</span>
+            <span class="chip"><b>Artefact</b>KPI definitions register</span>
+            <span class="chip"><b>Evidence</b>Source mapping per metric</span>
+            <span class="chip"><b>Owner</b>Marketing ops, signed by finance</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">2</div>
         <div>
-          <h4>Reconcile to one pipeline number</h4>
-          <p>Tie the sales and marketing views to a single source so one number leaves the building.</p>
+          <h4>Rebuild CAC fully loaded</h4>
+          <p>Move from a spend-based number to a cost-based one that carries everything it should, so the figure stops shrinking the moment someone looks under it.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Pipeline reconciliation</span>
-            <span class="chip"><b>Evidence</b>Single-source tie-out</span>
-            <span class="chip"><b>Owner</b>Marketing ops with sales ops</span>
+            <span class="chip"><b>Artefact</b>Unit economics methodology</span>
+            <span class="chip"><b>Evidence</b>Cost build, ledger-reconciled</span>
+            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">3</div>
         <div>
-          <h4>Write the service-level agreements</h4>
-          <p>Define the handoffs, response times and escalation, and get both leaders to sign.</p>
+          <h4>Derive LTV from real retention</h4>
+          <p>Replace the assumed lifetime value with one built off actual cohort behaviour, so the most quoted number in the deck is also the most defensible.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Signed SLAs</span>
-            <span class="chip"><b>Evidence</b>Both leaders signed</span>
-            <span class="chip"><b>Owner</b>Marketing and sales leadership</span>
+            <span class="chip"><b>Artefact</b>Cohort LTV model</span>
+            <span class="chip"><b>Evidence</b>Retention curves from source data</span>
+            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">4</div>
         <div>
-          <h4>Build the joint pipeline dashboard</h4>
-          <p>Create the one shared view both functions use, replacing the duelling dashboards.</p>
+          <h4>Establish and reconcile marketing-sourced revenue</h4>
+          <p>Stand up the bridge from marketing activity to closed-won revenue to the audited P&amp;L, and run it every month so it is never a one-off heroic effort.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Shared dashboard</span>
-            <span class="chip"><b>Evidence</b>Used by both functions</span>
-            <span class="chip"><b>Owner</b>Marketing ops with sales ops</span>
+            <span class="chip"><b>Artefact</b>Revenue reconciliation</span>
+            <span class="chip"><b>Evidence</b>CRM to P&amp;L tie-out</span>
+            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">5</div>
         <div>
-          <h4>Map lead to revenue with owners</h4>
-          <p>Lay out the full journey with a named owner at every stage, so nothing falls between the teams.</p>
+          <h4>Document attribution to a two-page standard</h4>
+          <p>Write the model down properly: what it does, what it cannot do, and why it is the right call. Short, honest, and the same every month.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Process map</span>
-            <span class="chip"><b>Evidence</b>Owner at each stage</span>
-            <span class="chip"><b>Owner</b>Marketing ops with sales ops</span>
+            <span class="chip"><b>Artefact</b>Attribution methodology</span>
+            <span class="chip"><b>Evidence</b>Consistent monthly application</span>
+            <span class="chip"><b>Owner</b>Marketing ops</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">6</div>
         <div>
-          <h4>Establish the alignment cadence</h4>
-          <p>Put a standing rhythm in place that keeps definitions and numbers true as the business shifts.</p>
+          <h4>Restate eight quarters onto one methodology</h4>
+          <p>Rebuild two years of history so the trend is consistent end to end, with every adjustment logged. This is the slow task, and the one that cannot be done in a hurry at the end.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Cadence and decisions log</span>
-            <span class="chip"><b>Evidence</b>Standing meeting record</span>
-            <span class="chip"><b>Owner</b>Marketing and sales leadership</span>
+            <span class="chip"><b>Artefact</b>Restated dataset</span>
+            <span class="chip"><b>Evidence</b>Dated restatement log</span>
+            <span class="chip"><b>Owner</b>Marketing ops</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">7</div>
         <div>
-          <h4>Tie marketing to closed-won</h4>
-          <p>Build the contribution model that the sales leader recognises, so marketing&rsquo;s number is shared, not asserted.</p>
+          <h4>Stand up the monthly close</h4>
+          <p>Put the numbers on a repeatable monthly rhythm with working papers and sign-offs, so the data stays true between now and the listing rather than going stale.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Contribution model</span>
-            <span class="chip"><b>Evidence</b>Agreed by sales leader</span>
-            <span class="chip"><b>Owner</b>Marketing with finance</span>
+            <span class="chip"><b>Artefact</b>Monthly close pack</span>
+            <span class="chip"><b>Evidence</b>Working papers and sign-off trail</span>
+            <span class="chip"><b>Owner</b>Marketing ops, reviewed by finance</span>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="engagement-callout">
-      <div class="label">Where an engagement comes in</div>
-      <p>Naming the tasks is the easy part. The work is in the room: getting two functions that have counted things their own way for years to agree on one set of definitions and live by them. That is as much negotiation as it is process, and it is what clevermx is built to lead, with both leaders at the table and the listing date concentrating minds.</p>
-    </div>
-  </div>
-</section>
-
-<section class="ws-pagination">
-  <div class="wrap">
-    <div class="eyebrow">The five marketing workstreams</div>
-    <div class="ws-nav-grid">
-      <a href="workstream-numbers.html" class="ws-nav-item">
-        <div class="ws-nav-letter">A</div>
-        <div class="ws-nav-name">The numbers</div>
-        <span class="ws-nav-tag">Unit economics</span>
-      </a>
-      <a href="workstream-operations.html" class="ws-nav-item">
-        <div class="ws-nav-letter">B</div>
-        <div class="ws-nav-name">The operations spine</div>
-        <span class="ws-nav-tag">Stack, lineage, close</span>
-      </a>
-      <a href="workstream-narrative.html" class="ws-nav-item">
-        <div class="ws-nav-letter">C</div>
-        <div class="ws-nav-name">The narrative</div>
-        <span class="ws-nav-tag">The equity story</span>
-      </a>
-      <a href="workstream-alignment.html" class="ws-nav-item current">
-        <div class="ws-nav-letter">D</div>
-        <div class="ws-nav-name">Sales and marketing</div>
-        <span class="ws-nav-tag">You are here</span>
-      </a>
-      <a href="workstream-team.html" class="ws-nav-item">
-        <div class="ws-nav-letter">E</div>
-        <div class="ws-nav-name">Team and capability</div>
-        <span class="ws-nav-tag">Ready for public life</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="closing">
-  <div class="wrap">
-    <div class="eyebrow">Get in touch</div>
-    <h1 class="section-title">In a sales-led business, this is <em>the hard one.</em></h1>
-    <hr class="gold-rule">
-    <div class="closing-grid">
-      <div class="closing-grid-left">
-        <p>Alignment is easy to claim and hard to prove. Everyone says sales and marketing are aligned. Far fewer can show one pipeline number, shared definitions enforced in the CRM, and handoffs that work on a bad week as well as a good one. At an IPO, the gap between the claim and the proof is exactly what gets found.</p>
-        <p>The honest framing matters. Marketing is tier two in an IPO, and in a sales-led company alignment is where marketing either earns its seat or confirms it never had one. Get this right and marketing becomes a co-owner of the growth story. Get it wrong and it stays a cost line.</p>
-        <p>If sales and marketing currently bring different numbers to the same meeting, that is common and it is fixable. The most useful first step is a short scoping conversation. No pitch deck. No pressure.</p>
-      </div>
-      <div class="closing-grid-right">
-        <div class="label">Get in touch</div>
-        <p>Bring how sales and marketing currently count pipeline and we will talk through where the two views would reconcile and where they would not.</p>
-        <a href="mailto:hello@thatsclevermx.com" class="contact-link">hello@thatsclevermx.com</a>
       </div>
     </div>
   </div>
@@ -1201,14 +1122,15 @@
   <div class="wrap">
     <div class="footer-inner">
       <a href="index.html" class="footer-logo" style="text-decoration:none;">
-        <img src="clevermx-logo.png" alt="that's clevermx." height="24">
+        <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
       </a>
       <div class="footer-meta">
-        Workstream D of five &middot; Marketing operations, IPO readiness &middot; United Kingdom
+        Workstream A of five · Marketing operations, IPO readiness · United Kingdom
       </div>
     </div>
   </div>
 </footer>
+
 
 </body>
 </html>

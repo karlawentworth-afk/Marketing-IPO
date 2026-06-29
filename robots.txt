@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Disallow: /m-ipo/
+
+Sitemap: https://thatsclevermx.com/sitemap.xml

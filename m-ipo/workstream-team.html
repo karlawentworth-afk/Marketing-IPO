@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Workstream A · The numbers · that's clevermx.</title>
-<meta name="description" content="Workstream A of marketing's pre-IPO readiness: CAC, LTV, payback, attribution and marketing-sourced revenue. The data layer that feeds finance's disclosed KPIs and survives the reporting accountants' challenge.">
+<meta name="robots" content="noindex, nofollow">
+<title>Workstream E &middot; Team and capability &middot; that's clevermx.</title>
+<meta name="description" content="Workstream E of marketing's pre-IPO readiness: operations leadership, succession and public-company readiness. Whether the team that built marketing can take it through scrutiny.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,6 +72,16 @@
     align-items: center;
   }
   .logo img { height: 40px; width: auto; }
+  .logo .lo-light {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--gold);
+    margin-right: 4px;
+    transform: translateY(-6px);
+    display: inline-block;
+  }
+  .logo .lo-mx { color: var(--gold); }
+  .logo .lo-dot { color: var(--gold); }
 
   .nav-links {
     display: flex;
@@ -718,13 +729,10 @@
     gap: 24px;
   }
   .footer-logo {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 20px;
-    color: var(--cream);
     display: flex;
-    align-items: baseline;
+    align-items: center;
   }
+  .footer-logo img { height: 32px; width: auto; filter: brightness(0) invert(1); }
   .footer-logo .lo-light {
     font-weight: 400;
     font-size: 12px;
@@ -742,8 +750,8 @@
 
   /* === RESPONSIVE === */
   @media (max-width: 900px) {
-    .nav-inner { padding: 12px 16px; gap: 12px; }
-    .logo { font-size: 19px; }
+    .nav-inner { padding: 14px 20px; gap: 16px; }
+    .logo img { height: 32px; }
     .wrap, .wrap-narrow { padding: 0 24px; }
     section { padding: 80px 0; }
     .hero { padding: 120px 0 80px; }
@@ -773,6 +781,54 @@
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; animation: none !important; }
   }
+
+  /* === STANDARD CARDS (qualitative gold standard) === */
+  .standard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .standard-card {
+    background: var(--cream);
+    border: 1px solid var(--rule-soft);
+    border-top: 6px solid var(--gold);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 1px 0 rgba(26, 47, 44, 0.04);
+  }
+  .standard-card .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .standard-card h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--slate-deep);
+    margin-bottom: 14px;
+    line-height: 1.25;
+  }
+  .standard-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .standard-note {
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 24px;
+    font-weight: 600;
+  }
+  @media (max-width: 900px) {
+    .standard-cards { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -780,7 +836,7 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="logo">
-      <img src="clevermx-logo.png" alt="that's clevermx." height="40">
+      <img src="../clevermx-logo.png" alt="that's clevermx." height="40">
     </a>
     <ul class="nav-links">
       <li><a href="index.html#whole-ipo">The whole picture</a></li>
@@ -801,317 +857,342 @@
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <a href="index.html#workstreams" class="back-link"><span class="arrow">←</span> The five marketing workstreams</a>
-    <div class="hero-eyebrow"><span class="letter">A</span> Workstream A · Commercial readiness · Tier two</div>
-    <h1>The <em>numbers.</em></h1>
-    <p class="hero-lede">
-      CAC, LTV, payback, attribution, marketing-sourced revenue. This is the data layer that feeds finance's disclosed KPIs and has to hold up when the reporting accountants pull on it. It is also where most marketing functions discover their numbers were never built to be looked at this closely.
-    </p>
+    <a href="index.html#workstreams" class="back-link"><span class="arrow">&larr;</span> The five marketing workstreams</a>
+    <div class="hero-eyebrow"><span class="letter">E</span> Workstream E &middot; Commercial readiness &middot; Tier two</div>
+    <h1>Team and <em>capability.</em></h1>
+    <p class="hero-lede">Marketing operations leadership, succession, public-company readiness. The honest question of whether the team that built marketing can take it through scrutiny, and survive life as a listed company. The most personal of the five, and the one most often left too late.</p>
     <div class="hero-meta">
       <div class="hero-meta-item">
-        <span class="label">What it feeds</span>
-        <span class="value">Finance's audited KPI disclosures</span>
+        <span class="label">What it tests</span>
+        <span class="value">Whether the team can scale to public life</span>
       </div>
       <div class="hero-meta-item">
-        <span class="label">Evidence floor</span>
-        <span class="value">Eight quarters of consistent data</span>
+        <span class="label">The risk</span>
+        <span class="value">Key-person dependency</span>
       </div>
       <div class="hero-meta-item">
         <span class="label">The real test</span>
-        <span class="value">Does it reconcile to the audited P&amp;L</span>
+        <span class="value">Could the function survive a departure</span>
       </div>
     </div>
   </div>
 </header>
 
-<!-- ============== GOLD STANDARD ============== -->
 <section class="benchmarks">
   <div class="wrap">
     <div class="eyebrow">What good looks like</div>
-    <h1 class="section-title">Numbers that <em>reconcile,</em> not numbers that impress.</h1>
-    <p class="section-lede">
-      The gold standard here is boring on purpose. Marketing and finance answer the same question the same way, every headline figure traces back to a system someone can open, and the unit economics survive a stranger asking how they were built.
-    </p>
+    <h1 class="section-title">A team that can <em>be looked at.</em></h1>
+    <p class="section-lede">The gold standard is a function that does not depend on any one person staying, led by someone who owns marketing operations as a discipline, with senior people who can hold their own in front of investors.</p>
     <hr class="gold-rule">
-
-    <div class="prose">
-      <p class="large">
-        Before an investor pays a multiple, someone independent checks whether your growth is efficient or just expensive. They do it with four or five numbers that have become the shared language of the market. You do not have to hit every benchmark. You do have to know where you sit against each one, and be able to explain it without flinching.
-      </p>
-    </div>
-
-    <div class="stat-grid">
-      <div class="stat-cell">
-        <div class="figure">3:1</div>
-        <h4>LTV to CAC</h4>
-        <p>The ratio investors reach for first. Below it and you are buying growth inefficiently. Far above it and you are probably underinvesting.</p>
+    <div class="standard-cards">
+      <div class="standard-card">
+        <div class="label">Operations leadership</div>
+        <h4>Owned, not borrowed</h4>
+        <p>Someone owns marketing operations as a real discipline, with the authority to set standards, rather than it being a side-of-desk task for an overloaded generalist.</p>
       </div>
-      <div class="stat-cell">
-        <div class="figure">12-18<span> mo</span></div>
-        <h4>CAC payback</h4>
-        <p>The band the market expects a B2B business to recover acquisition cost in. Drift past it and the growth model gets questioned.</p>
+      <div class="standard-card">
+        <div class="label">No single point of failure</div>
+        <h4>Knowledge written down</h4>
+        <p>The function survives a key departure because the methods and decisions are documented, not carried in one indispensable head.</p>
       </div>
-      <div class="stat-cell">
-        <div class="figure">40<span>+</span></div>
-        <h4>Rule of 40</h4>
-        <p>Growth rate plus profit margin. The single figure that frames whether your growth is worth what it costs to buy.</p>
-      </div>
-      <div class="stat-cell">
-        <div class="figure">7.7<span>%</span></div>
-        <h4>Marketing as % of revenue</h4>
-        <p>Gartner's cross-industry average. A sanity check on whether spend is in a normal range, never a target to chase.</p>
+      <div class="standard-card">
+        <div class="label">Investor-ready people</div>
+        <h4>Without a chaperone</h4>
+        <p>Senior marketers who can answer hard questions credibly in investor and adviser interactions, rather than a CMO who has to carry every room alone.</p>
       </div>
     </div>
-    <p class="benchmark-note">The numbers move by sector and stage. The discipline of knowing yours, and defending it, does not.</p>
+    <p class="standard-note">Spencer Stuart puts average CMO tenure at 4.3 years. A listing tests whether your function quietly depends on any one person staying.</p>
   </div>
 </section>
 
-<!-- ============== CONDITIONS ============== -->
 <section class="conditions">
   <div class="wrap">
     <div class="eyebrow">What has to be true</div>
-    <h1 class="section-title">Four conditions the numbers <em>have to meet.</em></h1>
-    <p class="section-lede">
-      These are not nice-to-haves. They are the state a marketing function's data has to be in before it walks into formal scrutiny. Miss one and the whole workstream is exposed.
-    </p>
+    <h1 class="section-title">Four conditions the team <em>has to meet.</em></h1>
+    <p class="section-lede">This is the workstream that cannot be fixed in the final quarter. These are the conditions that take the longest to reach, which is exactly why they have to be faced early.</p>
     <hr class="gold-rule">
-
     <div class="conditions-list">
       <div class="condition">
         <div class="num">01</div>
         <div>
-          <h4>One number, one source</h4>
-          <p>Marketing and finance produce the same answer to the same question. CAC, LTV, pipeline, attribution. No second set of numbers living in a deck somewhere.</p>
+          <h4>Operations leadership exists</h4>
+          <p>A named owner for marketing operations, with the remit and the authority to set and hold standards across the function.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">02</div>
         <div>
-          <h4>Eight quarters of clean data</h4>
-          <p>Two years minimum, built on one consistent methodology. Reporting accountants and bookrunners are not checking a snapshot. They are checking whether the trend can be trusted.</p>
+          <h4>Succession is documented</h4>
+          <p>Key-person risk identified and reduced, with the knowledge that matters written down and cover that has actually been tested.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">03</div>
         <div>
-          <h4>Documented attribution</h4>
-          <p>The method is written down, short enough to read in one sitting, applied the same way every month, and reconciled against the audited financials at close.</p>
+          <h4>The team is investor-ready</h4>
+          <p>Senior marketers who can answer hard questions from investors and advisers credibly, prepared rather than hoping to improvise.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">04</div>
         <div>
-          <h4>Defensible unit economics</h4>
-          <p>CAC carries its full cost, LTV comes off real retention curves rather than hope, payback sits within benchmark. The method survives someone competent pushing on it.</p>
+          <h4>Capability matches the ambition</h4>
+          <p>The skills the equity story promises are skills the team actually has, not ones the narrative quietly assumes into existence.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============== ARTEFACTS ============== -->
 <section class="artefacts">
   <div class="wrap">
     <div class="eyebrow">What has to exist</div>
-    <h1 class="section-title">Things you could <em>pull out of a drawer.</em></h1>
-    <p class="section-lede">
-      A capability you can describe is not the same as an artefact someone can inspect. By the time bookrunners arrive, the numbers workstream has to have produced concrete, finished things. These are them.
-    </p>
+    <h1 class="section-title">Six things that answer <em>can this team do it.</em></h1>
+    <p class="section-lede">The team workstream produces uncomfortable documents, because honest ones are the only useful kind. By the time the function is under scrutiny, these have to exist.</p>
     <hr class="gold-rule">
-
     <div class="artefact-list">
       <div class="artefact-row">
         <div class="artefact-mark">01</div>
         <div>
-          <h4>KPI definitions register</h4>
-          <p>Every reported marketing number, defined once, with its owning source system and the calculation behind it. The document that ends the argument about whose figure is right.</p>
+          <h4>Capability assessment</h4>
+          <p>An honest read of the function against what a listed company actually needs, naming gaps rather than assuming readiness.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">02</div>
         <div>
-          <h4>Unit economics methodology</h4>
-          <p>Fully-loaded CAC, LTV from actual retention, payback period. Written so a reporting accountant can follow every step without a meeting to explain it.</p>
+          <h4>Org and succession plan</h4>
+          <p>Roles, owners, cover for key people and hiring priorities, so the structure is deliberate rather than inherited.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">03</div>
         <div>
-          <h4>Attribution methodology document</h4>
-          <p>The model, its rules, and its honest limits, set out in two pages. Long enough to be real, short enough that nobody can claim it is unknowable.</p>
+          <h4>Operations leadership definition</h4>
+          <p>The role, its remit and who holds it, so marketing operations has an owner and not just a vague collective responsibility.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">04</div>
         <div>
-          <h4>Marketing-sourced revenue reconciliation</h4>
-          <p>Marketing's revenue claim tied back to closed-won in the CRM and to the audited P&amp;L, refreshed at month-end. The bridge between what marketing says it did and what finance can sign.</p>
+          <h4>Knowledge documentation</h4>
+          <p>The methods and decisions that currently live in people&rsquo;s heads, written down so the function does not walk out of the door with them.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">05</div>
         <div>
-          <h4>Eight-quarter restated dataset</h4>
-          <p>Two years of history rebuilt onto the single agreed methodology, with every restatement documented and dated. The proof that the trend is real and not redrawn to flatter.</p>
+          <h4>Investor-readiness brief</h4>
+          <p>Who fronts what, prepared and rehearsed, so investor interactions are handled rather than survived.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">06</div>
         <div>
-          <h4>Monthly close pack</h4>
-          <p>The working papers and sign-offs that show the numbers were produced through a process, not assembled the night before. The thing that turns a figure into evidence.</p>
+          <h4>Capability development plan</h4>
+          <p>The route from today&rsquo;s team to the public-company team, with dates rather than good intentions.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============== EVIDENCE QUANTUM ============== -->
 <section class="evidence">
   <div class="wrap">
     <div class="eyebrow">Evidence quantum</div>
-    <h1 class="section-title">Evidence is what survives the <em>challenge.</em></h1>
-    <p class="section-lede">
-      A number existing is not the same as a number being provable. Evidence quantum is the weight and kind of proof each claim has to carry before it is allowed into a disclosure. Here is what each claim actually costs to make.
-    </p>
+    <h1 class="section-title">Readiness is proven by <em>removing a person.</em></h1>
+    <p class="section-lede">The honest test of this workstream is whether the function would survive losing someone important. Every claim about the team has to stand up to that question, not to an org chart.</p>
     <hr class="gold-rule">
-
     <div class="claim-list">
       <div class="claim-row">
         <div class="claim-said">
           <span class="who">What marketing says</span>
-          "Our CAC is X."
+          &ldquo;We have the team for this.&rdquo;
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          A fully-loaded cost build that includes the cost most people leave out, extracted from the source systems, broken out month by month, and reconciled to the ledger. Not a media-spend figure wearing a CAC label.
+          A capability assessment that names the gaps honestly, not an org chart drawn on the assumption that everyone is already ready.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          "Marketing sourced Y of revenue."
+          &ldquo;We are not dependent on one person.&rdquo;
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          Opportunity-level data with documented attribution rules, tied to closed-won in the CRM and through to the audited P&amp;L. The rules have to be the same ones used last quarter and the quarter before.
+          Documented cover for every key role, tested by someone other than the person who normally does it, rather than assumed to exist.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          "Payback is Z months."
+          &ldquo;Our people can face investors.&rdquo;
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          Cohort-level retention behaviour, not a single blended assumption applied across everyone. The shape of the curve is the argument, and the curve has to come from real data.
+          Named spokespeople who are prepared and rehearsed, not a quiet hope that the CMO can personally carry every difficult room.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          "The trend is reliable."
+          &ldquo;We can grow into it.&rdquo;
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          Eight quarters built on one methodology, with every restatement logged and dated. If the method changed halfway through, the trend is decoration, and a good adviser will say so.
+          A development plan with dates and milestones, not an intention to sort the team out somewhere nearer the listing.
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============== TASKS ============== -->
 <section class="tasks">
   <div class="wrap">
-    <div class="eyebrow">How the work gets done</div>
-    <h1 class="section-title">The tasks, <em>named in full.</em></h1>
-    <p class="section-lede">
-      This is the methodology, not the method. Every task in the numbers workstream is named here. How each one is actually done, the models, the allocation logic, the order of operations, is the work itself, and it stays off the page.
-    </p>
+    <div class="eyebrow">The work, named</div>
+    <h1 class="section-title">Seven tasks. <em>The playbook stays in the room.</em></h1>
+    <p class="section-lede">The tasks that build capability are named here in full. How each one is actually done, the honest assessment, the succession work, the investor preparation, is what an engagement is for.</p>
     <hr class="gold-rule">
-
     <div class="task-list">
       <div class="task-row">
         <div class="task-num">1</div>
         <div>
-          <h4>Define the numbers once</h4>
-          <p>Agree a single definition and a single owning source for every reported marketing figure, signed off by finance, not just by marketing.</p>
+          <h4>Assess capability honestly</h4>
+          <p>Read the function against what a listed company needs and name the gaps plainly, because a flattering assessment helps nobody.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>KPI definitions register</span>
-            <span class="chip"><b>Evidence</b>Source mapping per metric</span>
-            <span class="chip"><b>Owner</b>Marketing ops, signed by finance</span>
+            <span class="chip"><b>Artefact</b>Capability assessment</span>
+            <span class="chip"><b>Evidence</b>Gaps named</span>
+            <span class="chip"><b>Owner</b>CMO with marketing ops</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">2</div>
         <div>
-          <h4>Rebuild CAC fully loaded</h4>
-          <p>Move from a spend-based number to a cost-based one that carries everything it should, so the figure stops shrinking the moment someone looks under it.</p>
+          <h4>Define marketing operations leadership</h4>
+          <p>Establish the role, its remit and its owner, so operations has someone accountable rather than everyone and no one.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Unit economics methodology</span>
-            <span class="chip"><b>Evidence</b>Cost build, ledger-reconciled</span>
-            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
+            <span class="chip"><b>Artefact</b>Role definition</span>
+            <span class="chip"><b>Evidence</b>Named owner with remit</span>
+            <span class="chip"><b>Owner</b>CMO</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">3</div>
         <div>
-          <h4>Derive LTV from real retention</h4>
-          <p>Replace the assumed lifetime value with one built off actual cohort behaviour, so the most quoted number in the deck is also the most defensible.</p>
+          <h4>Document succession and reduce key-person risk</h4>
+          <p>Identify where the function depends on individuals and build tested cover, so a departure is a setback rather than a crisis.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Cohort LTV model</span>
-            <span class="chip"><b>Evidence</b>Retention curves from source data</span>
-            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
+            <span class="chip"><b>Artefact</b>Succession plan</span>
+            <span class="chip"><b>Evidence</b>Tested cover</span>
+            <span class="chip"><b>Owner</b>CMO with HR</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">4</div>
         <div>
-          <h4>Establish and reconcile marketing-sourced revenue</h4>
-          <p>Stand up the bridge from marketing activity to closed-won revenue to the audited P&amp;L, and run it every month so it is never a one-off heroic effort.</p>
+          <h4>Get the knowledge out of people&rsquo;s heads</h4>
+          <p>Document the methods and decisions that currently live only in memory, so the function owns its own knowledge.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Revenue reconciliation</span>
-            <span class="chip"><b>Evidence</b>CRM to P&amp;L tie-out</span>
-            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
+            <span class="chip"><b>Artefact</b>Documented methods</span>
+            <span class="chip"><b>Evidence</b>Usable by someone else</span>
+            <span class="chip"><b>Owner</b>Marketing ops</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">5</div>
         <div>
-          <h4>Document attribution to a two-page standard</h4>
-          <p>Write the model down properly: what it does, what it cannot do, and why it is the right call. Short, honest, and the same every month.</p>
+          <h4>Prepare the team for investor interactions</h4>
+          <p>Decide who fronts what and rehearse them, so investor conversations are handled with confidence.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Attribution methodology</span>
-            <span class="chip"><b>Evidence</b>Consistent monthly application</span>
-            <span class="chip"><b>Owner</b>Marketing ops</span>
+            <span class="chip"><b>Artefact</b>Investor-readiness brief</span>
+            <span class="chip"><b>Evidence</b>Rehearsed spokespeople</span>
+            <span class="chip"><b>Owner</b>CMO with advisers</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">6</div>
         <div>
-          <h4>Restate eight quarters onto one methodology</h4>
-          <p>Rebuild two years of history so the trend is consistent end to end, with every adjustment logged. This is the slow task, and the one that cannot be done in a hurry at the end.</p>
+          <h4>Build the capability development plan</h4>
+          <p>Map the route from today&rsquo;s team to the public-company team, with dated milestones rather than intentions.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Restated dataset</span>
-            <span class="chip"><b>Evidence</b>Dated restatement log</span>
-            <span class="chip"><b>Owner</b>Marketing ops</span>
+            <span class="chip"><b>Artefact</b>Development plan</span>
+            <span class="chip"><b>Evidence</b>Dated milestones</span>
+            <span class="chip"><b>Owner</b>CMO with HR</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">7</div>
         <div>
-          <h4>Stand up the monthly close</h4>
-          <p>Put the numbers on a repeatable monthly rhythm with working papers and sign-offs, so the data stays true between now and the listing rather than going stale.</p>
+          <h4>Close the gap to the public-company team</h4>
+          <p>Run the hiring and development the plan calls for, tracking progress so the team is ready in time, not in theory.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Monthly close pack</span>
-            <span class="chip"><b>Evidence</b>Working papers and sign-off trail</span>
-            <span class="chip"><b>Owner</b>Marketing ops, reviewed by finance</span>
+            <span class="chip"><b>Artefact</b>Hiring and development actions</span>
+            <span class="chip"><b>Evidence</b>Progress against plan</span>
+            <span class="chip"><b>Owner</b>CMO</span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="engagement-callout">
+      <div class="label">Where an engagement comes in</div>
+      <p>Naming the tasks is the easy part. The work is the honesty: assessing a team you like against a standard it has never been held to, and building the case for change without breaking the thing that already works. That is delicate, and it is what clevermx is built to lead, alongside the CMO and HR, with enough runway for the answers to be real rather than rushed.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ws-pagination">
+  <div class="wrap">
+    <div class="eyebrow">The five marketing workstreams</div>
+    <div class="ws-nav-grid">
+      <a href="workstream-numbers.html" class="ws-nav-item">
+        <div class="ws-nav-letter">A</div>
+        <div class="ws-nav-name">The numbers</div>
+        <span class="ws-nav-tag">Unit economics</span>
+      </a>
+      <a href="workstream-operations.html" class="ws-nav-item">
+        <div class="ws-nav-letter">B</div>
+        <div class="ws-nav-name">The operations spine</div>
+        <span class="ws-nav-tag">Stack, lineage, close</span>
+      </a>
+      <a href="workstream-narrative.html" class="ws-nav-item">
+        <div class="ws-nav-letter">C</div>
+        <div class="ws-nav-name">The narrative</div>
+        <span class="ws-nav-tag">The equity story</span>
+      </a>
+      <a href="workstream-alignment.html" class="ws-nav-item">
+        <div class="ws-nav-letter">D</div>
+        <div class="ws-nav-name">Sales and marketing</div>
+        <span class="ws-nav-tag">Shared definitions</span>
+      </a>
+      <a href="workstream-team.html" class="ws-nav-item current">
+        <div class="ws-nav-letter">E</div>
+        <div class="ws-nav-name">Team and capability</div>
+        <span class="ws-nav-tag">You are here</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <div class="eyebrow">Get in touch</div>
+    <h1 class="section-title">The team question is the one <em>that gets left too late.</em></h1>
+    <hr class="gold-rule">
+    <div class="closing-grid">
+      <div class="closing-grid-left">
+        <p>Capability is the easiest workstream to defer and the hardest to fix in a hurry. You cannot hire a marketing operations leader and have them battle-tested in the final quarter before a listing. The honest assessment of whether your team can carry the function through scrutiny, and through public life after it, is work that needs runway.</p>
+        <p>The honest framing matters. Marketing is tier two in an IPO, and this workstream is the most personal part of it. It asks whether the people who built marketing can take it somewhere it has never been. That is a hard question to ask of a team you like, which is exactly why it gets avoided.</p>
+        <p>If you have a strong team that has never operated under public-company conditions, that is the normal position and the one worth planning around early. The most useful first step is a short scoping conversation. No pitch deck. No pressure.</p>
+      </div>
+      <div class="closing-grid-right">
+        <div class="label">Get in touch</div>
+        <p>Bring an honest view of your team and we will talk through where it is ready for public life and where it would need building.</p>
+        <a href="mailto:hello@thatsclevermx.com" class="contact-link">hello@thatsclevermx.com</a>
       </div>
     </div>
   </div>
@@ -1121,15 +1202,14 @@
   <div class="wrap">
     <div class="footer-inner">
       <a href="index.html" class="footer-logo" style="text-decoration:none;">
-        <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
+        <img src="../clevermx-logo.png" alt="that's clevermx." height="24">
       </a>
       <div class="footer-meta">
-        Workstream A of five · Marketing operations, IPO readiness · United Kingdom
+        Workstream E of five &middot; Marketing operations, IPO readiness &middot; United Kingdom
       </div>
     </div>
   </div>
 </footer>
-
 
 </body>
 </html>
