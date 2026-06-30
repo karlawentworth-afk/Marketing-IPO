@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<!-- clevermx internal portal - LIVE (Supabase). A tracker, not a repository. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>clevermx portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#204640;--slate-deep:#163029;--slate-deeper:#0e201c;
+    --cream:#FAF6EC;--cream-warm:#F2EBD8;--mint:#B8E5DE;--mint-dim:#98C8C0;
+    --gold:#B8902E;--gold-bright:#D4A82E;--ink:#1A2F2C;--ink-soft:#3A4A47;
+    --muted:#6B7A78;--rule:#D9D2BE;--rule-soft:#ECE4D0;--white:#fff;
+    --display:'Nunito',system-ui,sans-serif;--serif:'Source Serif 4',Georgia,serif;
+    --red:#8B3232;--green:#3A5A3A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--display);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5}
+  button{font-family:var(--display);cursor:pointer;border:none;background:none}
+  input,select,textarea{font-family:var(--display);font-size:14px}
+  .hidden{display:none!important}
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--slate-deep);padding:24px}
+  .login-card{width:100%;max-width:380px;background:var(--cream);border-radius:18px;padding:40px 36px;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+  .login-card img{height:34px;margin-bottom:28px}
+  .login-card h1{font-size:20px;font-weight:800;color:var(--slate-deep);margin-bottom:6px;letter-spacing:-.01em}
+  .login-card .sub{font-family:var(--serif);font-size:14px;color:var(--muted);margin-bottom:26px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .field input,.field select,.field textarea{width:100%;padding:11px 13px;border:1px solid var(--rule);border-radius:9px;background:var(--white);color:var(--ink)}
+  .field textarea{min-height:62px;resize:vertical}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;padding:11px 18px;border-radius:100px;transition:.15s}
+  .btn-primary{background:var(--slate);color:var(--cream);width:100%;margin-top:6px}
+  .btn-primary:hover{background:var(--slate-deep);color:var(--mint)}
+  .auth-toggle{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
+  .auth-toggle button{color:var(--gold);font-weight:700}
+  .auth-toggle button:hover{text-decoration:underline}
+  .msg{font-size:12.5px;margin-top:12px;padding:10px 12px;border-radius:9px;line-height:1.4}
+  .msg.err{background:#F5E2E2;color:var(--red)}
+  .msg.ok{background:#DEEBDE;color:var(--green)}
+
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(250,246,236,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule-soft)}
+  .topbar-inner{max-width:1080px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .topbar img{height:28px;display:block}
+  .topbar-right{display:flex;align-items:center;gap:14px}
+  .who{text-align:right;line-height:1.25}
+  .who .name{font-weight:800;font-size:13px;color:var(--slate-deep)}
+  .who .role{font-size:11px;color:var(--muted);font-weight:600}
+  .pill{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:100px;background:var(--mint);color:var(--slate-deep)}
+  .pill.admin{background:var(--gold-bright);color:var(--slate-deep)}
+  .link-btn{font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+  .link-btn:hover{color:var(--gold)}
+
+  .main{max-width:1080px;margin:0 auto;padding:34px 28px 90px}
+  .crumb{font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:14px}
+  .crumb button{color:var(--gold);font-weight:700;font-size:12.5px}
+  .crumb button:hover{text-decoration:underline}
+  .orgbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+  .orgbar h2{font-size:26px;font-weight:800;color:var(--slate-deep);letter-spacing:-.02em}
+  .orgbar h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .org-select{display:flex;align-items:center;gap:8px}
+  .org-select label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .org-select select{padding:8px 12px;border:1px solid var(--rule);border-radius:9px;background:var(--white);font-weight:700;color:var(--slate-deep)}
+
+  .card{background:var(--white);border:1px solid var(--rule-soft);border-radius:16px;padding:24px}
+  .company{margin-bottom:28px}
+  .company .nm{font-size:21px;font-weight:800;color:var(--slate-deep);margin-bottom:10px}
+  .company .intro{font-family:var(--serif);font-size:15px;color:var(--ink-soft);line-height:1.55;max-width:600px}
+  .detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px;padding-top:18px;border-top:1px solid var(--rule-soft)}
+  .detail .k{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .detail .v{font-size:15px;font-weight:700;color:var(--slate-deep)}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:4px 0 16px}
+  .section-head h3{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .overall{font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+  .ws-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .ws-card{background:var(--white);border:1px solid var(--rule-soft);border-radius:14px;padding:22px;cursor:pointer;transition:.15s;text-align:left;width:100%;display:block}
+  .ws-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 24px rgba(26,47,44,.06)}
+  .ws-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .ws-letter{font-weight:800;font-size:12px;color:var(--slate-deep);background:var(--cream-warm);width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+  .ws-card h4{font-size:17px;font-weight:800;color:var(--slate-deep);letter-spacing:-.01em}
+  .ws-card .desc{font-family:var(--serif);font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:18px;min-height:40px}
+  .bar-row{display:flex;align-items:center;gap:10px}
+  .bar{flex:1;height:8px;background:var(--rule-soft);border-radius:100px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--gold);border-radius:100px;transition:width .4s ease}
+  .bar.full>i{background:var(--green)}
+  .bar-pct{font-size:12.5px;font-weight:800;color:var(--slate-deep);min-width:34px;text-align:right}
+  .ws-card .count{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:8px}
+  .ws-detail-head h2{font-size:26px;font-weight:800;color:var(--slate-deep);letter-spacing:-.02em}
+  .ws-detail-head .desc{font-family:var(--serif);font-size:15px;color:var(--ink-soft);max-width:600px;margin-top:6px}
+  .ws-bigbar{margin:18px 0 8px;max-width:420px}
+  .mbt-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:26px 0 12px}
+  .mbt-head h3{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .req{background:var(--white);border:1px solid var(--rule-soft);border-radius:14px;margin-bottom:12px;overflow:hidden}
+  .req-head{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;width:100%;text-align:left;background:none}
+  .req-head:hover{background:var(--cream-warm)}
+  .chev{transition:transform .2s;color:var(--muted);font-size:13px;flex-shrink:0}
+  .req.open .chev{transform:rotate(90deg)}
+  .req-title{flex:1;font-weight:800;font-size:15.5px;color:var(--slate-deep);line-height:1.35}
+  .chip{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+  .dlabel{font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-right:8px;background:#E7ECEA;color:#41504D}
+  .reqsrc{font-family:var(--serif);font-size:12.5px;color:var(--muted);line-height:1.5;border-left:2px solid var(--rule);padding-left:11px;margin-bottom:14px}
+  .reqsrc b{font-family:var(--display);font-weight:800;color:var(--gold)}
+  .chip.met{background:#D6E5D6;color:var(--green)}
+  .chip.prog{background:#D8E8F0;color:#2A5670}
+  .chip.none{background:#EDE7D6;color:#6B5012}
+  .req-body{padding:4px 20px 22px;border-top:1px solid var(--rule-soft)}
+  .sub-label{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:18px 0 10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .output{border:1px solid var(--rule);border-radius:12px;padding:16px 18px;background:var(--cream)}
+  .output+.output{margin-top:10px}
+  .out-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .out-name{font-weight:800;font-size:15px;color:var(--slate-deep)}
+  .out-badge{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:100px}
+  .out-badge.approved{background:#D6E5D6;color:var(--green)}
+  .out-badge.pending{background:#EDE7D6;color:#6B5012}
+  .out-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;margin-top:14px}
+  .out-meta .k{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  .out-meta .v{font-size:13.5px;color:var(--ink);font-family:var(--serif);line-height:1.45}
+  .out-meta .v a{color:var(--gold);font-weight:600;font-family:var(--display);text-decoration:none;word-break:break-all}
+  .out-meta .v a:hover{text-decoration:underline}
+  .out-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .tasks{margin-top:4px}
+  .task{display:flex;align-items:center;gap:12px;padding:11px 2px;border-top:1px solid var(--rule-soft)}
+  .task:first-child{border-top:none}
+  .task .tw{flex:1}
+  .task .tw .what{font-weight:700;font-size:14px;color:var(--slate-deep)}
+  .task .tw .meta{font-size:12px;color:var(--muted);margin-top:2px}
+  .task .meta .over{color:var(--red);font-weight:700}
+  .status{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:100px;cursor:pointer;white-space:nowrap}
+  .status.todo{background:#EDE7D6;color:#6B5012}
+  .status.doing{background:#D8E8F0;color:#2A5670}
+  .status.done{background:#D6E5D6;color:#3A5A3A}
+  .icon-btn{font-size:12px;font-weight:700;color:var(--muted);padding:4px 8px;border-radius:7px}
+  .icon-btn:hover{background:var(--cream-warm);color:var(--slate-deep)}
+  .icon-btn.del:hover{color:var(--red)}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+  .btn-sm{font-size:12.5px;font-weight:700;padding:9px 15px;border-radius:100px}
+  .btn-xs{font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:100px}
+  .btn-dark{background:var(--slate);color:var(--cream)}
+  .btn-dark:hover{background:var(--slate-deep);color:var(--mint)}
+  .btn-line{border:1px solid var(--rule);color:var(--slate-deep);background:var(--white)}
+  .btn-line:hover{border-color:var(--gold);color:var(--gold)}
+  .btn-approve{background:var(--green);color:#fff}
+  .btn-approve:hover{filter:brightness(1.08)}
+  .modal-bg{position:fixed;inset:0;background:rgba(14,32,28,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .modal{background:var(--cream);border-radius:16px;padding:28px;width:100%;max-width:500px;max-height:90vh;overflow:auto}
+  .modal h3{font-size:18px;font-weight:800;color:var(--slate-deep);margin-bottom:6px}
+  .modal .hint{font-size:12.5px;color:var(--muted);margin-bottom:18px;font-family:var(--serif)}
+  .field .fhint{font-size:11.5px;color:var(--muted);font-family:var(--serif);margin-top:5px;line-height:1.4}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+  .report-box{white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.5;background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:16px;max-height:360px;overflow:auto;color:var(--ink-soft)}
+  .center-state{max-width:520px;margin:80px auto;text-align:center;color:var(--muted);font-family:var(--serif);font-size:16px}
+  .spinner{width:26px;height:26px;border:3px solid var(--rule);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:60px auto}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(max-width:760px){.detail-grid{grid-template-columns:1fr 1fr}.ws-grid{grid-template-columns:1fr}.out-meta{grid-template-columns:1fr}.main{padding:24px 18px 80px}.topbar-inner{padding:12px 18px}}
+</style>
+</head>
+<body>
+<div id="app"><div class="spinner"></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+<script>
+/* ===========  CONFIG  =========== */
+const SB_URL='https://ipnuehlrctbjezrxrkev.supabase.co';
+const SB_KEY='sb_publishable_-Y57ziciMZv0wx0ehD2xng_fVeozNk2';
+const LOGO='https://thatsclevermx.com/clevermx_logo.png';
+let sb=null;
+try{ sb = window.supabase.createClient(SB_URL, SB_KEY); }catch(e){ console.error(e); }
+
+const WS_DEFS=[
+  {key:'provable',letter:'1',title:'Provable claims',desc:'Every public claim is evidenced, or it comes down. Verification.'},
+  {key:'controlled',letter:'2',title:'Controlled communications',desc:'Nothing said that breaks the rules; financial promotions approved or exempt. Section 21, publicity guidelines, MAR.'},
+  {key:'story',letter:'3',title:'One consistent story',desc:'The same claims everywhere, tied to the numbers, holding up under scrutiny. Prospectus consistency, the equity story.'},
+  {key:'function',letter:'4',title:'A function that stands scrutiny',desc:'The data, controls and people behind all of it, able to run at public-company cadence.'},
+];
+
+/* ===========  CLIENT FORM HINTS  =========== */
+const ORG_HINTS={
+  funding:"How much they have raised and at what stage. Recently funded, Series B, that sort of thing.",
+  scale:"Rough size of the business. Headcount is fine, or sales team size if that is the number that matters.",
+  target:"When they are aiming to list. A rough timeframe is all you need.",
+  intro:"Anything worth remembering. Who introduced you, context, quirks. No rules, just notes."
+};
+
+/* ===========  COMMS / GOVERNANCE HINTS  =========== */
+const GOV_HINTS={
+  owner:"Who we report progress to. Name and role. The programme owner driving the readiness work.",
+  cadence:"How often we review and report. For example, weekly written update, monthly steering review.",
+  comms:"How reporting works. Channel, meeting rhythm, who is in the room, how issues get escalated."
+};
+
+/* ===========  STARTER REQUIREMENTS PER REQUIREMENT AREA  ===========
+   The four areas are the fixed, sourced spine. Each requirement carries the
+   rule it flows from (source) and a plain delivery label saying who owns it.
+   The labels are yours to rename or merge. Outputs and tasks stay client-specific. */
+const REQ_TEMPLATES={
+  provable:[
+    {t:"Every public marketing claim has documentary evidence behind it and a named owner. A claims register exists.",label:"Evidence & story",source:"Verification: unverifiable statements must be deleted or amended, and all IPO materials must be consistent with the prospectus. Objective claims also need substantiation under the ASA / CAP Code."},
+    {t:"Customer evidence is verifiable: references permissioned, case studies factual, logos you are cleared to use.",label:"Evidence & story",source:"Same verification standard. Permission to use a customer name or logo has to be real and on file."},
+    {t:"The marketing numbers (CAC, LTV, pipeline, attribution) reconcile to what finance can sign, with the method written down.",label:"The numbers",source:"Public marketing figures cannot contradict the financial information in the prospectus. Verification applies to numbers as much as words."},
+    {t:"Anything stale or unsupportable has been removed from the website and public materials.",label:"Public surface",source:"The company website is published information, reviewed and scrubbed as the listing approaches. The FCA can require a breaching website to be taken down."},
+  ],
+  controlled:[
+    {t:"Publicity guidelines are in place: what marketing can and cannot say, and who signs things off.",label:"Public surface",source:"It is customary for publicity guidelines to be put in place early to keep pre-prospectus marketing within the rules."},
+    {t:"Anything that could count as a financial promotion goes through an FCA-authorised approver or a clear exemption.",label:"Public surface",source:"FSMA section 21: an invitation or inducement to invest must be made or approved by an FCA-authorised person, or be exempt. Breach is a criminal offence."},
+    {t:"The website and social presence are scrubbed to match what is filed, and kept that way.",label:"Public surface",source:"Public information is controlled and must be consistent with the prospectus. The FCA can require breaching sites be taken down."},
+    {t:"Spokespeople are briefed and controlled, with one clear line on who speaks to whom.",label:"Public surface",source:"Publicity control and consistency of public statements. Near a float the safe answer to many questions is to say nothing."},
+    {t:"There is a process for handling price-sensitive information once listed (MAR readiness).",label:"The function",source:"UK Market Abuse Regulation: disclosure of inside information, insider lists and a dealing code apply from admission."},
+  ],
+  story:[
+    {t:"One approved message framework, consistent across website, sales, PR and investor materials.",label:"Evidence & story",source:"All IPO materials are vetted for consistency with the prospectus. Inconsistency across surfaces reads to investors as risk."},
+    {t:"Positioning is evidenced, not asserted, so it survives a competent challenge.",label:"Evidence & story",source:"Verification of objective claims. Where the company sits has to be argued with sources, not adjectives."},
+    {t:"The story ties to the numbers: every claim of momentum traces to something finance can stand behind.",label:"Evidence & story",source:"Consistency with the financial disclosures in the prospectus."},
+    {t:"Marketing's input to the equity story and investor materials is ready when the bankers and IR need it.",label:"Evidence & story",source:"The equity story is led by the sponsor, brokers and IR. Early investor meetings need a finessed, verifiable story. Marketing contributes, it does not own this."},
+  ],
+  function:[
+    {t:"Martech and data are documented and governed, with controlled, auditable access.",label:"The function",source:"Diligence and public-company governance expect controlled, auditable access to any system that touches reported numbers."},
+    {t:"There is one source of truth for marketing performance, and the numbers reconcile.",label:"The numbers",source:"Underpins provable, consistent numbers. Two departments with two numbers is the thing this prevents."},
+    {t:"Marketing contact data is held lawfully: a clear lawful basis and consent records.",label:"The function",source:"UK GDPR. A listing sharpens scrutiny of how personal data is held and used."},
+    {t:"Marketing operations has a named owner, and key-person risk is reduced.",label:"The function",source:"Capability and diligence. The function has to keep running without single points of failure."},
+    {t:"The team can produce accurate, on-time reporting at public-company cadence.",label:"The function",source:"Ongoing obligations under the DTRs and MAR set a reporting rhythm a listed company has to keep."},
+  ],
+};
+function seedRows(orgId){const rows=[];WS_DEFS.forEach(w=>{(REQ_TEMPLATES[w.key]||[]).forEach((item,i)=>rows.push({org_id:orgId,ws:w.key,title:item.t,sort:i,label:item.label,source:item.source}));});return rows;}
+
+/* ===========  STATE  =========== */
+let profile=null;                 // {id,email,role,org_id,full_name}
+let orgs=[];                      // organisations visible to me
+let currentOrg=null;             // org id
+let cache={org:null,reqs:[],outs:[],tasks:[]};
+let view={name:'dashboard',ws:null};
+let openReq=null;
+let authMode='signin';
+
+/* ===========  HELPERS  =========== */
+const $=s=>document.querySelector(s);
+const esc=s=>(s||'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const isAdmin=()=>profile&&profile.role==='admin';
+const reqsOf=ws=>cache.reqs.filter(r=>r.ws===ws);
+const outsOf=reqId=>cache.outs.filter(o=>o.requirement_id===reqId);
+const tasksOf=reqId=>cache.tasks.filter(t=>t.requirement_id===reqId);
+function reqMet(reqId){const os=outsOf(reqId);return os.length>0&&os.every(o=>o.status==='approved');}
+function reqState(reqId){if(reqMet(reqId))return 'met';const os=outsOf(reqId),ts=tasksOf(reqId);if(os.length||ts.some(t=>t.status!=='todo'))return 'prog';return 'none';}
+function wsPct(ws){const rs=reqsOf(ws);if(!rs.length)return 0;return Math.round(rs.filter(r=>reqMet(r.id)).length/rs.length*100);}
+function overall(){const v=WS_DEFS.map(w=>wsPct(w.key));return Math.round(v.reduce((a,b)=>a+b,0)/v.length);}
+function overdue(when,status){if(status==='done'||!when)return false;return new Date(when)<new Date(new Date().toDateString());}
+const fmtDate=d=>{if(!d)return '—';return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})};
+const stLabel={todo:'To do',doing:'In progress',done:'Done'};
+const chipLabel={met:'Output approved',prog:'In progress',none:'Not started'};
+const whereHtml=w=>{const v=esc(w);return /^https?:\/\//i.test(w||'')?`<a href="${v}" target="_blank" rel="noopener">${v}</a>`:(v||'—');};
+const orgObj=()=>orgs.find(o=>o.id===currentOrg)||cache.org;
+
+/* ===========  DATA LAYER  =========== */
+async function loadProfile(uid){
+  const {data,error}=await sb.from('profiles').select('*').eq('id',uid).single();
+  if(error){console.error(error);return null;}
+  return data;
+}
+async function loadOrgs(){
+  if(isAdmin()){const {data}=await sb.from('organizations').select('*').order('name');orgs=data||[];}
+  else if(profile.org_id){const {data}=await sb.from('organizations').select('*').eq('id',profile.org_id);orgs=data||[];}
+  else orgs=[];
+}
+async function loadOrgData(orgId){
+  if(!orgId){cache={org:null,reqs:[],outs:[],tasks:[]};return;}
+  const org=orgs.find(o=>o.id===orgId)||null;
+  const {data:reqs}=await sb.from('requirements').select('*').eq('org_id',orgId).order('sort').order('created_at');
+  const ids=(reqs||[]).map(r=>r.id);
+  let outs=[],tasks=[];
+  if(ids.length){
+    const r1=await sb.from('outputs').select('*').in('requirement_id',ids); outs=r1.data||[];
+    const r2=await sb.from('tasks').select('*').in('requirement_id',ids); tasks=r2.data||[];
+  }
+  cache={org,reqs:reqs||[],outs,tasks};
+}
+async function refresh(){ await loadOrgData(currentOrg); render(); }
+
+/* ===========  BOOT  =========== */
+async function boot(){
+  if(!sb){ $('#app').innerHTML=`<div class="center-state">Could not load the data service. Check your connection and refresh.</div>`; return; }
+  const {data:{session}}=await sb.auth.getSession();
+  if(session&&session.user){ await afterLogin(session.user); }
+  else { location.replace('portal-login.html'); }
+}
+async function afterLogin(user){
+  $('#app').innerHTML=`<div class="spinner"></div>`;
+  profile=await loadProfile(user.id);
+  if(!profile){ $('#app').innerHTML=`<div class="center-state">Your account has no profile yet. Ask your advisor to finish setting you up.</div>`; return; }
+  await loadOrgs();
+  currentOrg=orgs.length?orgs[0].id:null;
+  await loadOrgData(currentOrg);
+  view={name:'dashboard',ws:null};openReq=null;
+  render();
+}
+async function doSignout(){ await sb.auth.signOut(); location.replace('portal-login.html'); }
+
+/* ===========  RENDER  =========== */
+function render(){ profile?renderApp():renderLogin(); }
+
+function renderLogin(){
+  const signup=authMode==='signup';
+  $('#app').innerHTML=`
+  <div class="login-wrap"><div class="login-card">
+    <img src="${LOGO}" alt="that's clevermx" onerror="this.style.display='none'">
+    <h1>${signup?'Create your account':'Portal sign in'}</h1>
+    <p class="sub">Marketing operations readiness, tracked in one place.</p>
+    <div class="field"><label>Email</label><input id="email" type="email" placeholder="you@company.com"></div>
+    <div class="field"><label>Password</label><input id="pw" type="password" placeholder="••••••••"></div>
+    <button class="btn btn-primary" id="go">${signup?'Create account':'Sign in'}</button>
+    <div id="authmsg"></div>
+    <div class="auth-toggle">${signup?'Already have an account? <button id="tog">Sign in</button>':'Need an account? <button id="tog">Create one</button>'}</div>
+  </div></div>`;
+  $('#go').onclick=submitAuth;
+  $('#tog').onclick=()=>{authMode=signup?'signin':'signup';renderLogin();};
+  $('#pw').addEventListener('keydown',e=>{if(e.key==='Enter')submitAuth();});
+}
+async function submitAuth(){
+  const email=$('#email').value.trim(), pw=$('#pw').value;
+  const msg=$('#authmsg');
+  if(!email||!pw){msg.innerHTML=`<div class="msg err">Enter your email and password.</div>`;return;}
+  $('#go').textContent='Please wait...';
+  if(authMode==='signup'){
+    const {error}=await sb.auth.signUp({email,password:pw});
+    if(error){msg.innerHTML=`<div class="msg err">${esc(error.message)}</div>`;$('#go').textContent='Create account';return;}
+    msg.innerHTML=`<div class="msg ok">Account created. If email confirmation is on, confirm via the email, then sign in.</div>`;
+    authMode='signin';$('#go').textContent='Sign in';
+  }else{
+    const {data,error}=await sb.auth.signInWithPassword({email,password:pw});
+    if(error){msg.innerHTML=`<div class="msg err">${esc(error.message)}</div>`;$('#go').textContent='Sign in';return;}
+    await afterLogin(data.user);
+  }
+}
+
+function topbar(){
+  return `<div class="topbar"><div class="topbar-inner">
+    <img src="${LOGO}" alt="that's clevermx" onerror="this.style.display='none'">
+    <div class="topbar-right">
+      <div class="who"><div class="name">${esc(profile.full_name||profile.email)}</div><div class="role">${isAdmin()?'Admin':esc(orgObj()?orgObj().name:'')}</div></div>
+      <span class="pill ${isAdmin()?'admin':''}">${isAdmin()?'Admin':'Client'}</span>
+      <button class="link-btn" id="signout">Sign out</button>
+    </div></div></div>`;
+}
+function renderApp(){
+  $('#app').innerHTML=topbar()+`<div class="main">${view.name==='dashboard'?dashboard():workstreamView()}</div>`;
+  $('#signout').onclick=doSignout; wire();
+}
+
+function dashboard(){
+  if(isAdmin()&&orgs.length===0){
+    return `<div class="orgbar"><h2>Readiness <em>overview</em></h2></div>
+      <div class="center-state">No clients yet.<br><br><button class="btn-sm btn-dark" id="addorg">+ Add your first organisation</button></div>`;
+  }
+  if(!currentOrg||!orgObj()){
+    return `<div class="center-state">No organisation is assigned to your account yet. Your advisor will set this up.</div>`;
+  }
+  const o=orgObj();
+  const orgSwitch=isAdmin()?`<div class="org-select"><label>Client</label>
+    <select id="orgsel">${orgs.map(x=>`<option value="${x.id}" ${x.id===currentOrg?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
+    <button class="btn-xs btn-line" id="addorg">+ New</button></div>`:'';
+  const tools=isAdmin()?`<div class="toolbar" style="margin-bottom:24px">
+    <button class="btn-sm btn-dark" id="report">Generate status report</button>
+    <button class="btn-sm btn-line" id="progress">Progress report (PPTX)</button>
+    <button class="btn-sm btn-line" id="export">Export data (JSON)</button>
+    <button class="btn-sm btn-line" id="editco">Edit company details</button></div>`:'';
+  return `
+  <div class="orgbar"><h2>Readiness <em>overview</em></h2>${orgSwitch}</div>
+  <div class="card company">
+    <div class="nm">${esc(o.name)}</div>
+    <p class="intro">${esc(o.intro)||''}</p>
+    <div class="detail-grid">${detail('Sector',o.sector)}${detail('Funding',o.funding)}${detail('Scale',o.headcount)}${detail('Target',o.target)}</div>
+  </div>
+  ${tools}
+  <div class="section-head"><h3>The four requirements</h3><div class="overall">Overall readiness ${overall()}%</div></div>
+  <div class="ws-grid">${WS_DEFS.map(wsCard).join('')}</div>`;
+}
+function detail(k,v){return `<div class="detail"><div class="k">${k}</div><div class="v">${esc(v||'—')}</div></div>`;}
+function wsCard(w){
+  const pct=wsPct(w.key);const rs=reqsOf(w.key);const met=rs.filter(r=>reqMet(r.id)).length;
+  return `<button class="ws-card" data-ws="${w.key}">
+    <div class="ws-top"><span class="ws-letter">${w.letter}</span><h4>${esc(w.title)}</h4></div>
+    <div class="desc">${esc(w.desc)}</div>
+    <div class="bar-row"><span class="bar ${pct===100?'full':''}"><i style="width:${pct}%"></i></span><span class="bar-pct">${pct}%</span></div>
+    <div class="count">${met} of ${rs.length} must-be-true met</div>
+  </button>`;
+}
+
+function workstreamView(){
+  const w=WS_DEFS.find(x=>x.key===view.ws);const pct=wsPct(w.key);const rs=reqsOf(w.key);
+  const list=rs.length?rs.map(reqAccordion).join(''):`<div class="card" style="color:var(--muted);font-family:var(--serif)">Nothing defined here yet. Load the standard set to start from a template, then prune what does not apply.</div>`;
+  return `
+  <div class="crumb"><button id="back">← Readiness overview</button> &nbsp;/&nbsp; ${esc(orgObj().name)}</div>
+  <div class="ws-detail-head"><h2>${w.letter}. ${esc(w.title)}</h2><div class="desc">${esc(w.desc)}</div></div>
+  <div class="ws-bigbar"><div class="bar-row"><span class="bar ${pct===100?'full':''}"><i style="width:${pct}%"></i></span><span class="bar-pct">${pct}%</span></div></div>
+  <div class="mbt-head"><h3>What must be true</h3>${isAdmin()?`${rs.length===0?`<button class="btn-xs btn-line" id="loadtmpl">+ Load standard set</button>`:''}<button class="btn-xs btn-line" id="addreq">+ Add</button>`:''}</div>
+  ${list}`;
+}
+function reqAccordion(r){
+  const open=openReq===r.id;const st=reqState(r.id);
+  return `<div class="req ${open?'open':''}">
+    <button class="req-head" data-req="${r.id}"><span class="chev">▶</span>${r.label?`<span class="dlabel">${esc(r.label)}</span>`:''}<span class="req-title">${esc(r.title)}</span><span class="chip ${st}">${chipLabel[st]}</span></button>
+    ${open?reqBody(r):''}
+  </div>`;
+}
+function reqBody(r){
+  const os=outsOf(r.id);const ts=tasksOf(r.id);
+  const outHtml=os.length?os.map(outputCard).join(''):`<div style="font-family:var(--serif);color:var(--muted);font-size:13.5px">No output defined yet. This is the deliverable that proves it is true.</div>`;
+  const taskHtml=ts.length?`<div class="tasks">${ts.map(taskRow).join('')}</div>`:`<div style="font-family:var(--serif);color:var(--muted);font-size:13px">No tasks yet.</div>`;
+  return `<div class="req-body">
+    ${r.source?`<div class="reqsrc"><b>Source.</b> ${esc(r.source)}</div>`:''}
+    <div class="sub-label"><span>The output · the proof it is true</span>${isAdmin()?`<button class="btn-xs btn-line" data-addout="${r.id}">+ Output</button>`:''}</div>
+    ${outHtml}
+    <div class="sub-label"><span>Things that must happen</span>${isAdmin()?`<button class="btn-xs btn-line" data-addtask="${r.id}">+ Task</button>`:''}</div>
+    ${taskHtml}
+    ${isAdmin()?`<div class="toolbar" style="margin-top:16px"><button class="btn-xs icon-btn" data-editreq="${r.id}">Edit statement</button><button class="btn-xs icon-btn del" data-delreq="${r.id}">Delete</button></div>`:''}
+  </div>`;
+}
+function outputCard(o){
+  const approved=o.status==='approved';
+  return `<div class="output">
+    <div class="out-top"><div class="out-name">${esc(o.name)}</div><span class="out-badge ${approved?'approved':'pending'}">${approved?'Approved · 100%':'Pending'}</span></div>
+    <div class="out-meta">
+      <div><div class="k">How it is produced</div><div class="v">${esc(o.how)||'—'}</div></div>
+      <div><div class="k">How often</div><div class="v">${esc(o.freq)||'—'}</div></div>
+      <div><div class="k">Who by</div><div class="v">${esc(o.who)||'—'}</div></div>
+      <div><div class="k">Where it is found</div><div class="v">${whereHtml(o.where_found)}</div></div>
+    </div>
+    ${isAdmin()?`<div class="out-actions">
+      <button class="btn-xs ${approved?'btn-line':'btn-approve'}" data-approve="${o.id}" data-now="${o.status}">${approved?'Un-approve':'Approve as complete'}</button>
+      <button class="btn-xs icon-btn" data-editout="${o.id}">Edit</button>
+      <button class="btn-xs icon-btn del" data-delout="${o.id}">Delete</button>
+    </div>`:''}
+  </div>`;
+}
+function taskRow(t){
+  return `<div class="task">
+    <div class="tw"><div class="what">${esc(t.what)}</div><div class="meta">${esc(t.who||'Unassigned')} · <span class="${overdue(t.when_due,t.status)?'over':''}">${fmtDate(t.when_due)}</span></div></div>
+    <button class="status ${t.status}" data-cycle="${t.id}" data-now="${t.status}">${stLabel[t.status]}</button>
+    ${isAdmin()?`<button class="icon-btn" data-edittask="${t.id}">Edit</button><button class="icon-btn del" data-deltask="${t.id}">Del</button>`:''}
+  </div>`;
+}
+
+/* ===========  EVENTS  =========== */
+function wire(){
+  const sel=$('#orgsel');if(sel)sel.onchange=async()=>{currentOrg=sel.value;openReq=null;await refresh();};
+  const ao=$('#addorg');if(ao)ao.onclick=orgModal;
+  document.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{view={name:'workstream',ws:b.dataset.ws};openReq=null;render();});
+  const back=$('#back');if(back)back.onclick=()=>{view={name:'dashboard',ws:null};render();};
+  document.querySelectorAll('[data-req]').forEach(b=>b.onclick=()=>{openReq=openReq===b.dataset.req?null:b.dataset.req;render();});
+  const ar=$('#addreq');if(ar)ar.onclick=()=>reqModal(null);
+  const lt=$('#loadtmpl');if(lt)lt.onclick=async()=>{
+    const tpl=REQ_TEMPLATES[view.ws]||[];if(!tpl.length)return;
+    if(!confirm(`Add ${tpl.length} standard requirements to this area? You can delete or relabel any you do not need.`))return;
+    const rows=tpl.map((item,i)=>({org_id:currentOrg,ws:view.ws,title:item.t,sort:i,label:item.label,source:item.source}));
+    const {error}=await sb.from('requirements').insert(rows);
+    if(error){alert(error.message);return;}
+    await refresh();
+  };
+  document.querySelectorAll('[data-editreq]').forEach(b=>b.onclick=()=>reqModal(cache.reqs.find(r=>r.id===b.dataset.editreq)));
+  document.querySelectorAll('[data-delreq]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this requirement and its output and tasks?')){await sb.from('requirements').delete().eq('id',b.dataset.delreq);await refresh();}});
+  document.querySelectorAll('[data-addout]').forEach(b=>b.onclick=()=>outputModal(null,b.dataset.addout));
+  document.querySelectorAll('[data-editout]').forEach(b=>b.onclick=()=>outputModal(cache.outs.find(o=>o.id===b.dataset.editout)));
+  document.querySelectorAll('[data-delout]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this output?')){await sb.from('outputs').delete().eq('id',b.dataset.delout);await refresh();}});
+  document.querySelectorAll('[data-approve]').forEach(b=>b.onclick=async()=>{const ns=b.dataset.now==='approved'?'pending':'approved';await sb.from('outputs').update({status:ns}).eq('id',b.dataset.approve);await refresh();});
+  document.querySelectorAll('[data-addtask]').forEach(b=>b.onclick=()=>taskModal(null,b.dataset.addtask));
+  document.querySelectorAll('[data-edittask]').forEach(b=>b.onclick=()=>taskModal(cache.tasks.find(t=>t.id===b.dataset.edittask)));
+  document.querySelectorAll('[data-deltask]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this task?')){await sb.from('tasks').delete().eq('id',b.dataset.deltask);await refresh();}});
+  document.querySelectorAll('[data-cycle]').forEach(b=>b.onclick=async()=>{const ord=['todo','doing','done'];const ns=ord[(ord.indexOf(b.dataset.now)+1)%3];await sb.from('tasks').update({status:ns}).eq('id',b.dataset.cycle);await refresh();});
+  const rep=$('#report');if(rep)rep.onclick=reportModal;
+  const pr=$('#progress');if(pr)pr.onclick=buildProgressPptx;
+  const exp=$('#export');if(exp)exp.onclick=exportData;
+  const ec=$('#editco');if(ec)ec.onclick=companyModal;
+}
+
+function modal(html){const d=document.createElement('div');d.className='modal-bg';d.innerHTML=`<div class="modal">${html}</div>`;d.onclick=e=>{if(e.target===d)d.remove();};document.body.appendChild(d);return d;}
+function fld(id,label,val,ph,hint){return `<div class="field"><label>${label}</label><input id="${id}" value="${esc(val)}" placeholder="${ph||''}">${hint?`<div class="fhint">${hint}</div>`:''}</div>`;}
+function area(id,label,val,ph,hint){return `<div class="field"><label>${label}</label><textarea id="${id}" placeholder="${ph||''}">${esc(val)}</textarea>${hint?`<div class="fhint">${hint}</div>`:''}</div>`;}
+
+function orgModal(){
+  const d=modal(`<h3>Add organisation</h3><p class="hint">A new client to track readiness for.</p>
+    ${fld('g_name','Name','','Client name')}${fld('g_sector','Sector','')}${fld('g_funding','Funding','','',ORG_HINTS.funding)}${fld('g_headcount','Scale','','',ORG_HINTS.scale)}${fld('g_target','Target','','',ORG_HINTS.target)}${area('g_intro','Intro','','',ORG_HINTS.intro)}
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="gsave">Add</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#gsave').onclick=async()=>{
+    const name=d.querySelector('#g_name').value.trim();if(!name)return;
+    const row={name,sector:v('g_sector'),funding:v('g_funding'),headcount:v('g_headcount'),target:v('g_target'),intro:v('g_intro')};
+    const {data,error}=await sb.from('organizations').insert(row).select().single();
+    if(error){alert(error.message);return;}
+    const seed=seedRows(data.id);
+    const {error:seedErr}=await sb.from('requirements').insert(seed);
+    if(seedErr){alert('Organisation added, but the standard requirements did not seed:\n'+seedErr.message+'\n\nIf this mentions a missing "source" or "label" column, run the ALTER TABLE snippet in Supabase, then use Load standard set per area.');}
+    d.remove();await loadOrgs();currentOrg=data.id;await refresh();
+    function v(id){return d.querySelector('#'+id).value.trim();}
+  };
+  function v(id){return d.querySelector('#'+id).value.trim();}
+}
+function reqModal(r){
+  const isNew=!r;
+  const d=modal(`<h3>${isNew?'Add a requirement':'Edit requirement'}</h3>
+    <p class="hint">A plain statement of something that must be true, the rule it flows from, and who owns delivering it.</p>
+    ${area('r_t','Statement',isNew?'':r.title,'e.g. Every public claim has evidence behind it and a named owner')}
+    ${area('r_src','Source · the rule it flows from',isNew?'':(r.source||''),'e.g. Verification: unverifiable statements are removed; consistency with the prospectus')}
+    <div class="field"><label>Delivery label · who owns it</label><input id="r_label" value="${isNew?'':esc(r.label||'')}" placeholder="e.g. Public surface" list="labellist"><datalist id="labellist"><option>The numbers</option><option>Evidence &amp; story</option><option>Public surface</option><option>The function</option></datalist></div>
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="rsave">${isNew?'Add':'Save'}</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#rsave').onclick=async()=>{
+    const t=d.querySelector('#r_t').value.trim();if(!t)return;
+    const src=d.querySelector('#r_src').value.trim();const lbl=d.querySelector('#r_label').value.trim();
+    if(isNew){const {data,error}=await sb.from('requirements').insert({org_id:currentOrg,ws:view.ws,title:t,source:src,label:lbl,sort:cache.reqs.filter(x=>x.ws===view.ws).length}).select().single();if(error){alert(error.message);return;}openReq=data.id;}
+    else{const {error}=await sb.from('requirements').update({title:t,source:src,label:lbl}).eq('id',r.id);if(error){alert(error.message);return;}}
+    d.remove();await refresh();
+  };
+}
+function outputModal(o,reqId){
+  const isNew=!o;
+  const d=modal(`<h3>${isNew?'Add output':'Edit output'}</h3>
+    <p class="hint">The deliverable that proves the statement is true. We record where it lives, not the file itself.</p>
+    ${fld('o_n','Output',isNew?'':o.name,'e.g. Signed pipeline definition')}
+    ${area('o_h','How it is produced',isNew?'':o.how,'How it gets made')}
+    ${fld('o_f','How often',isNew?'':o.freq,'e.g. Monthly, Quarterly, One-off')}
+    ${fld('o_w','Who by',isNew?'':o.who,'Owner')}
+    ${fld('o_l','Where it is found',isNew?'':o.where_found,'A link or location')}
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="osave">${isNew?'Add':'Save'}</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#osave').onclick=async()=>{
+    const name=d.querySelector('#o_n').value.trim();if(!name)return;
+    const row={name,how:gv('o_h'),freq:gv('o_f'),who:gv('o_w'),where_found:gv('o_l')};
+    if(isNew){const {error}=await sb.from('outputs').insert({requirement_id:reqId,status:'pending',...row});if(error){alert(error.message);return;}}
+    else{const {error}=await sb.from('outputs').update(row).eq('id',o.id);if(error){alert(error.message);return;}}
+    d.remove();await refresh();
+    function gv(id){return d.querySelector('#'+id).value.trim();}
+  };
+  function gv(id){return d.querySelector('#'+id).value.trim();}
+}
+function taskModal(t,reqId){
+  const isNew=!t;
+  const d=modal(`<h3>${isNew?'Add task':'Edit task'}</h3>
+    <p class="hint">Something that must happen to produce the output.</p>
+    ${fld('t_w','What',isNew?'':t.what,'What needs doing')}
+    ${fld('t_o','Who',isNew?'':t.who,'Owner')}
+    <div class="field"><label>When</label><input id="t_d" type="date" value="${isNew?'':(t.when_due||'')}"></div>
+    <div class="field"><label>Status</label><select id="t_s">${['todo','doing','done'].map(s=>`<option value="${s}" ${(!isNew&&t.status===s)?'selected':''}>${stLabel[s]}</option>`).join('')}</select></div>
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="tsave">${isNew?'Add':'Save'}</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#tsave').onclick=async()=>{
+    const what=d.querySelector('#t_w').value.trim();if(!what)return;
+    const row={what,who:d.querySelector('#t_o').value.trim(),when_due:d.querySelector('#t_d').value||null,status:d.querySelector('#t_s').value};
+    if(isNew){const {error}=await sb.from('tasks').insert({requirement_id:reqId,...row});if(error){alert(error.message);return;}}
+    else{const {error}=await sb.from('tasks').update(row).eq('id',t.id);if(error){alert(error.message);return;}}
+    d.remove();await refresh();
+  };
+}
+function companyModal(){
+  const o=orgObj();
+  const d=modal(`<h3>Company details</h3>
+    ${fld('c_name','Name',o.name)}${fld('c_sector','Sector',o.sector)}${fld('c_funding','Funding',o.funding,'',ORG_HINTS.funding)}${fld('c_headcount','Scale',o.headcount,'',ORG_HINTS.scale)}${fld('c_target','Target',o.target,'',ORG_HINTS.target)}${area('c_intro','Intro',o.intro,'',ORG_HINTS.intro)}
+    <div class="sub-label" style="margin:18px 0 12px"><span>Comms and governance</span></div>
+    ${fld('c_owner','Programme owner',o.programme_owner,'',GOV_HINTS.owner)}${fld('c_cadence','Review cadence',o.review_cadence,'',GOV_HINTS.cadence)}${area('c_comms','Reporting notes',o.comms_notes,'',GOV_HINTS.comms)}
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="csave">Save</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#csave').onclick=async()=>{
+    const row={name:gc('c_name'),sector:gc('c_sector'),funding:gc('c_funding'),headcount:gc('c_headcount'),target:gc('c_target'),intro:gc('c_intro'),programme_owner:gc('c_owner'),review_cadence:gc('c_cadence'),comms_notes:gc('c_comms')};
+    const {error}=await sb.from('organizations').update(row).eq('id',o.id);if(error){alert(error.message+'\n\nIf this mentions a missing column, run the comms/governance ALTER TABLE snippet in Supabase first.');return;}
+    d.remove();await loadOrgs();await refresh();
+    function gc(id){return d.querySelector('#'+id).value.trim();}
+  };
+  function gc(id){return d.querySelector('#'+id).value.trim();}
+}
+
+function buildReport(){
+  const o=orgObj();const L=[];
+  L.push(`READINESS STATUS — ${o.name}`);
+  L.push(`Generated ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}`);
+  L.push(`${o.sector||''} · ${o.funding||''} · ${o.headcount||''} · ${o.target||''}`);
+  L.push(`Overall readiness: ${overall()}%`);L.push('');
+  WS_DEFS.forEach(w=>{
+    const rs=reqsOf(w.key);const met=rs.filter(r=>reqMet(r.id)).length;
+    L.push(`${w.letter}. ${w.title} — ${wsPct(w.key)}% (${met}/${rs.length} must-be-true met)`);
+    rs.forEach(r=>{
+      L.push(`   • ${reqMet(r.id)?'[MET]':'[open]'} ${r.title}`);
+      outsOf(r.id).forEach(out=>L.push(`        output: ${out.name} — ${out.status} · ${out.freq||'n/a'} · ${out.who||'n/a'} · ${out.where_found||'no location'}`));
+      tasksOf(r.id).filter(t=>t.status!=='done').forEach(t=>L.push(`        to do: ${t.what} (${t.who||'unassigned'}, ${fmtDate(t.when_due)}${overdue(t.when_due,t.status)?' OVERDUE':''})`));
+    });
+    L.push('');
+  });
+  return L.join('\n');
+}
+function buildProgressPptx(){
+  if(!window.PptxGenJS){alert('Report library is still loading. Give it a second and try again.');return;}
+  const o=orgObj();
+  const SLATE='204640',CREAM='FAF6EC',CREAMW='F2EBD8',GOLD='B8902E',INK='1A2F2C',MUTED='6B7A78',MINT='B8E5DE';
+  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  const pptx=new PptxGenJS();
+  pptx.layout='LAYOUT_WIDE'; // 13.333 x 7.5
+
+  const openReqs=[],metReqs=[],openTasks=[];
+  WS_DEFS.forEach(w=>reqsOf(w.key).forEach(r=>{
+    (reqMet(r.id)?metReqs:openReqs).push(w.letter+'   '+r.title);
+    tasksOf(r.id).forEach(t=>{if(t.status!=='done')openTasks.push(t.what+'  ('+(t.who||'unassigned')+', '+fmtDate(t.when_due)+(overdue(t.when_due,t.status)?', overdue':'')+')');});
+  }));
+  const owner=(o.programme_owner||'').trim()||'Add in Edit company details';
+  const cadence=(o.review_cadence||'').trim()||'Add in Edit company details';
+
+  // slide 1: title
+  let s=pptx.addSlide();s.background={color:CREAM};
+  s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:13.333,h:2.6,fill:{color:SLATE}});
+  s.addText('IPO marketing readiness',{x:0.7,y:0.7,w:12,h:0.7,fontFace:'Nunito',fontSize:34,bold:true,color:CREAM});
+  s.addText('Progress report',{x:0.7,y:1.5,w:12,h:0.5,fontFace:'Source Serif 4',italic:true,fontSize:20,color:MINT});
+  s.addText(o.name||'',{x:0.7,y:3.0,w:12,h:0.8,fontFace:'Nunito',fontSize:40,bold:true,color:SLATE});
+  s.addText([{text:'Reporting period: [add period]',options:{color:GOLD,bold:true}}],{x:0.7,y:4.05,w:12,h:0.4,fontFace:'Nunito',fontSize:15});
+  s.addText(today+'   |   Prepared by clevermx',{x:0.7,y:6.6,w:12,h:0.4,fontFace:'Nunito',fontSize:12,color:MUTED});
+
+  // slide 2: at a glance
+  s=pptx.addSlide();s.background={color:CREAM};
+  s.addText('At a glance',{x:0.7,y:0.5,w:8,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
+  s.addShape(pptx.ShapeType.roundRect,{x:10.0,y:0.5,w:2.6,h:1.5,rectRadius:0.1,fill:{color:SLATE}});
+  s.addText(overall()+'%',{x:10.0,y:0.62,w:2.6,h:0.95,fontFace:'Nunito',fontSize:40,bold:true,color:CREAM,align:'center'});
+  s.addText('overall readiness',{x:10.0,y:1.55,w:2.6,h:0.35,fontFace:'Nunito',fontSize:11,color:MINT,align:'center'});
+  let y=2.4;
+  WS_DEFS.forEach(w=>{
+    const pct=wsPct(w.key);const rs=reqsOf(w.key);const met=rs.filter(r=>reqMet(r.id)).length;
+    s.addText(w.letter+'.  '+w.title,{x:0.7,y:y,w:4.2,h:0.32,fontFace:'Nunito',fontSize:13,bold:true,color:INK});
+    s.addShape(pptx.ShapeType.roundRect,{x:5.0,y:y+0.03,w:5.5,h:0.26,rectRadius:0.13,fill:{color:CREAMW}});
+    if(pct>0)s.addShape(pptx.ShapeType.roundRect,{x:5.0,y:y+0.03,w:Math.max(0.26,5.5*pct/100),h:0.26,rectRadius:0.13,fill:{color:GOLD}});
+    s.addText(pct+'%  ('+met+'/'+rs.length+')',{x:10.7,y:y,w:1.9,h:0.32,fontFace:'Nunito',fontSize:12,bold:true,color:SLATE});
+    y+=0.62;
+  });
+  s.addText([
+    {text:'Programme owner   ',options:{bold:true,color:GOLD}},{text:owner+'\n',options:{color:INK}},
+    {text:'Review cadence   ',options:{bold:true,color:GOLD}},{text:cadence,options:{color:INK}},
+  ],{x:0.7,y:y+0.25,w:11.9,h:0.9,fontFace:'Nunito',fontSize:13,lineSpacingMultiple:1.3,valign:'top'});
+
+  // slide 3: achieved this period
+  s=pptx.addSlide();s.background={color:CREAM};
+  s.addText('Achieved this period',{x:0.7,y:0.5,w:12,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
+  s.addText('Replace these with the headlines for the period.',{x:0.7,y:1.15,w:12,h:0.35,fontFace:'Source Serif 4',italic:true,fontSize:13,color:MUTED});
+  s.addText([{text:'Headline one',options:{bullet:true}},{text:'Headline two',options:{bullet:true}},{text:'Headline three',options:{bullet:true}}],{x:0.7,y:1.7,w:7.6,h:3.0,fontFace:'Nunito',fontSize:15,color:INK,paraSpaceAfter:10,valign:'top'});
+  s.addShape(pptx.ShapeType.roundRect,{x:8.7,y:1.7,w:3.9,h:4.9,rectRadius:0.08,fill:{color:CREAMW}});
+  s.addText('Approved so far, for reference',{x:8.95,y:1.85,w:3.5,h:0.35,fontFace:'Nunito',fontSize:11,bold:true,color:SLATE});
+  s.addText(metReqs.length?metReqs.slice(0,12).map(t=>({text:t,options:{bullet:true}})).concat(metReqs.length>12?[{text:'and '+(metReqs.length-12)+' more',options:{italic:true,color:MUTED}}]:[]):[{text:'Nothing approved yet',options:{italic:true,color:MUTED}}],{x:8.95,y:2.3,w:3.5,h:4.1,fontFace:'Nunito',fontSize:9.5,color:INK,paraSpaceAfter:4,valign:'top'});
+
+  // slide 4: open items and focus
+  s=pptx.addSlide();s.background={color:CREAM};
+  s.addText('Open items and next focus',{x:0.7,y:0.5,w:12,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
+  s.addText('Requirements still open',{x:0.7,y:1.25,w:6,h:0.35,fontFace:'Nunito',fontSize:13,bold:true,color:GOLD});
+  s.addText(openReqs.length?openReqs.slice(0,14).map(t=>({text:t,options:{bullet:true}})).concat(openReqs.length>14?[{text:'and '+(openReqs.length-14)+' more',options:{italic:true,color:MUTED}}]:[]):[{text:'All requirements met',options:{italic:true,color:MUTED}}],{x:0.7,y:1.65,w:6.0,h:5.0,fontFace:'Nunito',fontSize:10.5,color:INK,paraSpaceAfter:4,valign:'top'});
+  s.addText('Tasks outstanding',{x:7.0,y:1.25,w:5.6,h:0.35,fontFace:'Nunito',fontSize:13,bold:true,color:GOLD});
+  s.addText(openTasks.length?openTasks.slice(0,10).map(t=>({text:t,options:{bullet:true}})).concat(openTasks.length>10?[{text:'and '+(openTasks.length-10)+' more',options:{italic:true,color:MUTED}}]:[]):[{text:'No open tasks',options:{italic:true,color:MUTED}}],{x:7.0,y:1.65,w:5.6,h:3.2,fontFace:'Nunito',fontSize:10.5,color:INK,paraSpaceAfter:4,valign:'top'});
+  s.addShape(pptx.ShapeType.roundRect,{x:7.0,y:5.0,w:5.6,h:1.7,rectRadius:0.08,fill:{color:CREAMW}});
+  s.addText([{text:'Focus next period\n',options:{bold:true,color:SLATE,fontSize:12}},{text:'Replace with the priorities for the period ahead.',options:{italic:true,color:MUTED,fontSize:11}}],{x:7.25,y:5.2,w:5.1,h:1.3,fontFace:'Nunito',valign:'top'});
+
+  const fn=(o.name||'client').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'-progress-report.pptx';
+  pptx.writeFile({fileName:fn});
+}
+function reportModal(){
+  const txt=buildReport();
+  const d=modal(`<h3>Status report</h3>
+    <p class="hint">A plain-text snapshot. Copy it into Claude for a written report and analytics, or use Export for the full data.</p>
+    <div class="report-box">${esc(txt)}</div>
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Close</button><button class="btn-sm btn-dark" id="cp">Copy</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#cp').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(txt);d.querySelector('#cp').textContent='Copied';};
+}
+function exportData(){
+  const o=orgObj();
+  const payload={org:o,overallReadiness:overall(),workstreams:WS_DEFS.map(w=>({...w,completeness:wsPct(w.key),requirements:reqsOf(w.key).map(r=>({statement:r.title,met:reqMet(r.id),outputs:outsOf(r.id),tasks:tasksOf(r.id)}))}))};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${o.name.replace(/\s+/g,'-').toLowerCase()}-readiness.json`;a.click();
+}
+
+/* go */
+boot();
+</script>
+</body>
+</html>

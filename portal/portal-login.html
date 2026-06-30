@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- clevermx portal - sign in. On success, sends you to portal-app.html. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>clevermx portal sign in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#204640;--slate-deep:#163029;--cream:#FAF6EC;--mint:#B8E5DE;
+    --gold:#B8902E;--ink:#1A2F2C;--ink-soft:#3A4A47;--muted:#6B7A78;
+    --rule:#D9D2BE;--white:#fff;--red:#8B3232;--green:#3A5A3A;
+    --display:'Nunito',system-ui,sans-serif;--serif:'Source Serif 4',Georgia,serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--display);color:var(--ink);background:var(--slate-deep);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5}
+  button{font-family:var(--display);cursor:pointer;border:none;background:none}
+  input{font-family:var(--display);font-size:14px}
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-card{width:100%;max-width:380px;background:var(--cream);border-radius:18px;padding:40px 36px;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+  .login-card img{height:34px;margin-bottom:28px}
+  .login-card h1{font-size:20px;font-weight:800;color:var(--slate-deep);margin-bottom:6px;letter-spacing:-.01em}
+  .login-card .sub{font-family:var(--serif);font-size:14px;color:var(--muted);margin-bottom:26px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .field input{width:100%;padding:11px 13px;border:1px solid var(--rule);border-radius:9px;background:var(--white);color:var(--ink)}
+  .field input:focus{outline:none;border-color:var(--gold)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;padding:11px 18px;border-radius:100px;transition:.15s}
+  .btn-primary{background:var(--slate);color:var(--cream);width:100%;margin-top:6px}
+  .btn-primary:hover{background:var(--slate-deep);color:var(--mint)}
+  .auth-toggle{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
+  .auth-toggle button{color:var(--gold);font-weight:700}
+  .auth-toggle button:hover{text-decoration:underline}
+  .msg{font-size:12.5px;margin-top:12px;padding:10px 12px;border-radius:9px;line-height:1.4}
+  .msg.err{background:#F5E2E2;color:var(--red)}
+  .msg.ok{background:#DEEBDE;color:var(--green)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const SB_URL='https://ipnuehlrctbjezrxrkev.supabase.co';
+const SB_KEY='sb_publishable_-Y57ziciMZv0wx0ehD2xng_fVeozNk2';
+const LOGO='https://thatsclevermx.com/clevermx_logo.png';
+const APP='portal-app.html';
+let sb=null, authMode='signin';
+try{ sb=window.supabase.createClient(SB_URL,SB_KEY); }catch(e){ console.error(e); }
+const $=s=>document.querySelector(s);
+const esc=s=>(s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+async function boot(){
+  if(!sb){ renderForm(); return; }
+  // detectSessionInUrl handles the email-confirm hash; give it a tick, then check.
+  const {data:{session}}=await sb.auth.getSession();
+  if(session&&session.user){ renderSignedIn(); } else { renderForm(); }
+}
+
+function renderSignedIn(){
+  $('#app').innerHTML=`
+  <div class="login-wrap"><div class="login-card">
+    <img src="${LOGO}" alt="that's clevermx" onerror="this.style.display='none'">
+    <h1>You're signed in</h1>
+    <p class="sub">Pick up where you left off.</p>
+    <button class="btn btn-primary" id="open">Open the portal</button>
+    <div class="auth-toggle"><button id="out">Sign out</button></div>
+  </div></div>`;
+  $('#open').onclick=()=>{ location.href=APP; };
+  $('#out').onclick=async()=>{ await sb.auth.signOut(); renderForm(); };
+}
+
+function renderForm(){
+  const signup=authMode==='signup';
+  $('#app').innerHTML=`
+  <div class="login-wrap"><div class="login-card">
+    <img src="${LOGO}" alt="that's clevermx" onerror="this.style.display='none'">
+    <h1>${signup?'Create your account':'Portal sign in'}</h1>
+    <p class="sub">Marketing operations readiness, tracked in one place.</p>
+    <div class="field"><label>Email</label><input id="email" type="email" placeholder="you@company.com"></div>
+    <div class="field"><label>Password</label><input id="pw" type="password" placeholder="••••••••"></div>
+    <button class="btn btn-primary" id="go">${signup?'Create account':'Sign in'}</button>
+    <div id="authmsg"></div>
+    <div class="auth-toggle">${signup?'Already have an account? <button id="tog">Sign in</button>':'Need an account? <button id="tog">Create one</button>'}</div>
+  </div></div>`;
+  $('#go').onclick=submitAuth;
+  $('#tog').onclick=()=>{ authMode=signup?'signin':'signup'; renderForm(); };
+  $('#pw').addEventListener('keydown',e=>{ if(e.key==='Enter')submitAuth(); });
+}
+
+async function submitAuth(){
+  const email=$('#email').value.trim(), pw=$('#pw').value, msg=$('#authmsg');
+  if(!email||!pw){ msg.innerHTML=`<div class="msg err">Enter your email and password.</div>`; return; }
+  $('#go').textContent='Please wait...';
+  if(authMode==='signup'){
+    const {error}=await sb.auth.signUp({email,password:pw});
+    if(error){ msg.innerHTML=`<div class="msg err">${esc(error.message)}</div>`; $('#go').textContent='Create account'; return; }
+    msg.innerHTML=`<div class="msg ok">Account created. If email confirmation is on, confirm via the email, then sign in.</div>`;
+    authMode='signin'; $('#go').textContent='Sign in';
+  }else{
+    const {error}=await sb.auth.signInWithPassword({email,password:pw});
+    if(error){ msg.innerHTML=`<div class="msg err">${esc(error.message)}</div>`; $('#go').textContent='Sign in'; return; }
+    location.href=APP;
+  }
+}
+boot();
+</script>
+</body>
+</html>
