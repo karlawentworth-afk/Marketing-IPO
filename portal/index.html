@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- clevermx internal portal - LIVE (Supabase). A tracker, not a repository. -->
+<!-- clevermx portal - single-file build. Login and app in one page. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -101,6 +101,9 @@
   .req.open .chev{transform:rotate(90deg)}
   .req-title{flex:1;font-weight:800;font-size:15.5px;color:var(--slate-deep);line-height:1.35}
   .chip{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+  .dlabel{font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-right:8px;background:#E7ECEA;color:#41504D}
+  .reqsrc{font-family:var(--serif);font-size:12.5px;color:var(--muted);line-height:1.5;border-left:2px solid var(--rule);padding-left:11px;margin-bottom:14px}
+  .reqsrc b{font-family:var(--display);font-weight:800;color:var(--gold)}
   .chip.met{background:#D6E5D6;color:var(--green)}
   .chip.prog{background:#D8E8F0;color:#2A5670}
   .chip.none{background:#EDE7D6;color:#6B5012}
@@ -168,11 +171,10 @@ let sb=null;
 try{ sb = window.supabase.createClient(SB_URL, SB_KEY); }catch(e){ console.error(e); }
 
 const WS_DEFS=[
-  {key:'numbers',letter:'A',title:'The numbers',desc:'Pipeline, attribution and a marketing number finance will sign off.'},
-  {key:'operations',letter:'B',title:'The operations spine',desc:'The stack, the data and the ways of working underneath it all.'},
-  {key:'narrative',letter:'C',title:'The narrative',desc:'A consistent story the business can stand behind under scrutiny.'},
-  {key:'alignment',letter:'D',title:'Sales and marketing alignment',desc:'One funnel, shared definitions, no arguing about whose lead it is.'},
-  {key:'team',letter:'E',title:'Team and capability',desc:'The people, roles and skills the function needs to hold up.'},
+  {key:'provable',letter:'1',title:'Provable claims',desc:'Every public claim is evidenced, or it comes down. Verification.'},
+  {key:'controlled',letter:'2',title:'Controlled communications',desc:'Nothing said that breaks the rules; financial promotions approved or exempt. Section 21, publicity guidelines, MAR.'},
+  {key:'story',letter:'3',title:'One consistent story',desc:'The same claims everywhere, tied to the numbers, holding up under scrutiny. Prospectus consistency, the equity story.'},
+  {key:'function',letter:'4',title:'A function that stands scrutiny',desc:'The data, controls and people behind all of it, able to run at public-company cadence.'},
 ];
 
 /* ===========  CLIENT FORM HINTS  =========== */
@@ -190,57 +192,39 @@ const GOV_HINTS={
   comms:"How reporting works. Channel, meeting rhythm, who is in the room, how issues get escalated."
 };
 
-/* ===========  STARTER REQUIREMENTS PER WORKSTREAM  ===========
-   The standard "what must be true" set. Load into an empty workstream,
-   then prune what does not apply. Outputs and tasks stay client-specific. */
+/* ===========  STARTER REQUIREMENTS PER REQUIREMENT AREA  ===========
+   The four areas are the fixed, sourced spine. Each requirement carries the
+   rule it flows from (source) and a plain delivery label saying who owns it.
+   The labels are yours to rename or merge. Outputs and tasks stay client-specific. */
 const REQ_TEMPLATES={
-  numbers:[
-    "Marketing's contribution to pipeline is measured and agreed with finance",
-    "One attribution model is used across the business, and its limits are understood",
-    "Pipeline figures reconcile between marketing, sales and finance",
-    "Marketing-sourced and influenced pipeline is predictable enough to stand behind a forecast",
-    "Marketing forecasts have a track record finance trusts",
-    "CAC, lifetime value and payback are calculated and would survive a hard question",
-    "Spend ties to outcomes, not just activity",
+  provable:[
+    {t:"Every public marketing claim has documentary evidence behind it and a named owner. A claims register exists.",label:"Evidence & story",source:"Verification: unverifiable statements must be deleted or amended, and all IPO materials must be consistent with the prospectus. Objective claims also need substantiation under the ASA / CAP Code."},
+    {t:"Customer evidence is verifiable: references permissioned, case studies factual, logos you are cleared to use.",label:"Evidence & story",source:"Same verification standard. Permission to use a customer name or logo has to be real and on file."},
+    {t:"The marketing numbers (CAC, LTV, pipeline, attribution) reconcile to what finance can sign, with the method written down.",label:"The numbers",source:"Public marketing figures cannot contradict the financial information in the prospectus. Verification applies to numbers as much as words."},
+    {t:"Anything stale or unsupportable has been removed from the website and public materials.",label:"Public surface",source:"The company website is published information, reviewed and scrubbed as the listing approaches. The FCA can require a breaching website to be taken down."},
   ],
-  operations:[
-    "The martech stack is documented and owned, with no orphan tools",
-    "Data flows between systems are mapped and reliable",
-    "There is one source of truth for marketing performance, and the numbers reconcile",
-    "Contact and lead data has agreed quality standards, routine hygiene and a named owner",
-    "Core processes such as routing, scoring and handoff are written down, not in someone's head",
-    "Access, permissions and data governance are controlled and auditable",
-    "The stack and the team can handle the volume a public-company business will run",
+  controlled:[
+    {t:"Publicity guidelines are in place: what marketing can and cannot say, and who signs things off.",label:"Public surface",source:"It is customary for publicity guidelines to be put in place early to keep pre-prospectus marketing within the rules."},
+    {t:"Anything that could count as a financial promotion goes through an FCA-authorised approver or a clear exemption.",label:"Public surface",source:"FSMA section 21: an invitation or inducement to invest must be made or approved by an FCA-authorised person, or be exempt. Breach is a criminal offence."},
+    {t:"The website and social presence are scrubbed to match what is filed, and kept that way.",label:"Public surface",source:"Public information is controlled and must be consistent with the prospectus. The FCA can require breaching sites be taken down."},
+    {t:"Spokespeople are briefed and controlled, with one clear line on who speaks to whom.",label:"Public surface",source:"Publicity control and consistency of public statements. Near a float the safe answer to many questions is to say nothing."},
+    {t:"There is a process for handling price-sensitive information once listed (MAR readiness).",label:"The function",source:"UK Market Abuse Regulation: disclosure of inside information, insider lists and a dealing code apply from admission."},
   ],
-  narrative:[
-    "There is one approved company story that works for investors, customers, media and employees alike",
-    "Messaging is consistent across web, sales, PR and investor materials",
-    "Claims are substantiated, backed by proof such as case studies and references, and legally cleared",
-    "The public website is accurate, on message and ready for the traffic and scrutiny a listing brings",
-    "The brand is actively monitored and holds up to analyst and press scrutiny",
-    "Marketing knows what it can and cannot say once the company is in the quiet period, and a normal pattern of communications is already established",
-    "Spokespeople are briefed, coached and on message",
-    "Competitive positioning is clear and honestly defensible",
+  story:[
+    {t:"One approved message framework, consistent across website, sales, PR and investor materials.",label:"Evidence & story",source:"All IPO materials are vetted for consistency with the prospectus. Inconsistency across surfaces reads to investors as risk."},
+    {t:"Positioning is evidenced, not asserted, so it survives a competent challenge.",label:"Evidence & story",source:"Verification of objective claims. Where the company sits has to be argued with sources, not adjectives."},
+    {t:"The story ties to the numbers: every claim of momentum traces to something finance can stand behind.",label:"Evidence & story",source:"Consistency with the financial disclosures in the prospectus."},
+    {t:"Marketing's input to the equity story and investor materials is ready when the bankers and IR need it.",label:"Evidence & story",source:"The equity story is led by the sponsor, brokers and IR. Early investor meetings need a finessed, verifiable story. Marketing contributes, it does not own this."},
   ],
-  alignment:[
-    "Sales and marketing share one definition of a qualified lead",
-    "Funnel stages mean the same thing to both teams, and the key terms are defined identically",
-    "The handoff from marketing to sales is defined and actually followed",
-    "Both teams report off the same pipeline numbers",
-    "Response and follow-up SLAs exist and are met",
-    "Lead routing is rules-based, not ad hoc",
-    "The two teams meet on a regular rhythm to work the funnel together",
-  ],
-  team:[
-    "The org chart covers the roles an IPO-ready function needs",
-    "Marketing operations and data have a named owner, not a shared afterthought",
-    "Key-person risk is identified and being reduced",
-    "Skills gaps are known and being filled",
-    "Critical work does not depend on one undocumented person",
-    "The team can cope with public-company reporting and disclosure demands",
-    "The hiring plan matches the growth the business is forecasting",
+  function:[
+    {t:"Martech and data are documented and governed, with controlled, auditable access.",label:"The function",source:"Diligence and public-company governance expect controlled, auditable access to any system that touches reported numbers."},
+    {t:"There is one source of truth for marketing performance, and the numbers reconcile.",label:"The numbers",source:"Underpins provable, consistent numbers. Two departments with two numbers is the thing this prevents."},
+    {t:"Marketing contact data is held lawfully: a clear lawful basis and consent records.",label:"The function",source:"UK GDPR. A listing sharpens scrutiny of how personal data is held and used."},
+    {t:"Marketing operations has a named owner, and key-person risk is reduced.",label:"The function",source:"Capability and diligence. The function has to keep running without single points of failure."},
+    {t:"The team can produce accurate, on-time reporting at public-company cadence.",label:"The function",source:"Ongoing obligations under the DTRs and MAR set a reporting rhythm a listed company has to keep."},
   ],
 };
+function seedRows(orgId){const rows=[];WS_DEFS.forEach(w=>{(REQ_TEMPLATES[w.key]||[]).forEach((item,i)=>rows.push({org_id:orgId,ws:w.key,title:item.t,sort:i,label:item.label,source:item.source}));});return rows;}
 
 /* ===========  STATE  =========== */
 let profile=null;                 // {id,email,role,org_id,full_name}
@@ -299,9 +283,10 @@ async function boot(){
   if(!sb){ $('#app').innerHTML=`<div class="center-state">Could not load the data service. Check your connection and refresh.</div>`; return; }
   const {data:{session}}=await sb.auth.getSession();
   if(session&&session.user){ await afterLogin(session.user); }
-  else renderLogin();
+  else { document.body.style.background='var(--slate-deep)'; renderLogin(); }
 }
 async function afterLogin(user){
+  document.body.style.background='var(--cream)';
   $('#app').innerHTML=`<div class="spinner"></div>`;
   profile=await loadProfile(user.id);
   if(!profile){ $('#app').innerHTML=`<div class="center-state">Your account has no profile yet. Ask your advisor to finish setting you up.</div>`; return; }
@@ -311,7 +296,7 @@ async function afterLogin(user){
   view={name:'dashboard',ws:null};openReq=null;
   render();
 }
-async function doSignout(){ await sb.auth.signOut(); profile=null;orgs=[];currentOrg=null;cache={org:null,reqs:[],outs:[],tasks:[]}; renderLogin(); }
+async function doSignout(){ await sb.auth.signOut(); profile=null;orgs=[];currentOrg=null;cache={org:null,reqs:[],outs:[],tasks:[]}; document.body.style.background='var(--slate-deep)'; renderLogin(); }
 
 /* ===========  RENDER  =========== */
 function render(){ profile?renderApp():renderLogin(); }
@@ -389,7 +374,7 @@ function dashboard(){
     <div class="detail-grid">${detail('Sector',o.sector)}${detail('Funding',o.funding)}${detail('Scale',o.headcount)}${detail('Target',o.target)}</div>
   </div>
   ${tools}
-  <div class="section-head"><h3>The five workstreams</h3><div class="overall">Overall readiness ${overall()}%</div></div>
+  <div class="section-head"><h3>The four requirements</h3><div class="overall">Overall readiness ${overall()}%</div></div>
   <div class="ws-grid">${WS_DEFS.map(wsCard).join('')}</div>`;
 }
 function detail(k,v){return `<div class="detail"><div class="k">${k}</div><div class="v">${esc(v||'—')}</div></div>`;}
@@ -416,7 +401,7 @@ function workstreamView(){
 function reqAccordion(r){
   const open=openReq===r.id;const st=reqState(r.id);
   return `<div class="req ${open?'open':''}">
-    <button class="req-head" data-req="${r.id}"><span class="chev">▶</span><span class="req-title">${esc(r.title)}</span><span class="chip ${st}">${chipLabel[st]}</span></button>
+    <button class="req-head" data-req="${r.id}"><span class="chev">▶</span>${r.label?`<span class="dlabel">${esc(r.label)}</span>`:''}<span class="req-title">${esc(r.title)}</span><span class="chip ${st}">${chipLabel[st]}</span></button>
     ${open?reqBody(r):''}
   </div>`;
 }
@@ -425,6 +410,7 @@ function reqBody(r){
   const outHtml=os.length?os.map(outputCard).join(''):`<div style="font-family:var(--serif);color:var(--muted);font-size:13.5px">No output defined yet. This is the deliverable that proves it is true.</div>`;
   const taskHtml=ts.length?`<div class="tasks">${ts.map(taskRow).join('')}</div>`:`<div style="font-family:var(--serif);color:var(--muted);font-size:13px">No tasks yet.</div>`;
   return `<div class="req-body">
+    ${r.source?`<div class="reqsrc"><b>Source.</b> ${esc(r.source)}</div>`:''}
     <div class="sub-label"><span>The output · the proof it is true</span>${isAdmin()?`<button class="btn-xs btn-line" data-addout="${r.id}">+ Output</button>`:''}</div>
     ${outHtml}
     <div class="sub-label"><span>Things that must happen</span>${isAdmin()?`<button class="btn-xs btn-line" data-addtask="${r.id}">+ Task</button>`:''}</div>
@@ -467,8 +453,8 @@ function wire(){
   const ar=$('#addreq');if(ar)ar.onclick=()=>reqModal(null);
   const lt=$('#loadtmpl');if(lt)lt.onclick=async()=>{
     const tpl=REQ_TEMPLATES[view.ws]||[];if(!tpl.length)return;
-    if(!confirm(`Add ${tpl.length} standard requirements to this workstream? You can delete any you do not need.`))return;
-    const rows=tpl.map((title,i)=>({org_id:currentOrg,ws:view.ws,title,sort:i}));
+    if(!confirm(`Add ${tpl.length} standard requirements to this area? You can delete or relabel any you do not need.`))return;
+    const rows=tpl.map((item,i)=>({org_id:currentOrg,ws:view.ws,title:item.t,sort:i,label:item.label,source:item.source}));
     const {error}=await sb.from('requirements').insert(rows);
     if(error){alert(error.message);return;}
     await refresh();
@@ -503,6 +489,9 @@ function orgModal(){
     const row={name,sector:v('g_sector'),funding:v('g_funding'),headcount:v('g_headcount'),target:v('g_target'),intro:v('g_intro')};
     const {data,error}=await sb.from('organizations').insert(row).select().single();
     if(error){alert(error.message);return;}
+    const seed=seedRows(data.id);
+    const {error:seedErr}=await sb.from('requirements').insert(seed);
+    if(seedErr){alert('Organisation added, but the standard requirements did not seed:\n'+seedErr.message+'\n\nIf this mentions a missing "source" or "label" column, run the ALTER TABLE snippet in Supabase, then use Load standard set per area.');}
     d.remove();await loadOrgs();currentOrg=data.id;await refresh();
     function v(id){return d.querySelector('#'+id).value.trim();}
   };
@@ -510,15 +499,18 @@ function orgModal(){
 }
 function reqModal(r){
   const isNew=!r;
-  const d=modal(`<h3>${isNew?'Add a "what must be true"':'Edit statement'}</h3>
-    <p class="hint">A plain statement of something that must be true for this workstream to be ready.</p>
-    ${area('r_t','Statement',isNew?'':r.title,'e.g. Marketing reports a pipeline number finance will sign off')}
+  const d=modal(`<h3>${isNew?'Add a requirement':'Edit requirement'}</h3>
+    <p class="hint">A plain statement of something that must be true, the rule it flows from, and who owns delivering it.</p>
+    ${area('r_t','Statement',isNew?'':r.title,'e.g. Every public claim has evidence behind it and a named owner')}
+    ${area('r_src','Source · the rule it flows from',isNew?'':(r.source||''),'e.g. Verification: unverifiable statements are removed; consistency with the prospectus')}
+    <div class="field"><label>Delivery label · who owns it</label><input id="r_label" value="${isNew?'':esc(r.label||'')}" placeholder="e.g. Public surface" list="labellist"><datalist id="labellist"><option>The numbers</option><option>Evidence &amp; story</option><option>Public surface</option><option>The function</option></datalist></div>
     <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="rsave">${isNew?'Add':'Save'}</button></div>`);
   d.querySelector('[data-x]').onclick=()=>d.remove();
   d.querySelector('#rsave').onclick=async()=>{
     const t=d.querySelector('#r_t').value.trim();if(!t)return;
-    if(isNew){const {data,error}=await sb.from('requirements').insert({org_id:currentOrg,ws:view.ws,title:t,sort:cache.reqs.filter(x=>x.ws===view.ws).length}).select().single();if(error){alert(error.message);return;}openReq=data.id;}
-    else{const {error}=await sb.from('requirements').update({title:t}).eq('id',r.id);if(error){alert(error.message);return;}}
+    const src=d.querySelector('#r_src').value.trim();const lbl=d.querySelector('#r_label').value.trim();
+    if(isNew){const {data,error}=await sb.from('requirements').insert({org_id:currentOrg,ws:view.ws,title:t,source:src,label:lbl,sort:cache.reqs.filter(x=>x.ws===view.ws).length}).select().single();if(error){alert(error.message);return;}openReq=data.id;}
+    else{const {error}=await sb.from('requirements').update({title:t,source:src,label:lbl}).eq('id',r.id);if(error){alert(error.message);return;}}
     d.remove();await refresh();
   };
 }
