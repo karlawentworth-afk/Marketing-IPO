@@ -166,6 +166,42 @@
   .spinner{width:26px;height:26px;border:3px solid var(--rule);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:60px auto}
   @keyframes spin{to{transform:rotate(360deg)}}
   @media(max-width:760px){.detail-grid{grid-template-columns:1fr 1fr}.ws-grid{grid-template-columns:1fr}.out-meta{grid-template-columns:1fr}.main{padding:24px 18px 80px}.topbar-inner{padding:12px 18px}}
+  .cnav{display:flex;gap:6px;margin:0 0 22px}
+  .cnav-tab{font-family:var(--display);font-weight:800;font-size:13px;padding:8px 16px;border-radius:100px;color:var(--muted);background:transparent;border:1px solid var(--rule)}
+  .cnav-tab.on{background:var(--slate-deep);color:var(--cream);border-color:var(--slate-deep)}
+  .cnav-count{display:inline-block;margin-left:7px;background:var(--gold);color:var(--slate-deep);font-size:11px;font-weight:800;padding:0 7px;border-radius:100px}
+  .disc-intro{font-family:var(--serif);font-size:14.5px;color:var(--ink-soft);line-height:1.6;max-width:720px;margin:0 0 24px}
+  .disc-head{display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:16px}
+  .disc-head h3{font-size:18px;font-weight:800;color:var(--slate-deep)}
+  .disc-srcbtns{display:flex;gap:6px}
+  .disc-empty{font-family:var(--serif);font-size:13.5px;color:var(--muted);background:var(--cream-warm);border-radius:12px;padding:18px 20px}
+  .pain{background:var(--white);border:1px solid var(--rule-soft);border-radius:14px;padding:16px 18px;margin-bottom:12px;border-left:5px solid var(--rule)}
+  .pain.sev-red{border-left-color:#B23A3A}.pain.sev-amber{border-left-color:var(--gold-bright)}.pain.sev-low{border-left-color:var(--mint-dim)}
+  .pain.ghost{opacity:.62;border-style:dashed;background:transparent}
+  .pain-top{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+  .pain-what{font-size:15px;font-weight:700;color:var(--ink);line-height:1.4;flex:1}
+  .pain-actions{display:flex;gap:5px;align-items:center;flex-shrink:0}
+  .pain-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .pchip{font-size:11px;font-weight:700;padding:3px 9px;border-radius:100px;background:var(--cream-warm);color:var(--ink-soft);white-space:nowrap}
+  .pchip.area{background:#E4EFEC;color:#1E4038}.pchip.area.none{background:#EFEADb;color:var(--muted)}
+  .pchip.owner{background:#ECE7F0;color:#4A3A55}
+  .pchip.sevchip.sev-red{background:#F3DADA;color:#8B2F2F}.pchip.sevchip.sev-amber{background:#F6E6C2;color:#7A5A14}.pchip.sevchip.sev-low{background:#E2EEEA;color:#3C5A52}
+  .pchip.clock{background:#F3DADA;color:#8B2F2F}
+  .pchip.status{background:#E7ECEA;color:#41504D}.pchip.status.st-tasked{background:#DEEBDE;color:#33532F}.pchip.status.st-accepted{background:#EAE6DA;color:#5A5340}
+  .ghost-note{font-family:var(--serif);font-size:12.5px;color:var(--muted);margin-top:12px;font-style:italic}
+  .src{background:var(--white);border:1px solid var(--rule-soft);border-radius:12px;padding:13px 16px;margin-bottom:10px}
+  .src-top{display:flex;align-items:center;gap:10px}
+  .src-kind{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:100px;background:#E7ECEA;color:#41504D;flex-shrink:0}
+  .src-kind.tr{background:#E4EFEC;color:#1E4038}
+  .src-title{font-weight:700;font-size:14px;color:var(--ink);flex:1}
+  .src-actions{display:flex;gap:4px;flex-shrink:0}
+  .src-snip{font-family:var(--serif);font-size:13px;color:var(--muted);margin-top:8px;line-height:1.5}
+  .src-full{font-family:var(--serif);font-size:13.5px;color:var(--ink);line-height:1.6;white-space:pre-wrap;max-height:50vh;overflow:auto;background:var(--cream-warm);border-radius:10px;padding:14px 16px;margin-bottom:6px}
+  .field2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .check{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--ink-soft);margin:4px 0 6px;line-height:1.4;cursor:pointer}
+  .check input{margin-top:2px;accent-color:var(--gold);flex-shrink:0}
+  .tcard{background:var(--white);border:1px solid var(--rule-soft);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+  .tcard-req{font-weight:700;font-size:14.5px;color:var(--ink);margin-bottom:10px}
 </style>
 </head>
 <body>
@@ -176,7 +212,7 @@
 /* ===========  CONFIG  =========== */
 const SB_URL='https://ipnuehlrctbjezrxrkev.supabase.co';
 const SB_KEY='sb_publishable_-Y57ziciMZv0wx0ehD2xng_fVeozNk2';
-const VERSION='v3';
+const VERSION='v4';
 const LOGO='https://thatsclevermx.com/clevermx_logo.png';
 let sb=null;
 try{ sb = window.supabase.createClient(SB_URL, SB_KEY); }catch(e){ console.error(e); }
@@ -274,7 +310,7 @@ function taskRowsFor(seededReqs){const rows=[];(seededReqs||[]).forEach(r=>{cons
 let profile=null;                 // {id,email,role,org_id,full_name}
 let orgs=[];                      // organisations visible to me
 let currentOrg=null;             // org id
-let cache={org:null,reqs:[],outs:[],tasks:[]};
+let cache={org:null,reqs:[],outs:[],tasks:[],sources:[],pains:[]};
 let view={name:'dashboard',ws:null};
 let openReq=null;
 let authMode='signin';
@@ -283,6 +319,8 @@ let authMode='signin';
 const $=s=>document.querySelector(s);
 const esc=s=>(s||'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const isAdmin=()=>profile&&profile.role==='admin';
+const isTeam=()=>profile&&profile.role==='team';
+const painsOf=ws=>cache.pains.filter(p=>p.ws===ws);
 const reqsOf=ws=>cache.reqs.filter(r=>r.ws===ws);
 const outsOf=reqId=>cache.outs.filter(o=>o.requirement_id===reqId);
 const tasksOf=reqId=>cache.tasks.filter(t=>t.requirement_id===reqId);
@@ -309,7 +347,7 @@ async function loadOrgs(){
   else orgs=[];
 }
 async function loadOrgData(orgId){
-  if(!orgId){cache={org:null,reqs:[],outs:[],tasks:[]};return;}
+  if(!orgId){cache={org:null,reqs:[],outs:[],tasks:[],sources:[],pains:[]};return;}
   const org=orgs.find(o=>o.id===orgId)||null;
   const {data:reqs}=await sb.from('requirements').select('*').eq('org_id',orgId).order('sort').order('created_at');
   const ids=(reqs||[]).map(r=>r.id);
@@ -318,7 +356,12 @@ async function loadOrgData(orgId){
     const r1=await sb.from('outputs').select('*').in('requirement_id',ids); outs=r1.data||[];
     const r2=await sb.from('tasks').select('*').in('requirement_id',ids); tasks=r2.data||[];
   }
-  cache={org,reqs:reqs||[],outs,tasks};
+  let sources=[],pains=[];
+  if(isAdmin()){
+    const s=await sb.from('sources').select('*').eq('org_id',orgId).order('created_at',{ascending:false}); if(!s.error)sources=s.data||[];
+    const p=await sb.from('pains').select('*').eq('org_id',orgId).order('created_at',{ascending:false}); if(!p.error)pains=p.data||[];
+  }
+  cache={org,reqs:reqs||[],outs,tasks,sources,pains};
 }
 async function refresh(){ await loadOrgData(currentOrg); render(); }
 
@@ -342,7 +385,7 @@ async function afterLogin(user){
 async function doSignout(){ await sb.auth.signOut(); profile=null; orgs=[]; currentOrg=null; authMode='signin'; renderLogin(); }
 
 /* ===========  RENDER  =========== */
-function render(){ profile?renderApp():renderLogin(); }
+function render(){ if(!profile){renderLogin();return;} isAdmin()?renderApp():renderTeam(); }
 
 function renderLogin(){
   const signup=authMode==='signup';
@@ -390,7 +433,8 @@ function topbar(){
     </div></div></div>`;
 }
 function renderApp(){
-  $('#app').innerHTML=topbar()+`<div class="main">${view.name==='dashboard'?dashboard():workstreamView()}</div>`;
+  const main = view.name==='discovery' ? discoveryView() : view.name==='workstream' ? workstreamView() : dashboard();
+  $('#app').innerHTML=topbar()+`<div class="main">${main}</div>`;
   $('#signout').onclick=doSignout; wire();
 }
 
@@ -415,6 +459,7 @@ function dashboard(){
     <button class="btn-sm btn-line" id="editco">Edit company details</button></div>`:'';
   return `
   <div class="orgbar"><h2>Readiness <em>overview</em></h2>${orgSwitch}</div>
+  ${clientNav('readiness')}
   <div class="card company">
     <div class="nm">${esc(o.name)}</div>
     <p class="intro">${esc(o.intro)||''}</p>
@@ -504,11 +549,168 @@ function taskRow(t){
   </div>`;
 }
 
+function clientNav(active){
+  const open=cache.pains.filter(p=>p.status==='open').length;
+  return `<div class="cnav">
+    <button class="cnav-tab ${active==='readiness'?'on':''}" data-nav="readiness">Readiness</button>
+    <button class="cnav-tab ${active==='discovery'?'on':''}" data-nav="discovery">Discovery${open?`<span class="cnav-count">${open}</span>`:''}</button>
+  </div>`;
+}
+function orgSwitcher(){return isAdmin()?`<div class="org-select"><label>Client</label><select id="orgsel">${orgs.map(x=>`<option value="${x.id}" ${x.id===currentOrg?'selected':''}>${esc(x.name)}</option>`).join('')}</select><button class="btn-xs btn-line" id="addorg">+ New</button></div>`:'';}
+
+/* ===========  DISCOVERY (admin cockpit)  =========== */
+const PAIN_STATUS={open:'Open',inhand:'In hand',tasked:'Turned into tasks',accepted:'Accepted gap'};
+const SEV_LABEL={red:'Critical',amber:'Serious',low:'Minor'};
+function discoveryView(){
+  const o=orgObj();const pains=cache.pains;const sources=cache.sources;
+  return `
+  <div class="orgbar"><h2>Discovery</h2>${orgSwitcher()}</div>
+  ${clientNav('discovery')}
+  <p class="disc-intro">Where you run ${esc(o?o.name:'this engagement')} from. Capture what you find in plain words, tag it to the requirement it threatens, mark how bad it is and whether the clock is running, then turn it into work.</p>
+  <div class="disc-head"><h3>Pain log</h3><button class="btn-xs btn-dark" id="addpain">+ Pain point</button></div>
+  ${pains.length? pains.map(painCard).join('') : painEmpty()}
+  <div class="disc-head" style="margin-top:34px"><h3>Sources</h3><div class="disc-srcbtns"><button class="btn-xs btn-line" id="addnote">+ Note</button><button class="btn-xs btn-line" id="addtranscript">+ Transcript</button></div></div>
+  ${sources.length? sources.map(sourceCard).join('') : `<div class="disc-empty">No notes or transcripts yet. Drop in meeting notes, or paste a transcript to work from. This is private to you.</div>`}`;
+}
+function painCard(p){
+  const sev=p.severity||'amber';const area=WS_DEFS.find(w=>w.key===p.ws);
+  return `<div class="pain sev-${sev}">
+    <div class="pain-top">
+      <div class="pain-what">${esc(p.what)}</div>
+      <div class="pain-actions">
+        ${p.status!=='tasked'?`<button class="btn-xs btn-line" data-paintask="${p.id}">Turn into task</button>`:''}
+        <button class="icon-btn" data-editpain="${p.id}">Edit</button>
+        <button class="icon-btn del" data-delpain="${p.id}">✕</button>
+      </div>
+    </div>
+    <div class="pain-meta">
+      ${area?`<span class="pchip area">Threatens ${esc(area.letter)}. ${esc(area.title)}</span>`:`<span class="pchip area none">Not yet tagged</span>`}
+      <span class="pchip owner">Owner: ${esc(p.blocker_owner||'—')}</span>
+      <span class="pchip sevchip sev-${sev}">${SEV_LABEL[sev]||'Serious'}</span>
+      ${p.clock?`<span class="pchip clock">Clock running</span>`:''}
+      <span class="pchip status st-${p.status}">${PAIN_STATUS[p.status]||'Open'}</span>
+    </div>
+  </div>`;
+}
+function painEmpty(){
+  return `<div class="pain sev-red ghost">
+    <div class="pain-top"><div class="pain-what">Example. We do not own the CRM, IT does, and marketing has no write access</div></div>
+    <div class="pain-meta">
+      <span class="pchip area">Threatens 1. Provable claims</span>
+      <span class="pchip owner">Owner: IT</span>
+      <span class="pchip sevchip sev-red">Critical</span>
+      <span class="pchip clock">Clock running</span>
+      <span class="pchip status st-open">Open</span>
+    </div>
+    <div class="ghost-note">This is how a logged pain looks. Add your first real one with the button above.</div>
+  </div>`;
+}
+function sourceCard(s){
+  const body=s.body||'';
+  return `<div class="src">
+    <div class="src-top"><span class="src-kind ${s.kind==='transcript'?'tr':''}">${s.kind==='transcript'?'Transcript':'Note'}</span><div class="src-title">${esc(s.title||'Untitled')}</div>
+      <div class="src-actions"><button class="icon-btn" data-viewsrc="${s.id}">Open</button><button class="icon-btn del" data-delsrc="${s.id}">✕</button></div></div>
+    ${body?`<div class="src-snip">${esc(body.slice(0,180))}${body.length>180?'…':''}</div>`:''}
+  </div>`;
+}
+function painModal(p){
+  const isNew=!p;const sev=isNew?'amber':(p.severity||'amber');const ws=isNew?'':(p.ws||'');const status=isNew?'open':(p.status||'open');
+  const d=modal(`<h3>${isNew?'Log a pain point':'Edit pain point'}</h3>
+    <p class="hint">Blunt is good. What is wrong, in your words.</p>
+    ${area('p_what','What is wrong',isNew?'':p.what,'e.g. We do not own the CRM, IT does, and we have no write access')}
+    <div class="field"><label>Which requirement does it threaten</label><select id="p_ws"><option value="">Not sure yet</option>${WS_DEFS.map(w=>`<option value="${w.key}" ${ws===w.key?'selected':''}>${w.letter}. ${esc(w.title)}</option>`).join('')}</select></div>
+    <div class="field"><label>Who owns the blocker</label><input id="p_owner" value="${isNew?'':esc(p.blocker_owner||'')}" placeholder="e.g. IT, Sales, Finance, Marketing" list="ownerlist"><datalist id="ownerlist"><option>Marketing</option><option>IT</option><option>Sales</option><option>Finance</option><option>Leadership</option><option>External</option></datalist></div>
+    <div class="field2"><div class="field"><label>How bad</label><select id="p_sev"><option value="red" ${sev==='red'?'selected':''}>Critical</option><option value="amber" ${sev==='amber'?'selected':''}>Serious</option><option value="low" ${sev==='low'?'selected':''}>Minor</option></select></div>
+      <div class="field"><label>Status</label><select id="p_status">${Object.entries(PAIN_STATUS).map(([k,v])=>`<option value="${k}" ${status===k?'selected':''}>${v}</option>`).join('')}</select></div></div>
+    <label class="check"><input type="checkbox" id="p_clock" ${(!isNew&&p.clock)?'checked':''}> The clock is running. Waiting costs history we cannot get back later</label>
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="psave">${isNew?'Log it':'Save'}</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#psave').onclick=async()=>{
+    const what=d.querySelector('#p_what').value.trim();if(!what)return;
+    const row={org_id:currentOrg,what,ws:d.querySelector('#p_ws').value||null,blocker_owner:d.querySelector('#p_owner').value.trim(),severity:d.querySelector('#p_sev').value,status:d.querySelector('#p_status').value,clock:d.querySelector('#p_clock').checked};
+    if(isNew){const {error}=await sb.from('pains').insert(row);if(error){alert(error.message);return;}}
+    else{const {error}=await sb.from('pains').update(row).eq('id',p.id);if(error){alert(error.message);return;}}
+    d.remove();await refresh();
+  };
+}
+function sourceModal(s,kind){
+  const isNew=!s;kind=kind||(s&&s.kind)||'note';
+  const d=modal(`<h3>${isNew?(kind==='transcript'?'Add a transcript':'Add a note'):'Edit'}</h3>
+    <p class="hint">${kind==='transcript'?'Paste the transcript text. It stays in your private discovery space.':'Capture what you found. Private to you.'}</p>
+    ${fld('s_title','Title',isNew?'':(s.title||''),kind==='transcript'?'e.g. Discovery call with IT, 3 July':'e.g. First look at the martech stack')}
+    ${area('s_body',kind==='transcript'?'Transcript':'Note',isNew?'':(s.body||''),'Paste or type here')}
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="ssave">${isNew?'Add':'Save'}</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#ssave').onclick=async()=>{
+    const title=d.querySelector('#s_title').value.trim();const body=d.querySelector('#s_body').value.trim();if(!title&&!body)return;
+    if(isNew){const {error}=await sb.from('sources').insert({org_id:currentOrg,kind,title,body});if(error){alert(error.message);return;}}
+    else{const {error}=await sb.from('sources').update({title,body}).eq('id',s.id);if(error){alert(error.message);return;}}
+    d.remove();await refresh();
+  };
+}
+function sourceViewModal(s){
+  const d=modal(`<h3>${esc(s.title||'Untitled')}</h3><p class="hint">${s.kind==='transcript'?'Transcript':'Note'}</p>
+    <div class="src-full">${esc(s.body||'')||'<span style="color:var(--muted)">Empty.</span>'}</div>
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Close</button><button class="btn-sm btn-dark" id="editsrc">Edit</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#editsrc').onclick=()=>{d.remove();sourceModal(s,s.kind);};
+}
+function painTaskModal(p){
+  const areaReqs=p.ws?cache.reqs.filter(r=>r.ws===p.ws):cache.reqs;
+  if(!areaReqs.length){alert('Add requirements to this area first, then turn pains into tasks against them.');return;}
+  const d=modal(`<h3>Turn this pain into a task</h3>
+    <p class="hint">${esc(p.what)}</p>
+    <div class="field"><label>Against which requirement</label><select id="pt_req">${areaReqs.map(r=>`<option value="${r.id}">${esc(r.title)}</option>`).join('')}</select></div>
+    ${fld('pt_what','Task','Address: '+p.what,'What needs doing')}
+    ${fld('pt_who','Who','','Owner')}
+    <div class="field"><label>When</label><input id="pt_when" type="date"></div>
+    <label class="check"><input type="checkbox" id="pt_mark" checked> Mark this pain as turned into tasks</label>
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="ptsave">Create task</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#ptsave').onclick=async()=>{
+    const reqId=d.querySelector('#pt_req').value;const what=d.querySelector('#pt_what').value.trim();if(!what)return;
+    const {error}=await sb.from('tasks').insert({requirement_id:reqId,what,who:d.querySelector('#pt_who').value.trim(),when_due:d.querySelector('#pt_when').value||null,status:'todo'});
+    if(error){alert(error.message);return;}
+    if(d.querySelector('#pt_mark').checked){await sb.from('pains').update({status:'tasked'}).eq('id',p.id);}
+    d.remove();await refresh();
+  };
+}
+
+/* ===========  TEAM VIEW (stripped, no discovery)  =========== */
+function renderTeam(){
+  $('#app').innerHTML=topbar()+`<div class="main">${teamView()}</div>`;
+  $('#signout').onclick=doSignout;
+  document.querySelectorAll('[data-cycle]').forEach(b=>b.onclick=async()=>{const ord=['todo','doing','done'];const ns=ord[(ord.indexOf(b.dataset.now)+1)%3];await sb.from('tasks').update({status:ns}).eq('id',b.dataset.cycle);await refresh();});
+}
+function teamView(){
+  const o=orgObj();
+  if(!o||!cache.reqs.length){return `<div class="orgbar"><h2>Your work</h2></div><div class="center-state">Nothing assigned yet. Your advisor will set this up.</div>`;}
+  const groups=WS_DEFS.map(w=>({w,reqs:reqsOf(w.key)})).filter(g=>g.reqs.length);
+  const body=groups.map(g=>`
+    <div class="section-head"><h3>${g.w.letter}. ${esc(g.w.title)}</h3></div>
+    ${g.reqs.map(r=>{const ts=tasksOf(r.id);return `<div class="tcard">
+      <div class="tcard-req">${esc(r.title)}</div>
+      ${ts.length?`<div class="tasks">${ts.map(taskRow).join('')}</div>`:`<div class="disc-empty">No tasks here yet.</div>`}
+    </div>`;}).join('')}`).join('');
+  return `<div class="orgbar"><h2>Your work <em>${esc(o.name)}</em></h2></div>
+    <p class="disc-intro">The work for ${esc(o.name)}. Update status as you go.</p>
+    ${body}`;
+}
+
 /* ===========  EVENTS  =========== */
 function wire(){
   const sel=$('#orgsel');if(sel)sel.onchange=async()=>{currentOrg=sel.value;openReq=null;await refresh();};
   const ao=$('#addorg');if(ao)ao.onclick=orgModal;
+  document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{view={name:b.dataset.nav==='discovery'?'discovery':'dashboard',ws:null};openReq=null;render();});
   document.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{view={name:'workstream',ws:b.dataset.ws};openReq=null;render();});
+  const apn=$('#addpain');if(apn)apn.onclick=()=>painModal(null);
+  document.querySelectorAll('[data-editpain]').forEach(b=>b.onclick=()=>painModal(cache.pains.find(p=>p.id===b.dataset.editpain)));
+  document.querySelectorAll('[data-delpain]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this pain point?')){await sb.from('pains').delete().eq('id',b.dataset.delpain);await refresh();}});
+  document.querySelectorAll('[data-paintask]').forEach(b=>b.onclick=()=>painTaskModal(cache.pains.find(p=>p.id===b.dataset.paintask)));
+  const an=$('#addnote');if(an)an.onclick=()=>sourceModal(null,'note');
+  const at=$('#addtranscript');if(at)at.onclick=()=>sourceModal(null,'transcript');
+  document.querySelectorAll('[data-viewsrc]').forEach(b=>b.onclick=()=>sourceViewModal(cache.sources.find(s=>s.id===b.dataset.viewsrc)));
+  document.querySelectorAll('[data-delsrc]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this source?')){await sb.from('sources').delete().eq('id',b.dataset.delsrc);await refresh();}});
   const back=$('#back');if(back)back.onclick=()=>{view={name:'dashboard',ws:null};render();};
   document.querySelectorAll('[data-req]').forEach(b=>b.onclick=()=>{openReq=openReq===b.dataset.req?null:b.dataset.req;render();});
   const ar=$('#addreq');if(ar)ar.onclick=()=>reqModal(null);
