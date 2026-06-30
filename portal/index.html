@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<!-- clevermx internal portal - LIVE (Supabase). A tracker, not a repository. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>clevermx portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#204640;--slate-deep:#163029;--slate-deeper:#0e201c;
+    --cream:#FAF6EC;--cream-warm:#F2EBD8;--mint:#B8E5DE;--mint-dim:#98C8C0;
+    --gold:#B8902E;--gold-bright:#D4A82E;--ink:#1A2F2C;--ink-soft:#3A4A47;
+    --muted:#6B7A78;--rule:#D9D2BE;--rule-soft:#ECE4D0;--white:#fff;
+    --display:'Nunito',system-ui,sans-serif;--serif:'Source Serif 4',Georgia,serif;
+    --red:#8B3232;--green:#3A5A3A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--display);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5}
+  button{font-family:var(--display);cursor:pointer;border:none;background:none}
+  input,select,textarea{font-family:var(--display);font-size:14px}
+  .hidden{display:none!important}
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--slate-deep);padding:24px}
+  .login-card{width:100%;max-width:380px;background:var(--cream);border-radius:18px;padding:40px 36px;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+  .login-card img{height:34px;margin-bottom:28px}
+  .login-card h1{font-size:20px;font-weight:800;color:var(--slate-deep);margin-bottom:6px;letter-spacing:-.01em}
+  .login-card .sub{font-family:var(--serif);font-size:14px;color:var(--muted);margin-bottom:26px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+  .field input,.field select,.field textarea{width:100%;padding:11px 13px;border:1px solid var(--rule);border-radius:9px;background:var(--white);color:var(--ink)}
+  .field textarea{min-height:62px;resize:vertical}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;padding:11px 18px;border-radius:100px;transition:.15s}
+  .btn-primary{background:var(--slate);color:var(--cream);width:100%;margin-top:6px}
+  .btn-primary:hover{background:var(--slate-deep);color:var(--mint)}
+  .auth-toggle{margin-top:18px;font-size:12.5px;color:var(--muted);text-align:center}
+  .auth-toggle button{color:var(--gold);font-weight:700}
+  .auth-toggle button:hover{text-decoration:underline}
+  .msg{font-size:12.5px;margin-top:12px;padding:10px 12px;border-radius:9px;line-height:1.4}
+  .msg.err{background:#F5E2E2;color:var(--red)}
+  .msg.ok{background:#DEEBDE;color:var(--green)}
+
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(250,246,236,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule-soft)}
+  .topbar-inner{max-width:1080px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .topbar img{height:28px;display:block}
+  .topbar-right{display:flex;align-items:center;gap:14px}
+  .who{text-align:right;line-height:1.25}
+  .who .name{font-weight:800;font-size:13px;color:var(--slate-deep)}
+  .who .role{font-size:11px;color:var(--muted);font-weight:600}
+  .pill{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:100px;background:var(--mint);color:var(--slate-deep)}
+  .pill.admin{background:var(--gold-bright);color:var(--slate-deep)}
+  .link-btn{font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+  .link-btn:hover{color:var(--gold)}
+
+  .main{max-width:1080px;margin:0 auto;padding:34px 28px 90px}
+  .crumb{font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:14px}
+  .crumb button{color:var(--gold);font-weight:700;font-size:12.5px}
+  .crumb button:hover{text-decoration:underline}
+  .orgbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+  .orgbar h2{font-size:26px;font-weight:800;color:var(--slate-deep);letter-spacing:-.02em}
+  .orgbar h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--gold)}
+  .org-select{display:flex;align-items:center;gap:8px}
+  .org-select label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .org-select select{padding:8px 12px;border:1px solid var(--rule);border-radius:9px;background:var(--white);font-weight:700;color:var(--slate-deep)}
+
+  .card{background:var(--white);border:1px solid var(--rule-soft);border-radius:16px;padding:24px}
+  .company{margin-bottom:28px}
+  .company .nm{font-size:21px;font-weight:800;color:var(--slate-deep);margin-bottom:10px}
+  .company .intro{font-family:var(--serif);font-size:15px;color:var(--ink-soft);line-height:1.55;max-width:600px}
+  .detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px;padding-top:18px;border-top:1px solid var(--rule-soft)}
+  .detail .k{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .detail .v{font-size:15px;font-weight:700;color:var(--slate-deep)}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:4px 0 16px}
+  .section-head h3{font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .overall{font-size:12.5px;font-weight:700;color:var(--ink-soft)}
+  .ws-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .ws-card{background:var(--white);border:1px solid var(--rule-soft);border-radius:14px;padding:22px;cursor:pointer;transition:.15s;text-align:left;width:100%;display:block}
+  .ws-card:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 24px rgba(26,47,44,.06)}
+  .ws-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .ws-letter{font-weight:800;font-size:12px;color:var(--slate-deep);background:var(--cream-warm);width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center}
+  .ws-card h4{font-size:17px;font-weight:800;color:var(--slate-deep);letter-spacing:-.01em}
+  .ws-card .desc{font-family:var(--serif);font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:18px;min-height:40px}
+  .bar-row{display:flex;align-items:center;gap:10px}
+  .bar{flex:1;height:8px;background:var(--rule-soft);border-radius:100px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--gold);border-radius:100px;transition:width .4s ease}
+  .bar.full>i{background:var(--green)}
+  .bar-pct{font-size:12.5px;font-weight:800;color:var(--slate-deep);min-width:34px;text-align:right}
+  .ws-card .count{font-size:11.5px;color:var(--muted);font-weight:600;margin-top:8px}
+  .ws-detail-head h2{font-size:26px;font-weight:800;color:var(--slate-deep);letter-spacing:-.02em}
+  .ws-detail-head .desc{font-family:var(--serif);font-size:15px;color:var(--ink-soft);max-width:600px;margin-top:6px}
+  .ws-bigbar{margin:18px 0 8px;max-width:420px}
+  .mbt-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:26px 0 12px}
+  .mbt-head h3{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .req{background:var(--white);border:1px solid var(--rule-soft);border-radius:14px;margin-bottom:12px;overflow:hidden}
+  .req-head{display:flex;align-items:center;gap:14px;padding:18px 20px;cursor:pointer;width:100%;text-align:left;background:none}
+  .req-head:hover{background:var(--cream-warm)}
+  .chev{transition:transform .2s;color:var(--muted);font-size:13px;flex-shrink:0}
+  .req.open .chev{transform:rotate(90deg)}
+  .req-title{flex:1;font-weight:800;font-size:15.5px;color:var(--slate-deep);line-height:1.35}
+  .chip{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+  .chip.met{background:#D6E5D6;color:var(--green)}
+  .chip.prog{background:#D8E8F0;color:#2A5670}
+  .chip.none{background:#EDE7D6;color:#6B5012}
+  .req-body{padding:4px 20px 22px;border-top:1px solid var(--rule-soft)}
+  .sub-label{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:18px 0 10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .output{border:1px solid var(--rule);border-radius:12px;padding:16px 18px;background:var(--cream)}
+  .output+.output{margin-top:10px}
+  .out-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .out-name{font-weight:800;font-size:15px;color:var(--slate-deep)}
+  .out-badge{font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:100px}
+  .out-badge.approved{background:#D6E5D6;color:var(--green)}
+  .out-badge.pending{background:#EDE7D6;color:#6B5012}
+  .out-meta{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;margin-top:14px}
+  .out-meta .k{font-size:10px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+  .out-meta .v{font-size:13.5px;color:var(--ink);font-family:var(--serif);line-height:1.45}
+  .out-meta .v a{color:var(--gold);font-weight:600;font-family:var(--display);text-decoration:none;word-break:break-all}
+  .out-meta .v a:hover{text-decoration:underline}
+  .out-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .tasks{margin-top:4px}
+  .task{display:flex;align-items:center;gap:12px;padding:11px 2px;border-top:1px solid var(--rule-soft)}
+  .task:first-child{border-top:none}
+  .task .tw{flex:1}
+  .task .tw .what{font-weight:700;font-size:14px;color:var(--slate-deep)}
+  .task .tw .meta{font-size:12px;color:var(--muted);margin-top:2px}
+  .task .meta .over{color:var(--red);font-weight:700}
+  .status{font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:5px 10px;border-radius:100px;cursor:pointer;white-space:nowrap}
+  .status.todo{background:#EDE7D6;color:#6B5012}
+  .status.doing{background:#D8E8F0;color:#2A5670}
+  .status.done{background:#D6E5D6;color:#3A5A3A}
+  .icon-btn{font-size:12px;font-weight:700;color:var(--muted);padding:4px 8px;border-radius:7px}
+  .icon-btn:hover{background:var(--cream-warm);color:var(--slate-deep)}
+  .icon-btn.del:hover{color:var(--red)}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap}
+  .btn-sm{font-size:12.5px;font-weight:700;padding:9px 15px;border-radius:100px}
+  .btn-xs{font-size:11.5px;font-weight:700;padding:6px 12px;border-radius:100px}
+  .btn-dark{background:var(--slate);color:var(--cream)}
+  .btn-dark:hover{background:var(--slate-deep);color:var(--mint)}
+  .btn-line{border:1px solid var(--rule);color:var(--slate-deep);background:var(--white)}
+  .btn-line:hover{border-color:var(--gold);color:var(--gold)}
+  .btn-approve{background:var(--green);color:#fff}
+  .btn-approve:hover{filter:brightness(1.08)}
+  .modal-bg{position:fixed;inset:0;background:rgba(14,32,28,.55);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .modal{background:var(--cream);border-radius:16px;padding:28px;width:100%;max-width:500px;max-height:90vh;overflow:auto}
+  .modal h3{font-size:18px;font-weight:800;color:var(--slate-deep);margin-bottom:6px}
+  .modal .hint{font-size:12.5px;color:var(--muted);margin-bottom:18px;font-family:var(--serif)}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+  .report-box{white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.5;background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:16px;max-height:360px;overflow:auto;color:var(--ink-soft)}
+  .center-state{max-width:520px;margin:80px auto;text-align:center;color:var(--muted);font-family:var(--serif);font-size:16px}
+  .spinner{width:26px;height:26px;border:3px solid var(--rule);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin:60px auto}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media(max-width:760px){.detail-grid{grid-template-columns:1fr 1fr}.ws-grid{grid-template-columns:1fr}.out-meta{grid-template-columns:1fr}.main{padding:24px 18px 80px}.topbar-inner{padding:12px 18px}}
+</style>
+</head>
+<body>
+<div id="app"><div class="spinner"></div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ===========  CONFIG  =========== */
+const SB_URL='https://ipnuehlrctbjezrxrkev.supabase.co';
+const SB_KEY='sb_publishable_-Y57ziciMZv0wx0ehD2xng_fVeozNk2';
+const LOGO='https://thatsclevermx.com/clevermx_logo.png';
+let sb=null;
+try{ sb = window.supabase.createClient(SB_URL, SB_KEY); }catch(e){ console.error(e); }
+
+const WS_DEFS=[
+  {key:'numbers',letter:'A',title:'The numbers',desc:'Pipeline, attribution and a marketing number finance will sign off.'},
+  {key:'operations',letter:'B',title:'The operations spine',desc:'The stack, the data and the ways of working underneath it all.'},
+  {key:'narrative',letter:'C',title:'The narrative',desc:'A consistent story the business can stand behind under scrutiny.'},
+  {key:'alignment',letter:'D',title:'Sales and marketing alignment',desc:'One funnel, shared definitions, no arguing about whose lead it is.'},
+  {key:'team',letter:'E',title:'Team and capability',desc:'The people, roles and skills the function needs to hold up.'},
+];
+
+/* ===========  STATE  =========== */
+let profile=null;                 // {id,email,role,org_id,full_name}
+let orgs=[];                      // organisations visible to me
+let currentOrg=null;             // org id
+let cache={org:null,reqs:[],outs:[],tasks:[]};
+let view={name:'dashboard',ws:null};
+let openReq=null;
+let authMode='signin';
+
+/* ===========  HELPERS  =========== */
+const $=s=>document.querySelector(s);
+const esc=s=>(s||'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const isAdmin=()=>profile&&profile.role==='admin';
+const reqsOf=ws=>cache.reqs.filter(r=>r.ws===ws);
+const outsOf=reqId=>cache.outs.filter(o=>o.requirement_id===reqId);
+const tasksOf=reqId=>cache.tasks.filter(t=>t.requirement_id===reqId);
+function reqMet(reqId){const os=outsOf(reqId);return os.length>0&&os.every(o=>o.status==='approved');}
+function reqState(reqId){if(reqMet(reqId))return 'met';const os=outsOf(reqId),ts=tasksOf(reqId);if(os.length||ts.some(t=>t.status!=='todo'))return 'prog';return 'none';}
+function wsPct(ws){const rs=reqsOf(ws);if(!rs.length)return 0;return Math.round(rs.filter(r=>reqMet(r.id)).length/rs.length*100);}
+function overall(){const v=WS_DEFS.map(w=>wsPct(w.key));return Math.round(v.reduce((a,b)=>a+b,0)/v.length);}
+function overdue(when,status){if(status==='done'||!when)return false;return new Date(when)<new Date(new Date().toDateString());}
+const fmtDate=d=>{if(!d)return '—';return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})};
+const stLabel={todo:'To do',doing:'In progress',done:'Done'};
+const chipLabel={met:'Output approved',prog:'In progress',none:'Not started'};
+const whereHtml=w=>{const v=esc(w);return /^https?:\/\//i.test(w||'')?`<a href="${v}" target="_blank" rel="noopener">${v}</a>`:(v||'—');};
+const orgObj=()=>orgs.find(o=>o.id===currentOrg)||cache.org;
+
+/* ===========  DATA LAYER  =========== */
+async function loadProfile(uid){
+  const {data,error}=await sb.from('profiles').select('*').eq('id',uid).single();
+  if(error){console.error(error);return null;}
+  return data;
+}
+async function loadOrgs(){
+  if(isAdmin()){const {data}=await sb.from('organizations').select('*').order('name');orgs=data||[];}
+  else if(profile.org_id){const {data}=await sb.from('organizations').select('*').eq('id',profile.org_id);orgs=data||[];}
+  else orgs=[];
+}
+async function loadOrgData(orgId){
+  if(!orgId){cache={org:null,reqs:[],outs:[],tasks:[]};return;}
+  const org=orgs.find(o=>o.id===orgId)||null;
+  const {data:reqs}=await sb.from('requirements').select('*').eq('org_id',orgId).order('sort').order('created_at');
+  const ids=(reqs||[]).map(r=>r.id);
+  let outs=[],tasks=[];
+  if(ids.length){
+    const r1=await sb.from('outputs').select('*').in('requirement_id',ids); outs=r1.data||[];
+    const r2=await sb.from('tasks').select('*').in('requirement_id',ids); tasks=r2.data||[];
+  }
+  cache={org,reqs:reqs||[],outs,tasks};
+}
+async function refresh(){ await loadOrgData(currentOrg); render(); }
+
+/* ===========  BOOT  =========== */
+async function boot(){
+  if(!sb){ $('#app').innerHTML=`<div class="center-state">Could not load the data service. Check your connection and refresh.</div>`; return; }
+  const {data:{session}}=await sb.auth.getSession();
+  if(session&&session.user){ await afterLogin(session.user); }
+  else renderLogin();
+}
+async function afterLogin(user){
+  $('#app').innerHTML=`<div class="spinner"></div>`;
+  profile=await loadProfile(user.id);
+  if(!profile){ $('#app').innerHTML=`<div class="center-state">Your account has no profile yet. Ask your advisor to finish setting you up.</div>`; return; }
+  await loadOrgs();
+  currentOrg=orgs.length?orgs[0].id:null;
+  await loadOrgData(currentOrg);
+  view={name:'dashboard',ws:null};openReq=null;
+  render();
+}
+async function doSignout(){ await sb.auth.signOut(); profile=null;orgs=[];currentOrg=null;cache={org:null,reqs:[],outs:[],tasks:[]}; renderLogin(); }
+
+/* ===========  RENDER  =========== */
+function render(){ profile?renderApp():renderLogin(); }
+
+function renderLogin(){
+  const signup=authMode==='signup';
+  $('#app').innerHTML=`
+  <div class="login-wrap"><div class="login-card">
+    <img src="${LOGO}" alt="that's clevermx" onerror="this.style.display='none'">
+    <h1>${signup?'Create your account':'Portal sign in'}</h1>
+    <p class="sub">Marketing operations readiness, tracked in one place.</p>
+    <div class="field"><label>Email</label><input id="email" type="email" placeholder="you@company.com"></div>
+    <div class="field"><label>Password</label><input id="pw" type="password" placeholder="••••••••"></div>
+    <button class="btn btn-primary" id="go">${signup?'Create account':'Sign in'}</button>
+    <div id="authmsg"></div>
+    <div class="auth-toggle">${signup?'Already have an account? <button id="tog">Sign in</button>':'Need an account? <button id="tog">Create one</button>'}</div>
+  </div></div>`;
+  $('#go').onclick=submitAuth;
+  $('#tog').onclick=()=>{authMode=signup?'signin':'signup';renderLogin();};
+  $('#pw').addEventListener('keydown',e=>{if(e.key==='Enter')submitAuth();});
+}
+async function submitAuth(){
+  const email=$('#email').value.trim(), pw=$('#pw').value;
+  const msg=$('#authmsg');
+  if(!email||!pw){msg.innerHTML=`<div class="msg err">Enter your email and password.</div>`;return;}
+  $('#go').textContent='Please wait...';
+  if(authMode==='signup'){
+    const {error}=await sb.auth.signUp({email,password:pw});
+    if(error){msg.innerHTML=`<div class="msg err">${esc(error.message)}</div>`;$('#go').textContent='Create account';return;}
+    msg.innerHTML=`<div class="msg ok">Account created. If email confirmation is on, confirm via the email, then sign in.</div>`;
+    authMode='signin';$('#go').textContent='Sign in';
+  }else{
+    const {data,error}=await sb.auth.signInWithPassword({email,password:pw});
+    if(error){msg.innerHTML=`<div class="msg err">${esc(error.message)}</div>`;$('#go').textContent='Sign in';return;}
+    await afterLogin(data.user);
+  }
+}
+
+function topbar(){
+  return `<div class="topbar"><div class="topbar-inner">
+    <img src="${LOGO}" alt="that's clevermx" onerror="this.style.display='none'">
+    <div class="topbar-right">
+      <div class="who"><div class="name">${esc(profile.full_name||profile.email)}</div><div class="role">${isAdmin()?'Admin':esc(orgObj()?orgObj().name:'')}</div></div>
+      <span class="pill ${isAdmin()?'admin':''}">${isAdmin()?'Admin':'Client'}</span>
+      <button class="link-btn" id="signout">Sign out</button>
+    </div></div></div>`;
+}
+function renderApp(){
+  $('#app').innerHTML=topbar()+`<div class="main">${view.name==='dashboard'?dashboard():workstreamView()}</div>`;
+  $('#signout').onclick=doSignout; wire();
+}
+
+function dashboard(){
+  if(isAdmin()&&orgs.length===0){
+    return `<div class="orgbar"><h2>Readiness <em>overview</em></h2></div>
+      <div class="center-state">No clients yet.<br><br><button class="btn-sm btn-dark" id="addorg">+ Add your first organisation</button></div>`;
+  }
+  if(!currentOrg||!orgObj()){
+    return `<div class="center-state">No organisation is assigned to your account yet. Your advisor will set this up.</div>`;
+  }
+  const o=orgObj();
+  const orgSwitch=isAdmin()?`<div class="org-select"><label>Client</label>
+    <select id="orgsel">${orgs.map(x=>`<option value="${x.id}" ${x.id===currentOrg?'selected':''}>${esc(x.name)}</option>`).join('')}</select>
+    <button class="btn-xs btn-line" id="addorg">+ New</button></div>`:'';
+  const tools=isAdmin()?`<div class="toolbar" style="margin-bottom:24px">
+    <button class="btn-sm btn-dark" id="report">Generate status report</button>
+    <button class="btn-sm btn-line" id="export">Export data (JSON)</button>
+    <button class="btn-sm btn-line" id="editco">Edit company details</button></div>`:'';
+  return `
+  <div class="orgbar"><h2>Readiness <em>overview</em></h2>${orgSwitch}</div>
+  <div class="card company">
+    <div class="nm">${esc(o.name)}</div>
+    <p class="intro">${esc(o.intro)||''}</p>
+    <div class="detail-grid">${detail('Sector',o.sector)}${detail('Funding',o.funding)}${detail('Scale',o.headcount)}${detail('Target',o.target)}</div>
+  </div>
+  ${tools}
+  <div class="section-head"><h3>The five workstreams</h3><div class="overall">Overall readiness ${overall()}%</div></div>
+  <div class="ws-grid">${WS_DEFS.map(wsCard).join('')}</div>`;
+}
+function detail(k,v){return `<div class="detail"><div class="k">${k}</div><div class="v">${esc(v||'—')}</div></div>`;}
+function wsCard(w){
+  const pct=wsPct(w.key);const rs=reqsOf(w.key);const met=rs.filter(r=>reqMet(r.id)).length;
+  return `<button class="ws-card" data-ws="${w.key}">
+    <div class="ws-top"><span class="ws-letter">${w.letter}</span><h4>${esc(w.title)}</h4></div>
+    <div class="desc">${esc(w.desc)}</div>
+    <div class="bar-row"><span class="bar ${pct===100?'full':''}"><i style="width:${pct}%"></i></span><span class="bar-pct">${pct}%</span></div>
+    <div class="count">${met} of ${rs.length} must-be-true met</div>
+  </button>`;
+}
+
+function workstreamView(){
+  const w=WS_DEFS.find(x=>x.key===view.ws);const pct=wsPct(w.key);const rs=reqsOf(w.key);
+  const list=rs.length?rs.map(reqAccordion).join(''):`<div class="card" style="color:var(--muted);font-family:var(--serif)">Nothing defined here yet.</div>`;
+  return `
+  <div class="crumb"><button id="back">← Readiness overview</button> &nbsp;/&nbsp; ${esc(orgObj().name)}</div>
+  <div class="ws-detail-head"><h2>${w.letter}. ${esc(w.title)}</h2><div class="desc">${esc(w.desc)}</div></div>
+  <div class="ws-bigbar"><div class="bar-row"><span class="bar ${pct===100?'full':''}"><i style="width:${pct}%"></i></span><span class="bar-pct">${pct}%</span></div></div>
+  <div class="mbt-head"><h3>What must be true</h3>${isAdmin()?`<button class="btn-xs btn-line" id="addreq">+ Add</button>`:''}</div>
+  ${list}`;
+}
+function reqAccordion(r){
+  const open=openReq===r.id;const st=reqState(r.id);
+  return `<div class="req ${open?'open':''}">
+    <button class="req-head" data-req="${r.id}"><span class="chev">▶</span><span class="req-title">${esc(r.title)}</span><span class="chip ${st}">${chipLabel[st]}</span></button>
+    ${open?reqBody(r):''}
+  </div>`;
+}
+function reqBody(r){
+  const os=outsOf(r.id);const ts=tasksOf(r.id);
+  const outHtml=os.length?os.map(outputCard).join(''):`<div style="font-family:var(--serif);color:var(--muted);font-size:13.5px">No output defined yet. This is the deliverable that proves it is true.</div>`;
+  const taskHtml=ts.length?`<div class="tasks">${ts.map(taskRow).join('')}</div>`:`<div style="font-family:var(--serif);color:var(--muted);font-size:13px">No tasks yet.</div>`;
+  return `<div class="req-body">
+    <div class="sub-label"><span>The output · the proof it is true</span>${isAdmin()?`<button class="btn-xs btn-line" data-addout="${r.id}">+ Output</button>`:''}</div>
+    ${outHtml}
+    <div class="sub-label"><span>Things that must happen</span>${isAdmin()?`<button class="btn-xs btn-line" data-addtask="${r.id}">+ Task</button>`:''}</div>
+    ${taskHtml}
+    ${isAdmin()?`<div class="toolbar" style="margin-top:16px"><button class="btn-xs icon-btn" data-editreq="${r.id}">Edit statement</button><button class="btn-xs icon-btn del" data-delreq="${r.id}">Delete</button></div>`:''}
+  </div>`;
+}
+function outputCard(o){
+  const approved=o.status==='approved';
+  return `<div class="output">
+    <div class="out-top"><div class="out-name">${esc(o.name)}</div><span class="out-badge ${approved?'approved':'pending'}">${approved?'Approved · 100%':'Pending'}</span></div>
+    <div class="out-meta">
+      <div><div class="k">How it is produced</div><div class="v">${esc(o.how)||'—'}</div></div>
+      <div><div class="k">How often</div><div class="v">${esc(o.freq)||'—'}</div></div>
+      <div><div class="k">Who by</div><div class="v">${esc(o.who)||'—'}</div></div>
+      <div><div class="k">Where it is found</div><div class="v">${whereHtml(o.where_found)}</div></div>
+    </div>
+    ${isAdmin()?`<div class="out-actions">
+      <button class="btn-xs ${approved?'btn-line':'btn-approve'}" data-approve="${o.id}" data-now="${o.status}">${approved?'Un-approve':'Approve as complete'}</button>
+      <button class="btn-xs icon-btn" data-editout="${o.id}">Edit</button>
+      <button class="btn-xs icon-btn del" data-delout="${o.id}">Delete</button>
+    </div>`:''}
+  </div>`;
+}
+function taskRow(t){
+  return `<div class="task">
+    <div class="tw"><div class="what">${esc(t.what)}</div><div class="meta">${esc(t.who||'Unassigned')} · <span class="${overdue(t.when_due,t.status)?'over':''}">${fmtDate(t.when_due)}</span></div></div>
+    <button class="status ${t.status}" data-cycle="${t.id}" data-now="${t.status}">${stLabel[t.status]}</button>
+    ${isAdmin()?`<button class="icon-btn" data-edittask="${t.id}">Edit</button><button class="icon-btn del" data-deltask="${t.id}">Del</button>`:''}
+  </div>`;
+}
+
+/* ===========  EVENTS  =========== */
+function wire(){
+  const sel=$('#orgsel');if(sel)sel.onchange=async()=>{currentOrg=sel.value;openReq=null;await refresh();};
+  const ao=$('#addorg');if(ao)ao.onclick=orgModal;
+  document.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{view={name:'workstream',ws:b.dataset.ws};openReq=null;render();});
+  const back=$('#back');if(back)back.onclick=()=>{view={name:'dashboard',ws:null};render();};
+  document.querySelectorAll('[data-req]').forEach(b=>b.onclick=()=>{openReq=openReq===b.dataset.req?null:b.dataset.req;render();});
+  const ar=$('#addreq');if(ar)ar.onclick=()=>reqModal(null);
+  document.querySelectorAll('[data-editreq]').forEach(b=>b.onclick=()=>reqModal(cache.reqs.find(r=>r.id===b.dataset.editreq)));
+  document.querySelectorAll('[data-delreq]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this requirement and its output and tasks?')){await sb.from('requirements').delete().eq('id',b.dataset.delreq);await refresh();}});
+  document.querySelectorAll('[data-addout]').forEach(b=>b.onclick=()=>outputModal(null,b.dataset.addout));
+  document.querySelectorAll('[data-editout]').forEach(b=>b.onclick=()=>outputModal(cache.outs.find(o=>o.id===b.dataset.editout)));
+  document.querySelectorAll('[data-delout]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this output?')){await sb.from('outputs').delete().eq('id',b.dataset.delout);await refresh();}});
+  document.querySelectorAll('[data-approve]').forEach(b=>b.onclick=async()=>{const ns=b.dataset.now==='approved'?'pending':'approved';await sb.from('outputs').update({status:ns}).eq('id',b.dataset.approve);await refresh();});
+  document.querySelectorAll('[data-addtask]').forEach(b=>b.onclick=()=>taskModal(null,b.dataset.addtask));
+  document.querySelectorAll('[data-edittask]').forEach(b=>b.onclick=()=>taskModal(cache.tasks.find(t=>t.id===b.dataset.edittask)));
+  document.querySelectorAll('[data-deltask]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this task?')){await sb.from('tasks').delete().eq('id',b.dataset.deltask);await refresh();}});
+  document.querySelectorAll('[data-cycle]').forEach(b=>b.onclick=async()=>{const ord=['todo','doing','done'];const ns=ord[(ord.indexOf(b.dataset.now)+1)%3];await sb.from('tasks').update({status:ns}).eq('id',b.dataset.cycle);await refresh();});
+  const rep=$('#report');if(rep)rep.onclick=reportModal;
+  const exp=$('#export');if(exp)exp.onclick=exportData;
+  const ec=$('#editco');if(ec)ec.onclick=companyModal;
+}
+
+function modal(html){const d=document.createElement('div');d.className='modal-bg';d.innerHTML=`<div class="modal">${html}</div>`;d.onclick=e=>{if(e.target===d)d.remove();};document.body.appendChild(d);return d;}
+function fld(id,label,val,ph){return `<div class="field"><label>${label}</label><input id="${id}" value="${esc(val)}" placeholder="${ph||''}"></div>`;}
+function area(id,label,val,ph){return `<div class="field"><label>${label}</label><textarea id="${id}" placeholder="${ph||''}">${esc(val)}</textarea></div>`;}
+
+function orgModal(){
+  const d=modal(`<h3>Add organisation</h3><p class="hint">A new client to track readiness for.</p>
+    ${fld('g_name','Name','','Client name')}${fld('g_sector','Sector','')}${fld('g_funding','Funding','')}${fld('g_headcount','Scale','')}${fld('g_target','Target','')}${area('g_intro','Intro','')}
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="gsave">Add</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#gsave').onclick=async()=>{
+    const name=d.querySelector('#g_name').value.trim();if(!name)return;
+    const row={name,sector:v('g_sector'),funding:v('g_funding'),headcount:v('g_headcount'),target:v('g_target'),intro:v('g_intro')};
+    const {data,error}=await sb.from('organizations').insert(row).select().single();
+    if(error){alert(error.message);return;}
+    d.remove();await loadOrgs();currentOrg=data.id;await refresh();
+    function v(id){return d.querySelector('#'+id).value.trim();}
+  };
+  function v(id){return d.querySelector('#'+id).value.trim();}
+}
+function reqModal(r){
+  const isNew=!r;
+  const d=modal(`<h3>${isNew?'Add a "what must be true"':'Edit statement'}</h3>
+    <p class="hint">A plain statement of something that must be true for this workstream to be ready.</p>
+    ${area('r_t','Statement',isNew?'':r.title,'e.g. Marketing reports a pipeline number finance will sign off')}
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="rsave">${isNew?'Add':'Save'}</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#rsave').onclick=async()=>{
+    const t=d.querySelector('#r_t').value.trim();if(!t)return;
+    if(isNew){const {data,error}=await sb.from('requirements').insert({org_id:currentOrg,ws:view.ws,title:t,sort:cache.reqs.filter(x=>x.ws===view.ws).length}).select().single();if(error){alert(error.message);return;}openReq=data.id;}
+    else{const {error}=await sb.from('requirements').update({title:t}).eq('id',r.id);if(error){alert(error.message);return;}}
+    d.remove();await refresh();
+  };
+}
+function outputModal(o,reqId){
+  const isNew=!o;
+  const d=modal(`<h3>${isNew?'Add output':'Edit output'}</h3>
+    <p class="hint">The deliverable that proves the statement is true. We record where it lives, not the file itself.</p>
+    ${fld('o_n','Output',isNew?'':o.name,'e.g. Signed pipeline definition')}
+    ${area('o_h','How it is produced',isNew?'':o.how,'How it gets made')}
+    ${fld('o_f','How often',isNew?'':o.freq,'e.g. Monthly, Quarterly, One-off')}
+    ${fld('o_w','Who by',isNew?'':o.who,'Owner')}
+    ${fld('o_l','Where it is found',isNew?'':o.where_found,'A link or location')}
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="osave">${isNew?'Add':'Save'}</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#osave').onclick=async()=>{
+    const name=d.querySelector('#o_n').value.trim();if(!name)return;
+    const row={name,how:gv('o_h'),freq:gv('o_f'),who:gv('o_w'),where_found:gv('o_l')};
+    if(isNew){const {error}=await sb.from('outputs').insert({requirement_id:reqId,status:'pending',...row});if(error){alert(error.message);return;}}
+    else{const {error}=await sb.from('outputs').update(row).eq('id',o.id);if(error){alert(error.message);return;}}
+    d.remove();await refresh();
+    function gv(id){return d.querySelector('#'+id).value.trim();}
+  };
+  function gv(id){return d.querySelector('#'+id).value.trim();}
+}
+function taskModal(t,reqId){
+  const isNew=!t;
+  const d=modal(`<h3>${isNew?'Add task':'Edit task'}</h3>
+    <p class="hint">Something that must happen to produce the output.</p>
+    ${fld('t_w','What',isNew?'':t.what,'What needs doing')}
+    ${fld('t_o','Who',isNew?'':t.who,'Owner')}
+    <div class="field"><label>When</label><input id="t_d" type="date" value="${isNew?'':(t.when_due||'')}"></div>
+    <div class="field"><label>Status</label><select id="t_s">${['todo','doing','done'].map(s=>`<option value="${s}" ${(!isNew&&t.status===s)?'selected':''}>${stLabel[s]}</option>`).join('')}</select></div>
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="tsave">${isNew?'Add':'Save'}</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#tsave').onclick=async()=>{
+    const what=d.querySelector('#t_w').value.trim();if(!what)return;
+    const row={what,who:d.querySelector('#t_o').value.trim(),when_due:d.querySelector('#t_d').value||null,status:d.querySelector('#t_s').value};
+    if(isNew){const {error}=await sb.from('tasks').insert({requirement_id:reqId,...row});if(error){alert(error.message);return;}}
+    else{const {error}=await sb.from('tasks').update(row).eq('id',t.id);if(error){alert(error.message);return;}}
+    d.remove();await refresh();
+  };
+}
+function companyModal(){
+  const o=orgObj();
+  const d=modal(`<h3>Company details</h3>
+    ${fld('c_name','Name',o.name)}${fld('c_sector','Sector',o.sector)}${fld('c_funding','Funding',o.funding)}${fld('c_headcount','Scale',o.headcount)}${fld('c_target','Target',o.target)}${area('c_intro','Intro',o.intro)}
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="csave">Save</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#csave').onclick=async()=>{
+    const row={name:gc('c_name'),sector:gc('c_sector'),funding:gc('c_funding'),headcount:gc('c_headcount'),target:gc('c_target'),intro:gc('c_intro')};
+    const {error}=await sb.from('organizations').update(row).eq('id',o.id);if(error){alert(error.message);return;}
+    d.remove();await loadOrgs();await refresh();
+    function gc(id){return d.querySelector('#'+id).value.trim();}
+  };
+  function gc(id){return d.querySelector('#'+id).value.trim();}
+}
+
+function buildReport(){
+  const o=orgObj();const L=[];
+  L.push(`READINESS STATUS — ${o.name}`);
+  L.push(`Generated ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}`);
+  L.push(`${o.sector||''} · ${o.funding||''} · ${o.headcount||''} · ${o.target||''}`);
+  L.push(`Overall readiness: ${overall()}%`);L.push('');
+  WS_DEFS.forEach(w=>{
+    const rs=reqsOf(w.key);const met=rs.filter(r=>reqMet(r.id)).length;
+    L.push(`${w.letter}. ${w.title} — ${wsPct(w.key)}% (${met}/${rs.length} must-be-true met)`);
+    rs.forEach(r=>{
+      L.push(`   • ${reqMet(r.id)?'[MET]':'[open]'} ${r.title}`);
+      outsOf(r.id).forEach(out=>L.push(`        output: ${out.name} — ${out.status} · ${out.freq||'n/a'} · ${out.who||'n/a'} · ${out.where_found||'no location'}`));
+      tasksOf(r.id).filter(t=>t.status!=='done').forEach(t=>L.push(`        to do: ${t.what} (${t.who||'unassigned'}, ${fmtDate(t.when_due)}${overdue(t.when_due,t.status)?' OVERDUE':''})`));
+    });
+    L.push('');
+  });
+  return L.join('\n');
+}
+function reportModal(){
+  const txt=buildReport();
+  const d=modal(`<h3>Status report</h3>
+    <p class="hint">A plain-text snapshot. Copy it into Claude for a written report and analytics, or use Export for the full data.</p>
+    <div class="report-box">${esc(txt)}</div>
+    <div class="modal-actions"><button class="btn-sm btn-line" data-x>Close</button><button class="btn-sm btn-dark" id="cp">Copy</button></div>`);
+  d.querySelector('[data-x]').onclick=()=>d.remove();
+  d.querySelector('#cp').onclick=()=>{navigator.clipboard&&navigator.clipboard.writeText(txt);d.querySelector('#cp').textContent='Copied';};
+}
+function exportData(){
+  const o=orgObj();
+  const payload={org:o,overallReadiness:overall(),workstreams:WS_DEFS.map(w=>({...w,completeness:wsPct(w.key),requirements:reqsOf(w.key).map(r=>({statement:r.title,met:reqMet(r.id),outputs:outsOf(r.id),tasks:tasksOf(r.id)}))}))};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${o.name.replace(/\s+/g,'-').toLowerCase()}-readiness.json`;a.click();
+}
+
+/* go */
+boot();
+</script>
+</body>
+</html>

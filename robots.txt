@@ -2,3 +2,4 @@
 # The m-ipo section is kept out of search by that noindex tag plus never linking to it.
 User-agent: *
 Allow: /
+Disallow: /portal/
