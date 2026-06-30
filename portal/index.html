@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- clevermx portal - single-file build. Login and app in one page. -->
+<!-- clevermx internal portal - LIVE (Supabase). A tracker, not a repository. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -104,6 +104,14 @@
   .dlabel{font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-right:8px;background:#E7ECEA;color:#41504D}
   .reqsrc{font-family:var(--serif);font-size:12.5px;color:var(--muted);line-height:1.5;border-left:2px solid var(--rule);padding-left:11px;margin-bottom:14px}
   .reqsrc b{font-family:var(--display);font-weight:800;color:var(--gold)}
+  .wscard-work{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin:12px 0 2px}
+  .wlbl{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:2px}
+  .wpill{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:100px;background:var(--cream-warm);color:#7A5E1E;border:1px solid #E4D6AE}
+  .mbt-intro{font-family:var(--serif);font-size:13.5px;color:var(--muted);line-height:1.55;margin:0 0 18px;max-width:680px}
+  .wsgroup{margin-bottom:8px}
+  .wsgroup-head{display:flex;align-items:center;gap:9px;margin:22px 0 12px;padding-bottom:7px;border-bottom:1.5px solid var(--rule)}
+  .wsgroup-head h4{font-size:15px;font-weight:800;color:var(--slate-deep);letter-spacing:-.01em}
+  .wsgroup-count{font-size:11px;font-weight:800;color:var(--muted);background:var(--cream-warm);padding:1px 8px;border-radius:100px}
   .chip.met{background:#D6E5D6;color:var(--green)}
   .chip.prog{background:#D8E8F0;color:#2A5670}
   .chip.none{background:#EDE7D6;color:#6B5012}
@@ -192,10 +200,7 @@ const GOV_HINTS={
   comms:"How reporting works. Channel, meeting rhythm, who is in the room, how issues get escalated."
 };
 
-/* ===========  STARTER REQUIREMENTS PER REQUIREMENT AREA  ===========
-   The four areas are the fixed, sourced spine. Each requirement carries the
-   rule it flows from (source) and a plain delivery label saying who owns it.
-   The labels are yours to rename or merge. Outputs and tasks stay client-specific. */
+/* ===========  STARTER REQUIREMENTS PER REQUIREMENT AREA  =========== */
 const REQ_TEMPLATES={
   provable:[
     {t:"Every public marketing claim has documentary evidence behind it and a named owner. A claims register exists.",label:"Evidence & story",source:"Verification: unverifiable statements must be deleted or amended, and all IPO materials must be consistent with the prospectus. Objective claims also need substantiation under the ASA / CAP Code."},
@@ -226,10 +231,41 @@ const REQ_TEMPLATES={
 };
 function seedRows(orgId){const rows=[];WS_DEFS.forEach(w=>{(REQ_TEMPLATES[w.key]||[]).forEach((item,i)=>rows.push({org_id:orgId,ws:w.key,title:item.t,sort:i,label:item.label,source:item.source}));});return rows;}
 
+/* ===========  STARTER TASKS  =========== */
+const TASK_TEMPLATES={
+  provable:[
+    ["List every claim made on the website and in the main sales deck.","Set up the claims register: claim, evidence, owner, where the evidence lives."],
+    ["Pull every customer name, logo and case study in use, and check we hold written permission for each."],
+    ["Agree with finance which marketing numbers they will and will not sign."],
+    ["Audit the website and public materials for claims we can no longer stand behind."],
+  ],
+  controlled:[
+    ["Ask the sponsor or lawyers for the publicity guidelines, or flag that they are needed."],
+    ["Map who approves outbound marketing now, and where an FCA-authorised sign-off will be needed."],
+    ["Inventory every public channel: website, social accounts, anywhere the company speaks."],
+    ["List who speaks publicly for the company and agree one approval line."],
+    ["Confirm who owns the inside-information process once listed."],
+  ],
+  story:[
+    ["Gather the positioning from website, sales deck and investor materials and compare them."],
+    ["For each positioning claim, note the evidence behind it, or flag that there is none."],
+    ["Check every momentum claim against a number finance can stand behind."],
+    ["Ask the programme when marketing's input to the equity story is needed, and in what form."],
+  ],
+  function:[
+    ["Document the martech stack: every tool, what it does, who has access."],
+    ["Identify where the single marketing performance number will come from."],
+    ["Confirm the lawful basis and consent records for the marketing contact database."],
+    ["Name the marketing operations owner and note where key-person risk sits."],
+    ["Agree the reporting rhythm marketing will need to hit once listed."],
+  ],
+};
+function taskRowsFor(seededReqs){const rows=[];(seededReqs||[]).forEach(r=>{const list=(TASK_TEMPLATES[r.ws]||[])[r.sort]||[];list.forEach(w=>rows.push({requirement_id:r.id,what:w,status:'todo'}));});return rows;}
+
 /* ===========  STATE  =========== */
-let profile=null;                 // {id,email,role,org_id,full_name}
-let orgs=[];                      // organisations visible to me
-let currentOrg=null;             // org id
+let profile=null;
+let orgs=[];
+let currentOrg=null;
 let cache={org:null,reqs:[],outs:[],tasks:[]};
 let view={name:'dashboard',ws:null};
 let openReq=null;
@@ -247,10 +283,10 @@ function reqState(reqId){if(reqMet(reqId))return 'met';const os=outsOf(reqId),ts
 function wsPct(ws){const rs=reqsOf(ws);if(!rs.length)return 0;return Math.round(rs.filter(r=>reqMet(r.id)).length/rs.length*100);}
 function overall(){const v=WS_DEFS.map(w=>wsPct(w.key));return Math.round(v.reduce((a,b)=>a+b,0)/v.length);}
 function overdue(when,status){if(status==='done'||!when)return false;return new Date(when)<new Date(new Date().toDateString());}
-const fmtDate=d=>{if(!d)return '—';return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})};
+const fmtDate=d=>{if(!d)return '\u2014';return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})};
 const stLabel={todo:'To do',doing:'In progress',done:'Done'};
 const chipLabel={met:'Output approved',prog:'In progress',none:'Not started'};
-const whereHtml=w=>{const v=esc(w);return /^https?:\/\//i.test(w||'')?`<a href="${v}" target="_blank" rel="noopener">${v}</a>`:(v||'—');};
+const whereHtml=w=>{const v=esc(w);return /^https?:\/\//i.test(w||'')?`<a href="${v}" target="_blank" rel="noopener">${v}</a>`:(v||'\u2014');};
 const orgObj=()=>orgs.find(o=>o.id===currentOrg)||cache.org;
 
 /* ===========  DATA LAYER  =========== */
@@ -309,7 +345,7 @@ function renderLogin(){
     <h1>${signup?'Create your account':'Portal sign in'}</h1>
     <p class="sub">Marketing operations readiness, tracked in one place.</p>
     <div class="field"><label>Email</label><input id="email" type="email" placeholder="you@company.com"></div>
-    <div class="field"><label>Password</label><input id="pw" type="password" placeholder="••••••••"></div>
+    <div class="field"><label>Password</label><input id="pw" type="password" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022"></div>
     <button class="btn btn-primary" id="go">${signup?'Create account':'Sign in'}</button>
     <div id="authmsg"></div>
     <div class="auth-toggle">${signup?'Already have an account? <button id="tog">Sign in</button>':'Need an account? <button id="tog">Create one</button>'}</div>
@@ -349,6 +385,8 @@ function renderApp(){
   $('#signout').onclick=doSignout; wire();
 }
 
+const LABEL_ORDER=['The numbers','Evidence & story','Public surface','The function'];
+function labelsIn(rs){const set=[...new Set(rs.map(r=>r.label).filter(Boolean))];return set.sort((a,b)=>{const ia=LABEL_ORDER.indexOf(a),ib=LABEL_ORDER.indexOf(b);return (ia<0?99:ia)-(ib<0?99:ib);});}
 function dashboard(){
   if(isAdmin()&&orgs.length===0){
     return `<div class="orgbar"><h2>Readiness <em>overview</em></h2></div>
@@ -377,12 +415,14 @@ function dashboard(){
   <div class="section-head"><h3>The four requirements</h3><div class="overall">Overall readiness ${overall()}%</div></div>
   <div class="ws-grid">${WS_DEFS.map(wsCard).join('')}</div>`;
 }
-function detail(k,v){return `<div class="detail"><div class="k">${k}</div><div class="v">${esc(v||'—')}</div></div>`;}
+function detail(k,v){return `<div class="detail"><div class="k">${k}</div><div class="v">${esc(v||'\u2014')}</div></div>`;}
 function wsCard(w){
   const pct=wsPct(w.key);const rs=reqsOf(w.key);const met=rs.filter(r=>reqMet(r.id)).length;
+  const work=labelsIn(rs);
   return `<button class="ws-card" data-ws="${w.key}">
     <div class="ws-top"><span class="ws-letter">${w.letter}</span><h4>${esc(w.title)}</h4></div>
     <div class="desc">${esc(w.desc)}</div>
+    ${work.length?`<div class="wscard-work"><span class="wlbl">Marketing work</span>${work.map(l=>`<span class="wpill">${esc(l)}</span>`).join('')}</div>`:''}
     <div class="bar-row"><span class="bar ${pct===100?'full':''}"><i style="width:${pct}%"></i></span><span class="bar-pct">${pct}%</span></div>
     <div class="count">${met} of ${rs.length} must-be-true met</div>
   </button>`;
@@ -390,18 +430,30 @@ function wsCard(w){
 
 function workstreamView(){
   const w=WS_DEFS.find(x=>x.key===view.ws);const pct=wsPct(w.key);const rs=reqsOf(w.key);
-  const list=rs.length?rs.map(reqAccordion).join(''):`<div class="card" style="color:var(--muted);font-family:var(--serif)">Nothing defined here yet. Load the standard set to start from a template, then prune what does not apply.</div>`;
+  let body;
+  if(!rs.length){
+    body=`<div class="card" style="color:var(--muted);font-family:var(--serif)">Nothing defined here yet. Load the standard set to start from a template, then prune what does not apply.</div>`;
+  }else{
+    const groups=labelsIn(rs).map(l=>({l,items:rs.filter(r=>r.label===l)}));
+    const unlabelled=rs.filter(r=>!r.label);
+    if(unlabelled.length)groups.push({l:'Unassigned',items:unlabelled});
+    body=groups.map(g=>`<div class="wsgroup">
+      <div class="wsgroup-head"><h4>${esc(g.l)}</h4><span class="wsgroup-count">${g.items.length}</span></div>
+      ${g.items.map(reqAccordion).join('')}
+    </div>`).join('');
+  }
   return `
-  <div class="crumb"><button id="back">← Readiness overview</button> &nbsp;/&nbsp; ${esc(orgObj().name)}</div>
+  <div class="crumb"><button id="back">\u2190 Readiness overview</button> &nbsp;/&nbsp; ${esc(orgObj().name)}</div>
   <div class="ws-detail-head"><h2>${w.letter}. ${esc(w.title)}</h2><div class="desc">${esc(w.desc)}</div></div>
   <div class="ws-bigbar"><div class="bar-row"><span class="bar ${pct===100?'full':''}"><i style="width:${pct}%"></i></span><span class="bar-pct">${pct}%</span></div></div>
   <div class="mbt-head"><h3>What must be true</h3>${isAdmin()?`${rs.length===0?`<button class="btn-xs btn-line" id="loadtmpl">+ Load standard set</button>`:''}<button class="btn-xs btn-line" id="addreq">+ Add</button>`:''}</div>
-  ${list}`;
+  ${rs.length?`<p class="mbt-intro">Grouped by the marketing work that owns it. Each heading is a part of the marketing function, and it is here because the work makes this requirement true.</p>`:''}
+  ${body}`;
 }
 function reqAccordion(r){
   const open=openReq===r.id;const st=reqState(r.id);
   return `<div class="req ${open?'open':''}">
-    <button class="req-head" data-req="${r.id}"><span class="chev">▶</span>${r.label?`<span class="dlabel">${esc(r.label)}</span>`:''}<span class="req-title">${esc(r.title)}</span><span class="chip ${st}">${chipLabel[st]}</span></button>
+    <button class="req-head" data-req="${r.id}"><span class="chev">\u25B6</span><span class="req-title">${esc(r.title)}</span><span class="chip ${st}">${chipLabel[st]}</span></button>
     ${open?reqBody(r):''}
   </div>`;
 }
@@ -411,7 +463,7 @@ function reqBody(r){
   const taskHtml=ts.length?`<div class="tasks">${ts.map(taskRow).join('')}</div>`:`<div style="font-family:var(--serif);color:var(--muted);font-size:13px">No tasks yet.</div>`;
   return `<div class="req-body">
     ${r.source?`<div class="reqsrc"><b>Source.</b> ${esc(r.source)}</div>`:''}
-    <div class="sub-label"><span>The output · the proof it is true</span>${isAdmin()?`<button class="btn-xs btn-line" data-addout="${r.id}">+ Output</button>`:''}</div>
+    <div class="sub-label"><span>The output \u00B7 the proof it is true</span>${isAdmin()?`<button class="btn-xs btn-line" data-addout="${r.id}">+ Output</button>`:''}</div>
     ${outHtml}
     <div class="sub-label"><span>Things that must happen</span>${isAdmin()?`<button class="btn-xs btn-line" data-addtask="${r.id}">+ Task</button>`:''}</div>
     ${taskHtml}
@@ -421,11 +473,11 @@ function reqBody(r){
 function outputCard(o){
   const approved=o.status==='approved';
   return `<div class="output">
-    <div class="out-top"><div class="out-name">${esc(o.name)}</div><span class="out-badge ${approved?'approved':'pending'}">${approved?'Approved · 100%':'Pending'}</span></div>
+    <div class="out-top"><div class="out-name">${esc(o.name)}</div><span class="out-badge ${approved?'approved':'pending'}">${approved?'Approved \u00B7 100%':'Pending'}</span></div>
     <div class="out-meta">
-      <div><div class="k">How it is produced</div><div class="v">${esc(o.how)||'—'}</div></div>
-      <div><div class="k">How often</div><div class="v">${esc(o.freq)||'—'}</div></div>
-      <div><div class="k">Who by</div><div class="v">${esc(o.who)||'—'}</div></div>
+      <div><div class="k">How it is produced</div><div class="v">${esc(o.how)||'\u2014'}</div></div>
+      <div><div class="k">How often</div><div class="v">${esc(o.freq)||'\u2014'}</div></div>
+      <div><div class="k">Who by</div><div class="v">${esc(o.who)||'\u2014'}</div></div>
       <div><div class="k">Where it is found</div><div class="v">${whereHtml(o.where_found)}</div></div>
     </div>
     ${isAdmin()?`<div class="out-actions">
@@ -437,7 +489,7 @@ function outputCard(o){
 }
 function taskRow(t){
   return `<div class="task">
-    <div class="tw"><div class="what">${esc(t.what)}</div><div class="meta">${esc(t.who||'Unassigned')} · <span class="${overdue(t.when_due,t.status)?'over':''}">${fmtDate(t.when_due)}</span></div></div>
+    <div class="tw"><div class="what">${esc(t.what)}</div><div class="meta">${esc(t.who||'Unassigned')} \u00B7 <span class="${overdue(t.when_due,t.status)?'over':''}">${fmtDate(t.when_due)}</span></div></div>
     <button class="status ${t.status}" data-cycle="${t.id}" data-now="${t.status}">${stLabel[t.status]}</button>
     ${isAdmin()?`<button class="icon-btn" data-edittask="${t.id}">Edit</button><button class="icon-btn del" data-deltask="${t.id}">Del</button>`:''}
   </div>`;
@@ -455,8 +507,9 @@ function wire(){
     const tpl=REQ_TEMPLATES[view.ws]||[];if(!tpl.length)return;
     if(!confirm(`Add ${tpl.length} standard requirements to this area? You can delete or relabel any you do not need.`))return;
     const rows=tpl.map((item,i)=>({org_id:currentOrg,ws:view.ws,title:item.t,sort:i,label:item.label,source:item.source}));
-    const {error}=await sb.from('requirements').insert(rows);
+    const {data:added,error}=await sb.from('requirements').insert(rows).select();
     if(error){alert(error.message);return;}
+    const tr=taskRowsFor(added);if(tr.length){const {error:tErr}=await sb.from('tasks').insert(tr);if(tErr)console.warn('Starter tasks did not seed:',tErr.message);}
     await refresh();
   };
   document.querySelectorAll('[data-editreq]').forEach(b=>b.onclick=()=>reqModal(cache.reqs.find(r=>r.id===b.dataset.editreq)));
@@ -490,8 +543,9 @@ function orgModal(){
     const {data,error}=await sb.from('organizations').insert(row).select().single();
     if(error){alert(error.message);return;}
     const seed=seedRows(data.id);
-    const {error:seedErr}=await sb.from('requirements').insert(seed);
+    const {data:seededReqs,error:seedErr}=await sb.from('requirements').insert(seed).select();
     if(seedErr){alert('Organisation added, but the standard requirements did not seed:\n'+seedErr.message+'\n\nIf this mentions a missing "source" or "label" column, run the ALTER TABLE snippet in Supabase, then use Load standard set per area.');}
+    else{const tr=taskRowsFor(seededReqs);if(tr.length){const {error:tErr}=await sb.from('tasks').insert(tr);if(tErr)console.warn('Starter tasks did not seed:',tErr.message);}}
     d.remove();await loadOrgs();currentOrg=data.id;await refresh();
     function v(id){return d.querySelector('#'+id).value.trim();}
   };
@@ -502,8 +556,8 @@ function reqModal(r){
   const d=modal(`<h3>${isNew?'Add a requirement':'Edit requirement'}</h3>
     <p class="hint">A plain statement of something that must be true, the rule it flows from, and who owns delivering it.</p>
     ${area('r_t','Statement',isNew?'':r.title,'e.g. Every public claim has evidence behind it and a named owner')}
-    ${area('r_src','Source · the rule it flows from',isNew?'':(r.source||''),'e.g. Verification: unverifiable statements are removed; consistency with the prospectus')}
-    <div class="field"><label>Delivery label · who owns it</label><input id="r_label" value="${isNew?'':esc(r.label||'')}" placeholder="e.g. Public surface" list="labellist"><datalist id="labellist"><option>The numbers</option><option>Evidence &amp; story</option><option>Public surface</option><option>The function</option></datalist></div>
+    ${area('r_src','Source \u00B7 the rule it flows from',isNew?'':(r.source||''),'e.g. Verification: unverifiable statements are removed; consistency with the prospectus')}
+    <div class="field"><label>Delivery label \u00B7 who owns it</label><input id="r_label" value="${isNew?'':esc(r.label||'')}" placeholder="e.g. Public surface" list="labellist"><datalist id="labellist"><option>The numbers</option><option>Evidence &amp; story</option><option>Public surface</option><option>The function</option></datalist></div>
     <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="rsave">${isNew?'Add':'Save'}</button></div>`);
   d.querySelector('[data-x]').onclick=()=>d.remove();
   d.querySelector('#rsave').onclick=async()=>{
@@ -572,16 +626,16 @@ function companyModal(){
 
 function buildReport(){
   const o=orgObj();const L=[];
-  L.push(`READINESS STATUS — ${o.name}`);
+  L.push(`READINESS STATUS \u2014 ${o.name}`);
   L.push(`Generated ${new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}`);
-  L.push(`${o.sector||''} · ${o.funding||''} · ${o.headcount||''} · ${o.target||''}`);
+  L.push(`${o.sector||''} \u00B7 ${o.funding||''} \u00B7 ${o.headcount||''} \u00B7 ${o.target||''}`);
   L.push(`Overall readiness: ${overall()}%`);L.push('');
   WS_DEFS.forEach(w=>{
     const rs=reqsOf(w.key);const met=rs.filter(r=>reqMet(r.id)).length;
-    L.push(`${w.letter}. ${w.title} — ${wsPct(w.key)}% (${met}/${rs.length} must-be-true met)`);
+    L.push(`${w.letter}. ${w.title} \u2014 ${wsPct(w.key)}% (${met}/${rs.length} must-be-true met)`);
     rs.forEach(r=>{
-      L.push(`   • ${reqMet(r.id)?'[MET]':'[open]'} ${r.title}`);
-      outsOf(r.id).forEach(out=>L.push(`        output: ${out.name} — ${out.status} · ${out.freq||'n/a'} · ${out.who||'n/a'} · ${out.where_found||'no location'}`));
+      L.push(`   \u2022 ${reqMet(r.id)?'[MET]':'[open]'} ${r.title}`);
+      outsOf(r.id).forEach(out=>L.push(`        output: ${out.name} \u2014 ${out.status} \u00B7 ${out.freq||'n/a'} \u00B7 ${out.who||'n/a'} \u00B7 ${out.where_found||'no location'}`));
       tasksOf(r.id).filter(t=>t.status!=='done').forEach(t=>L.push(`        to do: ${t.what} (${t.who||'unassigned'}, ${fmtDate(t.when_due)}${overdue(t.when_due,t.status)?' OVERDUE':''})`));
     });
     L.push('');
@@ -594,7 +648,7 @@ function buildProgressPptx(){
   const SLATE='204640',CREAM='FAF6EC',CREAMW='F2EBD8',GOLD='B8902E',INK='1A2F2C',MUTED='6B7A78',MINT='B8E5DE';
   const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   const pptx=new PptxGenJS();
-  pptx.layout='LAYOUT_WIDE'; // 13.333 x 7.5
+  pptx.layout='LAYOUT_WIDE';
 
   const openReqs=[],metReqs=[],openTasks=[];
   WS_DEFS.forEach(w=>reqsOf(w.key).forEach(r=>{
@@ -604,7 +658,6 @@ function buildProgressPptx(){
   const owner=(o.programme_owner||'').trim()||'Add in Edit company details';
   const cadence=(o.review_cadence||'').trim()||'Add in Edit company details';
 
-  // slide 1: title
   let s=pptx.addSlide();s.background={color:CREAM};
   s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:13.333,h:2.6,fill:{color:SLATE}});
   s.addText('IPO marketing readiness',{x:0.7,y:0.7,w:12,h:0.7,fontFace:'Nunito',fontSize:34,bold:true,color:CREAM});
@@ -613,7 +666,6 @@ function buildProgressPptx(){
   s.addText([{text:'Reporting period: [add period]',options:{color:GOLD,bold:true}}],{x:0.7,y:4.05,w:12,h:0.4,fontFace:'Nunito',fontSize:15});
   s.addText(today+'   |   Prepared by clevermx',{x:0.7,y:6.6,w:12,h:0.4,fontFace:'Nunito',fontSize:12,color:MUTED});
 
-  // slide 2: at a glance
   s=pptx.addSlide();s.background={color:CREAM};
   s.addText('At a glance',{x:0.7,y:0.5,w:8,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
   s.addShape(pptx.ShapeType.roundRect,{x:10.0,y:0.5,w:2.6,h:1.5,rectRadius:0.1,fill:{color:SLATE}});
@@ -633,7 +685,6 @@ function buildProgressPptx(){
     {text:'Review cadence   ',options:{bold:true,color:GOLD}},{text:cadence,options:{color:INK}},
   ],{x:0.7,y:y+0.25,w:11.9,h:0.9,fontFace:'Nunito',fontSize:13,lineSpacingMultiple:1.3,valign:'top'});
 
-  // slide 3: achieved this period
   s=pptx.addSlide();s.background={color:CREAM};
   s.addText('Achieved this period',{x:0.7,y:0.5,w:12,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
   s.addText('Replace these with the headlines for the period.',{x:0.7,y:1.15,w:12,h:0.35,fontFace:'Source Serif 4',italic:true,fontSize:13,color:MUTED});
@@ -642,7 +693,6 @@ function buildProgressPptx(){
   s.addText('Approved so far, for reference',{x:8.95,y:1.85,w:3.5,h:0.35,fontFace:'Nunito',fontSize:11,bold:true,color:SLATE});
   s.addText(metReqs.length?metReqs.slice(0,12).map(t=>({text:t,options:{bullet:true}})).concat(metReqs.length>12?[{text:'and '+(metReqs.length-12)+' more',options:{italic:true,color:MUTED}}]:[]):[{text:'Nothing approved yet',options:{italic:true,color:MUTED}}],{x:8.95,y:2.3,w:3.5,h:4.1,fontFace:'Nunito',fontSize:9.5,color:INK,paraSpaceAfter:4,valign:'top'});
 
-  // slide 4: open items and focus
   s=pptx.addSlide();s.background={color:CREAM};
   s.addText('Open items and next focus',{x:0.7,y:0.5,w:12,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
   s.addText('Requirements still open',{x:0.7,y:1.25,w:6,h:0.35,fontFace:'Nunito',fontSize:13,bold:true,color:GOLD});
