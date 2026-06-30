@@ -146,6 +146,7 @@
   .modal{background:var(--cream);border-radius:16px;padding:28px;width:100%;max-width:500px;max-height:90vh;overflow:auto}
   .modal h3{font-size:18px;font-weight:800;color:var(--slate-deep);margin-bottom:6px}
   .modal .hint{font-size:12.5px;color:var(--muted);margin-bottom:18px;font-family:var(--serif)}
+  .field .fhint{font-size:11.5px;color:var(--muted);font-family:var(--serif);margin-top:5px;line-height:1.4}
   .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
   .report-box{white-space:pre-wrap;font-family:ui-monospace,Menlo,monospace;font-size:12px;line-height:1.5;background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:16px;max-height:360px;overflow:auto;color:var(--ink-soft)}
   .center-state{max-width:520px;margin:80px auto;text-align:center;color:var(--muted);font-family:var(--serif);font-size:16px}
@@ -157,6 +158,7 @@
 <body>
 <div id="app"><div class="spinner"></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
 <script>
 /* ===========  CONFIG  =========== */
 const SB_URL='https://ipnuehlrctbjezrxrkev.supabase.co';
@@ -172,6 +174,73 @@ const WS_DEFS=[
   {key:'alignment',letter:'D',title:'Sales and marketing alignment',desc:'One funnel, shared definitions, no arguing about whose lead it is.'},
   {key:'team',letter:'E',title:'Team and capability',desc:'The people, roles and skills the function needs to hold up.'},
 ];
+
+/* ===========  CLIENT FORM HINTS  =========== */
+const ORG_HINTS={
+  funding:"How much they have raised and at what stage. Recently funded, Series B, that sort of thing.",
+  scale:"Rough size of the business. Headcount is fine, or sales team size if that is the number that matters.",
+  target:"When they are aiming to list. A rough timeframe is all you need.",
+  intro:"Anything worth remembering. Who introduced you, context, quirks. No rules, just notes."
+};
+
+/* ===========  COMMS / GOVERNANCE HINTS  =========== */
+const GOV_HINTS={
+  owner:"Who we report progress to. Name and role. The programme owner driving the readiness work.",
+  cadence:"How often we review and report. For example, weekly written update, monthly steering review.",
+  comms:"How reporting works. Channel, meeting rhythm, who is in the room, how issues get escalated."
+};
+
+/* ===========  STARTER REQUIREMENTS PER WORKSTREAM  ===========
+   The standard "what must be true" set. Load into an empty workstream,
+   then prune what does not apply. Outputs and tasks stay client-specific. */
+const REQ_TEMPLATES={
+  numbers:[
+    "Marketing's contribution to pipeline is measured and agreed with finance",
+    "One attribution model is used across the business, and its limits are understood",
+    "Pipeline figures reconcile between marketing, sales and finance",
+    "Marketing-sourced and influenced pipeline is predictable enough to stand behind a forecast",
+    "Marketing forecasts have a track record finance trusts",
+    "CAC, lifetime value and payback are calculated and would survive a hard question",
+    "Spend ties to outcomes, not just activity",
+  ],
+  operations:[
+    "The martech stack is documented and owned, with no orphan tools",
+    "Data flows between systems are mapped and reliable",
+    "There is one source of truth for marketing performance, and the numbers reconcile",
+    "Contact and lead data has agreed quality standards, routine hygiene and a named owner",
+    "Core processes such as routing, scoring and handoff are written down, not in someone's head",
+    "Access, permissions and data governance are controlled and auditable",
+    "The stack and the team can handle the volume a public-company business will run",
+  ],
+  narrative:[
+    "There is one approved company story that works for investors, customers, media and employees alike",
+    "Messaging is consistent across web, sales, PR and investor materials",
+    "Claims are substantiated, backed by proof such as case studies and references, and legally cleared",
+    "The public website is accurate, on message and ready for the traffic and scrutiny a listing brings",
+    "The brand is actively monitored and holds up to analyst and press scrutiny",
+    "Marketing knows what it can and cannot say once the company is in the quiet period, and a normal pattern of communications is already established",
+    "Spokespeople are briefed, coached and on message",
+    "Competitive positioning is clear and honestly defensible",
+  ],
+  alignment:[
+    "Sales and marketing share one definition of a qualified lead",
+    "Funnel stages mean the same thing to both teams, and the key terms are defined identically",
+    "The handoff from marketing to sales is defined and actually followed",
+    "Both teams report off the same pipeline numbers",
+    "Response and follow-up SLAs exist and are met",
+    "Lead routing is rules-based, not ad hoc",
+    "The two teams meet on a regular rhythm to work the funnel together",
+  ],
+  team:[
+    "The org chart covers the roles an IPO-ready function needs",
+    "Marketing operations and data have a named owner, not a shared afterthought",
+    "Key-person risk is identified and being reduced",
+    "Skills gaps are known and being filled",
+    "Critical work does not depend on one undocumented person",
+    "The team can cope with public-company reporting and disclosure demands",
+    "The hiring plan matches the growth the business is forecasting",
+  ],
+};
 
 /* ===========  STATE  =========== */
 let profile=null;                 // {id,email,role,org_id,full_name}
@@ -309,6 +378,7 @@ function dashboard(){
     <button class="btn-xs btn-line" id="addorg">+ New</button></div>`:'';
   const tools=isAdmin()?`<div class="toolbar" style="margin-bottom:24px">
     <button class="btn-sm btn-dark" id="report">Generate status report</button>
+    <button class="btn-sm btn-line" id="progress">Progress report (PPTX)</button>
     <button class="btn-sm btn-line" id="export">Export data (JSON)</button>
     <button class="btn-sm btn-line" id="editco">Edit company details</button></div>`:'';
   return `
@@ -335,12 +405,12 @@ function wsCard(w){
 
 function workstreamView(){
   const w=WS_DEFS.find(x=>x.key===view.ws);const pct=wsPct(w.key);const rs=reqsOf(w.key);
-  const list=rs.length?rs.map(reqAccordion).join(''):`<div class="card" style="color:var(--muted);font-family:var(--serif)">Nothing defined here yet.</div>`;
+  const list=rs.length?rs.map(reqAccordion).join(''):`<div class="card" style="color:var(--muted);font-family:var(--serif)">Nothing defined here yet. Load the standard set to start from a template, then prune what does not apply.</div>`;
   return `
   <div class="crumb"><button id="back">← Readiness overview</button> &nbsp;/&nbsp; ${esc(orgObj().name)}</div>
   <div class="ws-detail-head"><h2>${w.letter}. ${esc(w.title)}</h2><div class="desc">${esc(w.desc)}</div></div>
   <div class="ws-bigbar"><div class="bar-row"><span class="bar ${pct===100?'full':''}"><i style="width:${pct}%"></i></span><span class="bar-pct">${pct}%</span></div></div>
-  <div class="mbt-head"><h3>What must be true</h3>${isAdmin()?`<button class="btn-xs btn-line" id="addreq">+ Add</button>`:''}</div>
+  <div class="mbt-head"><h3>What must be true</h3>${isAdmin()?`${rs.length===0?`<button class="btn-xs btn-line" id="loadtmpl">+ Load standard set</button>`:''}<button class="btn-xs btn-line" id="addreq">+ Add</button>`:''}</div>
   ${list}`;
 }
 function reqAccordion(r){
@@ -395,6 +465,14 @@ function wire(){
   const back=$('#back');if(back)back.onclick=()=>{view={name:'dashboard',ws:null};render();};
   document.querySelectorAll('[data-req]').forEach(b=>b.onclick=()=>{openReq=openReq===b.dataset.req?null:b.dataset.req;render();});
   const ar=$('#addreq');if(ar)ar.onclick=()=>reqModal(null);
+  const lt=$('#loadtmpl');if(lt)lt.onclick=async()=>{
+    const tpl=REQ_TEMPLATES[view.ws]||[];if(!tpl.length)return;
+    if(!confirm(`Add ${tpl.length} standard requirements to this workstream? You can delete any you do not need.`))return;
+    const rows=tpl.map((title,i)=>({org_id:currentOrg,ws:view.ws,title,sort:i}));
+    const {error}=await sb.from('requirements').insert(rows);
+    if(error){alert(error.message);return;}
+    await refresh();
+  };
   document.querySelectorAll('[data-editreq]').forEach(b=>b.onclick=()=>reqModal(cache.reqs.find(r=>r.id===b.dataset.editreq)));
   document.querySelectorAll('[data-delreq]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this requirement and its output and tasks?')){await sb.from('requirements').delete().eq('id',b.dataset.delreq);await refresh();}});
   document.querySelectorAll('[data-addout]').forEach(b=>b.onclick=()=>outputModal(null,b.dataset.addout));
@@ -406,17 +484,18 @@ function wire(){
   document.querySelectorAll('[data-deltask]').forEach(b=>b.onclick=async()=>{if(confirm('Delete this task?')){await sb.from('tasks').delete().eq('id',b.dataset.deltask);await refresh();}});
   document.querySelectorAll('[data-cycle]').forEach(b=>b.onclick=async()=>{const ord=['todo','doing','done'];const ns=ord[(ord.indexOf(b.dataset.now)+1)%3];await sb.from('tasks').update({status:ns}).eq('id',b.dataset.cycle);await refresh();});
   const rep=$('#report');if(rep)rep.onclick=reportModal;
+  const pr=$('#progress');if(pr)pr.onclick=buildProgressPptx;
   const exp=$('#export');if(exp)exp.onclick=exportData;
   const ec=$('#editco');if(ec)ec.onclick=companyModal;
 }
 
 function modal(html){const d=document.createElement('div');d.className='modal-bg';d.innerHTML=`<div class="modal">${html}</div>`;d.onclick=e=>{if(e.target===d)d.remove();};document.body.appendChild(d);return d;}
-function fld(id,label,val,ph){return `<div class="field"><label>${label}</label><input id="${id}" value="${esc(val)}" placeholder="${ph||''}"></div>`;}
-function area(id,label,val,ph){return `<div class="field"><label>${label}</label><textarea id="${id}" placeholder="${ph||''}">${esc(val)}</textarea></div>`;}
+function fld(id,label,val,ph,hint){return `<div class="field"><label>${label}</label><input id="${id}" value="${esc(val)}" placeholder="${ph||''}">${hint?`<div class="fhint">${hint}</div>`:''}</div>`;}
+function area(id,label,val,ph,hint){return `<div class="field"><label>${label}</label><textarea id="${id}" placeholder="${ph||''}">${esc(val)}</textarea>${hint?`<div class="fhint">${hint}</div>`:''}</div>`;}
 
 function orgModal(){
   const d=modal(`<h3>Add organisation</h3><p class="hint">A new client to track readiness for.</p>
-    ${fld('g_name','Name','','Client name')}${fld('g_sector','Sector','')}${fld('g_funding','Funding','')}${fld('g_headcount','Scale','')}${fld('g_target','Target','')}${area('g_intro','Intro','')}
+    ${fld('g_name','Name','','Client name')}${fld('g_sector','Sector','')}${fld('g_funding','Funding','','',ORG_HINTS.funding)}${fld('g_headcount','Scale','','',ORG_HINTS.scale)}${fld('g_target','Target','','',ORG_HINTS.target)}${area('g_intro','Intro','','',ORG_HINTS.intro)}
     <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="gsave">Add</button></div>`);
   d.querySelector('[data-x]').onclick=()=>d.remove();
   d.querySelector('#gsave').onclick=async()=>{
@@ -485,12 +564,14 @@ function taskModal(t,reqId){
 function companyModal(){
   const o=orgObj();
   const d=modal(`<h3>Company details</h3>
-    ${fld('c_name','Name',o.name)}${fld('c_sector','Sector',o.sector)}${fld('c_funding','Funding',o.funding)}${fld('c_headcount','Scale',o.headcount)}${fld('c_target','Target',o.target)}${area('c_intro','Intro',o.intro)}
+    ${fld('c_name','Name',o.name)}${fld('c_sector','Sector',o.sector)}${fld('c_funding','Funding',o.funding,'',ORG_HINTS.funding)}${fld('c_headcount','Scale',o.headcount,'',ORG_HINTS.scale)}${fld('c_target','Target',o.target,'',ORG_HINTS.target)}${area('c_intro','Intro',o.intro,'',ORG_HINTS.intro)}
+    <div class="sub-label" style="margin:18px 0 12px"><span>Comms and governance</span></div>
+    ${fld('c_owner','Programme owner',o.programme_owner,'',GOV_HINTS.owner)}${fld('c_cadence','Review cadence',o.review_cadence,'',GOV_HINTS.cadence)}${area('c_comms','Reporting notes',o.comms_notes,'',GOV_HINTS.comms)}
     <div class="modal-actions"><button class="btn-sm btn-line" data-x>Cancel</button><button class="btn-sm btn-dark" id="csave">Save</button></div>`);
   d.querySelector('[data-x]').onclick=()=>d.remove();
   d.querySelector('#csave').onclick=async()=>{
-    const row={name:gc('c_name'),sector:gc('c_sector'),funding:gc('c_funding'),headcount:gc('c_headcount'),target:gc('c_target'),intro:gc('c_intro')};
-    const {error}=await sb.from('organizations').update(row).eq('id',o.id);if(error){alert(error.message);return;}
+    const row={name:gc('c_name'),sector:gc('c_sector'),funding:gc('c_funding'),headcount:gc('c_headcount'),target:gc('c_target'),intro:gc('c_intro'),programme_owner:gc('c_owner'),review_cadence:gc('c_cadence'),comms_notes:gc('c_comms')};
+    const {error}=await sb.from('organizations').update(row).eq('id',o.id);if(error){alert(error.message+'\n\nIf this mentions a missing column, run the comms/governance ALTER TABLE snippet in Supabase first.');return;}
     d.remove();await loadOrgs();await refresh();
     function gc(id){return d.querySelector('#'+id).value.trim();}
   };
@@ -514,6 +595,73 @@ function buildReport(){
     L.push('');
   });
   return L.join('\n');
+}
+function buildProgressPptx(){
+  if(!window.PptxGenJS){alert('Report library is still loading. Give it a second and try again.');return;}
+  const o=orgObj();
+  const SLATE='204640',CREAM='FAF6EC',CREAMW='F2EBD8',GOLD='B8902E',INK='1A2F2C',MUTED='6B7A78',MINT='B8E5DE';
+  const today=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  const pptx=new PptxGenJS();
+  pptx.layout='LAYOUT_WIDE'; // 13.333 x 7.5
+
+  const openReqs=[],metReqs=[],openTasks=[];
+  WS_DEFS.forEach(w=>reqsOf(w.key).forEach(r=>{
+    (reqMet(r.id)?metReqs:openReqs).push(w.letter+'   '+r.title);
+    tasksOf(r.id).forEach(t=>{if(t.status!=='done')openTasks.push(t.what+'  ('+(t.who||'unassigned')+', '+fmtDate(t.when_due)+(overdue(t.when_due,t.status)?', overdue':'')+')');});
+  }));
+  const owner=(o.programme_owner||'').trim()||'Add in Edit company details';
+  const cadence=(o.review_cadence||'').trim()||'Add in Edit company details';
+
+  // slide 1: title
+  let s=pptx.addSlide();s.background={color:CREAM};
+  s.addShape(pptx.ShapeType.rect,{x:0,y:0,w:13.333,h:2.6,fill:{color:SLATE}});
+  s.addText('IPO marketing readiness',{x:0.7,y:0.7,w:12,h:0.7,fontFace:'Nunito',fontSize:34,bold:true,color:CREAM});
+  s.addText('Progress report',{x:0.7,y:1.5,w:12,h:0.5,fontFace:'Source Serif 4',italic:true,fontSize:20,color:MINT});
+  s.addText(o.name||'',{x:0.7,y:3.0,w:12,h:0.8,fontFace:'Nunito',fontSize:40,bold:true,color:SLATE});
+  s.addText([{text:'Reporting period: [add period]',options:{color:GOLD,bold:true}}],{x:0.7,y:4.05,w:12,h:0.4,fontFace:'Nunito',fontSize:15});
+  s.addText(today+'   |   Prepared by clevermx',{x:0.7,y:6.6,w:12,h:0.4,fontFace:'Nunito',fontSize:12,color:MUTED});
+
+  // slide 2: at a glance
+  s=pptx.addSlide();s.background={color:CREAM};
+  s.addText('At a glance',{x:0.7,y:0.5,w:8,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
+  s.addShape(pptx.ShapeType.roundRect,{x:10.0,y:0.5,w:2.6,h:1.5,rectRadius:0.1,fill:{color:SLATE}});
+  s.addText(overall()+'%',{x:10.0,y:0.62,w:2.6,h:0.95,fontFace:'Nunito',fontSize:40,bold:true,color:CREAM,align:'center'});
+  s.addText('overall readiness',{x:10.0,y:1.55,w:2.6,h:0.35,fontFace:'Nunito',fontSize:11,color:MINT,align:'center'});
+  let y=2.4;
+  WS_DEFS.forEach(w=>{
+    const pct=wsPct(w.key);const rs=reqsOf(w.key);const met=rs.filter(r=>reqMet(r.id)).length;
+    s.addText(w.letter+'.  '+w.title,{x:0.7,y:y,w:4.2,h:0.32,fontFace:'Nunito',fontSize:13,bold:true,color:INK});
+    s.addShape(pptx.ShapeType.roundRect,{x:5.0,y:y+0.03,w:5.5,h:0.26,rectRadius:0.13,fill:{color:CREAMW}});
+    if(pct>0)s.addShape(pptx.ShapeType.roundRect,{x:5.0,y:y+0.03,w:Math.max(0.26,5.5*pct/100),h:0.26,rectRadius:0.13,fill:{color:GOLD}});
+    s.addText(pct+'%  ('+met+'/'+rs.length+')',{x:10.7,y:y,w:1.9,h:0.32,fontFace:'Nunito',fontSize:12,bold:true,color:SLATE});
+    y+=0.62;
+  });
+  s.addText([
+    {text:'Programme owner   ',options:{bold:true,color:GOLD}},{text:owner+'\n',options:{color:INK}},
+    {text:'Review cadence   ',options:{bold:true,color:GOLD}},{text:cadence,options:{color:INK}},
+  ],{x:0.7,y:y+0.25,w:11.9,h:0.9,fontFace:'Nunito',fontSize:13,lineSpacingMultiple:1.3,valign:'top'});
+
+  // slide 3: achieved this period
+  s=pptx.addSlide();s.background={color:CREAM};
+  s.addText('Achieved this period',{x:0.7,y:0.5,w:12,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
+  s.addText('Replace these with the headlines for the period.',{x:0.7,y:1.15,w:12,h:0.35,fontFace:'Source Serif 4',italic:true,fontSize:13,color:MUTED});
+  s.addText([{text:'Headline one',options:{bullet:true}},{text:'Headline two',options:{bullet:true}},{text:'Headline three',options:{bullet:true}}],{x:0.7,y:1.7,w:7.6,h:3.0,fontFace:'Nunito',fontSize:15,color:INK,paraSpaceAfter:10,valign:'top'});
+  s.addShape(pptx.ShapeType.roundRect,{x:8.7,y:1.7,w:3.9,h:4.9,rectRadius:0.08,fill:{color:CREAMW}});
+  s.addText('Approved so far, for reference',{x:8.95,y:1.85,w:3.5,h:0.35,fontFace:'Nunito',fontSize:11,bold:true,color:SLATE});
+  s.addText(metReqs.length?metReqs.slice(0,12).map(t=>({text:t,options:{bullet:true}})).concat(metReqs.length>12?[{text:'and '+(metReqs.length-12)+' more',options:{italic:true,color:MUTED}}]:[]):[{text:'Nothing approved yet',options:{italic:true,color:MUTED}}],{x:8.95,y:2.3,w:3.5,h:4.1,fontFace:'Nunito',fontSize:9.5,color:INK,paraSpaceAfter:4,valign:'top'});
+
+  // slide 4: open items and focus
+  s=pptx.addSlide();s.background={color:CREAM};
+  s.addText('Open items and next focus',{x:0.7,y:0.5,w:12,h:0.6,fontFace:'Nunito',fontSize:26,bold:true,color:SLATE});
+  s.addText('Requirements still open',{x:0.7,y:1.25,w:6,h:0.35,fontFace:'Nunito',fontSize:13,bold:true,color:GOLD});
+  s.addText(openReqs.length?openReqs.slice(0,14).map(t=>({text:t,options:{bullet:true}})).concat(openReqs.length>14?[{text:'and '+(openReqs.length-14)+' more',options:{italic:true,color:MUTED}}]:[]):[{text:'All requirements met',options:{italic:true,color:MUTED}}],{x:0.7,y:1.65,w:6.0,h:5.0,fontFace:'Nunito',fontSize:10.5,color:INK,paraSpaceAfter:4,valign:'top'});
+  s.addText('Tasks outstanding',{x:7.0,y:1.25,w:5.6,h:0.35,fontFace:'Nunito',fontSize:13,bold:true,color:GOLD});
+  s.addText(openTasks.length?openTasks.slice(0,10).map(t=>({text:t,options:{bullet:true}})).concat(openTasks.length>10?[{text:'and '+(openTasks.length-10)+' more',options:{italic:true,color:MUTED}}]:[]):[{text:'No open tasks',options:{italic:true,color:MUTED}}],{x:7.0,y:1.65,w:5.6,h:3.2,fontFace:'Nunito',fontSize:10.5,color:INK,paraSpaceAfter:4,valign:'top'});
+  s.addShape(pptx.ShapeType.roundRect,{x:7.0,y:5.0,w:5.6,h:1.7,rectRadius:0.08,fill:{color:CREAMW}});
+  s.addText([{text:'Focus next period\n',options:{bold:true,color:SLATE,fontSize:12}},{text:'Replace with the priorities for the period ahead.',options:{italic:true,color:MUTED,fontSize:11}}],{x:7.25,y:5.2,w:5.1,h:1.3,fontFace:'Nunito',valign:'top'});
+
+  const fn=(o.name||'client').replace(/[^a-z0-9]+/gi,'-').toLowerCase()+'-progress-report.pptx';
+  pptx.writeFile({fileName:fn});
 }
 function reportModal(){
   const txt=buildReport();
