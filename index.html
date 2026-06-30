@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+<!-- clevermx main site. Consultancy voice. mx = Marketer Experience. No IPO content on the public site. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>that's clevermx. Marketing operations consulting.</title>
-<meta name="description" content="clevermx is a marketing operations consultancy. Practical, embedded support for marketing teams facing serious operational moments.">
+<title>clevermx · Marketing operations and Marketer Experience</title>
+<meta name="description" content="clevermx is a marketing operations consultancy. We rebuild the operation under modern marketing, the process, technology, data and team, so the function can deliver what it is now asked to. We call it Marketer Experience.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,189 +27,198 @@
     --muted: #6B7A78;
     --rule: #D9D2BE;
     --rule-soft: #ECE4D0;
-
     --display: 'Nunito', system-ui, sans-serif;
     --body: 'Source Serif 4', Georgia, serif;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
     font-family: var(--body);
-    font-size: 18px;
-    line-height: 1.65;
-    color: var(--ink);
-    background: var(--cream);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    font-size: 18px; line-height: 1.65;
+    color: var(--ink); background: var(--cream);
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   }
   ::selection { background: var(--mint); color: var(--slate-deep); }
 
-  /* === NAV === */
+  /* NAV */
   .nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background: rgba(250, 246, 236, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--rule-soft);
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(250,246,236,0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule-soft); z-index: 100;
   }
-  .nav-inner {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  .nav-logo img { display: block; }
-  .nav-logo { text-decoration: none; }
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-  }
-  .nav-links a {
-    font-family: var(--display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--ink-soft);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: color 0.2s;
-  }
+  .nav-inner { max-width: 1120px; margin: 0 auto; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; gap: 32px; }
+  .logo { display: flex; align-items: center; text-decoration: none; }
+  .logo img { height: 34px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 28px; align-items: center; list-style: none; }
+  .nav-links a { font-family: var(--display); font-weight: 600; font-size: 14px; color: var(--ink-soft); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover { color: var(--gold); }
+  .nav-links a.cta { background: var(--slate); color: var(--cream); padding: 10px 20px; border-radius: 100px; }
+  .nav-links a.cta:hover { background: var(--slate-deep); color: var(--mint); }
 
-  /* mobile nav */
-  .nav-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-  .nav-toggle span {
-    display: block;
-    width: 22px;
-    height: 2px;
-    background: var(--ink);
-    margin: 5px 0;
-    transition: 0.2s;
-  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 40px; }
+  .wrap-narrow { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 120px 0; }
 
-  @media (max-width: 700px) {
-    .nav-toggle { display: block; }
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 64px;
-      left: 0;
-      right: 0;
-      background: rgba(250, 246, 236, 0.97);
-      backdrop-filter: blur(12px);
-      flex-direction: column;
-      padding: 1.5rem 2rem;
-      gap: 1.2rem;
-      border-bottom: 1px solid var(--rule-soft);
-    }
-    .nav-links.open { display: flex; }
-  }
+  /* HERO */
+  .hero { background: var(--slate-deep); color: var(--cream); padding: 200px 0 150px; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: 40%; right: -240px; width: 760px; height: 760px; background: radial-gradient(circle, rgba(184,229,222,0.13), transparent 60%); border-radius: 50%; pointer-events: none; }
+  .hero-inner { position: relative; z-index: 2; max-width: 920px; }
+  .hero-eyebrow { font-family: var(--display); font-weight: 700; font-size: 13px; color: var(--gold-bright); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 30px; }
+  .hero h1 { font-family: var(--display); font-size: clamp(46px, 7vw, 92px); font-weight: 800; line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 34px; color: var(--cream); }
+  .hero h1 em { font-family: var(--body); font-style: italic; font-weight: 400; color: var(--mint); }
+  .hero-lede { font-size: 23px; line-height: 1.55; color: var(--cream); opacity: 0.9; max-width: 660px; margin-bottom: 52px; }
+  .hero-cta { display: inline-block; background: var(--mint); color: var(--slate-deep); font-family: var(--display); font-weight: 700; font-size: 15px; padding: 16px 30px; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+  .hero-cta:hover { background: var(--cream); }
+  .hero-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px 36px; margin-top: 64px; padding-top: 38px; border-top: 1px solid rgba(250,246,236,0.16); max-width: 780px; }
+  .hero-meta-item { font-family: var(--display); }
+  .hero-meta-item .label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mint-dim); margin-bottom: 8px; }
+  .hero-meta-item .value { font-size: 16px; font-weight: 700; color: var(--cream); }
 
-  /* === HERO === */
-  .hero {
-    background: var(--slate-deep);
-    color: var(--cream);
-    padding: 10rem 2rem 6rem;
-    text-align: center;
-  }
-  .hero-inner {
-    max-width: 740px;
-    margin: 0 auto;
-  }
-  .hero h1 {
-    font-family: var(--display);
-    font-size: clamp(2rem, 5vw, 2.8rem);
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 1.5rem;
-    color: var(--cream);
-  }
-  .hero p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: var(--mint-dim);
-    max-width: 600px;
-    margin: 0 auto;
-  }
+  /* FOCUS (quality floor) */
+  a:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; border-radius: 2px; }
 
-  /* === SECTIONS === */
-  .section {
-    padding: 5rem 2rem;
-    border-bottom: 1px solid var(--rule-soft);
-  }
-  .section:last-of-type { border-bottom: none; }
-  .section-inner {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  .section-title {
-    font-family: var(--display);
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: var(--slate-deep);
-    margin-bottom: 1.8rem;
-    line-height: 1.3;
-  }
-  .section-title .accent {
-    font-family: var(--body);
-    font-style: italic;
-    font-weight: 400;
-    color: var(--gold);
-  }
-  .section p {
-    margin-bottom: 1.2rem;
-    color: var(--ink-soft);
-  }
-  .section p:last-child { margin-bottom: 0; }
+  /* SHARED HEADINGS */
+  .eyebrow { font-family: var(--display); font-weight: 700; font-size: 12px; color: var(--gold); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 22px; }
+  .section-title { font-family: var(--display); font-size: clamp(34px, 4.6vw, 58px); font-weight: 800; line-height: 1.08; letter-spacing: -0.025em; color: var(--slate-deep); margin-bottom: 26px; }
+  .section-title em { font-family: var(--body); font-style: italic; font-weight: 400; color: var(--gold); }
+  .section-lede { font-size: 22px; line-height: 1.55; color: var(--ink-soft); max-width: 700px; font-style: italic; }
+  .gold-rule { width: 60px; height: 4px; background: var(--gold); border: none; margin: 28px 0 0; }
 
-  /* === CONTACT === */
-  .contact-email {
-    font-family: var(--display);
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--gold);
-    text-decoration: none;
-    border-bottom: 2px solid var(--rule);
-    padding-bottom: 2px;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .contact-email:hover {
-    color: var(--gold-bright);
-    border-color: var(--gold-bright);
-  }
+  /* THE GAP (signature) */
+  .gap-section { background: var(--cream); }
+  .gap-figure { margin: 64px 0 56px; }
+  .gap-figure svg { width: 100%; height: auto; display: block; }
+  .gap-line { fill: none; stroke-width: 3.5; stroke-linecap: round; }
+  .gap-demand { stroke: var(--gold-bright); stroke-dasharray: 1200; stroke-dashoffset: 0; }
+  .gap-capacity { stroke: var(--mint-dim); stroke-dasharray: 1200; stroke-dashoffset: 0; }
+  .gap-area { fill: var(--gold); opacity: 0.12; }
+  .gap-figure.in-view .gap-demand { animation: gapdraw 1.5s 0.1s cubic-bezier(.4,0,.2,1); }
+  .gap-figure.in-view .gap-capacity { animation: gapdraw 1.5s 0.3s cubic-bezier(.4,0,.2,1); }
+  @keyframes gapdraw { from { stroke-dashoffset: 1200; } to { stroke-dashoffset: 0; } }
+  .gap-axis { stroke: var(--rule); stroke-width: 1.5; }
+  .gap-label { font-family: var(--display); font-weight: 700; font-size: 15px; fill: var(--ink-soft); }
+  .gap-label.demand { fill: var(--gold); }
+  .gap-label.cap { fill: var(--muted); }
+  .gap-label.mid { fill: var(--gold); font-style: italic; font-family: var(--body); font-weight: 400; }
+  .gap-tick { font-family: var(--display); font-weight: 600; font-size: 12px; fill: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+  .gap-prose { max-width: 760px; }
+  .gap-prose p { font-size: 21px; line-height: 1.7; color: var(--ink); }
+  .gap-prose p strong { font-weight: 600; color: var(--slate-deep); }
 
-  /* === FOOTER === */
-  .footer {
-    background: var(--slate-deeper);
-    color: var(--mint-dim);
-    padding: 3rem 2rem;
-    text-align: center;
+  /* MX SECTION */
+  .mx { background: var(--cream-warm); }
+  .mx-lede { font-size: 21px; line-height: 1.62; color: var(--ink); max-width: 720px; }
+  .mx-lede strong { font-weight: 600; color: var(--slate-deep); }
+  .mx-panel { position: relative; overflow: hidden; background: var(--slate-deep); color: var(--cream); border-radius: 24px; padding: 60px 56px; margin-top: 56px; }
+  .mx-panel::before { content: ''; position: absolute; top: -90px; right: -90px; width: 340px; height: 340px; background: radial-gradient(circle, rgba(184,229,222,0.13), transparent 70%); pointer-events: none; }
+  .mx-triad { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .mx-term { padding: 6px 30px; border-left: 1px solid rgba(184,229,222,0.18); }
+  .mx-term:first-child { border-left: none; padding-left: 0; }
+  .mx-abbr { font-family: var(--display); font-weight: 800; font-size: clamp(40px, 6vw, 60px); letter-spacing: -0.02em; line-height: 1; color: rgba(184,229,222,0.42); }
+  .mx-term .name { font-family: var(--display); font-weight: 700; font-size: 12.5px; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(250,246,236,0.5); margin-top: 16px; }
+  .mx-term.is-mx .mx-abbr { color: var(--gold-bright); }
+  .mx-term.is-mx .name { color: var(--mint); }
+  .mx-statement { position: relative; z-index: 2; margin-top: 44px; padding-top: 30px; border-top: 1px solid rgba(184,229,222,0.18); font-family: var(--body); font-size: 22px; line-height: 1.5; color: var(--cream); max-width: 780px; }
+  .mx-statement em { font-style: italic; color: var(--mint); }
+
+  /* SERVICES */
+  .services { background: var(--slate-deep); color: var(--cream); }
+  .services .eyebrow { color: var(--gold-bright); }
+  .services .section-title { color: var(--cream); }
+  .services .section-title em { color: var(--mint); }
+  .services .section-lede { color: var(--mint-dim); }
+  .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(184,229,222,0.16); border: 1px solid rgba(184,229,222,0.16); margin-top: 60px; }
+  .svc { background: var(--slate-deep); padding: 40px 32px 38px; transition: background 0.25s; }
+  .svc:hover { background: var(--slate-deeper); }
+  .svc-kicker { font-family: var(--display); font-weight: 800; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-bright); display: inline-block; margin-bottom: 18px; }
+  .svc-kicker::after { content: ''; display: block; width: 22px; height: 2px; background: var(--gold); margin-top: 11px; transition: width 0.25s ease; }
+  .svc:hover .svc-kicker::after { width: 42px; }
+  .svc h3 { font-family: var(--display); font-weight: 700; font-size: 22px; color: var(--cream); margin-bottom: 12px; letter-spacing: -0.01em; transition: color 0.2s; }
+  .svc:hover h3 { color: var(--mint); }
+  .svc p { font-size: 15.5px; line-height: 1.62; color: var(--mint-dim); }
+
+  /* HOW */
+  .how { background: var(--cream-warm); }
+  .how-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 64px; align-items: start; }
+  .how-grid .section-title { margin-bottom: 0; }
+  .principles { display: flex; flex-direction: column; }
+  .principle { padding: 26px 0; border-top: 1px solid var(--rule); }
+  .principle:first-child { border-top: none; padding-top: 0; }
+  .principle:last-child { padding-bottom: 0; }
+  .principle h4 { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--slate-deep); margin-bottom: 8px; letter-spacing: -0.01em; }
+  .principle h4 span { color: var(--gold); }
+  .principle p { font-size: 17.5px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+
+  /* FOUNDER */
+  .founder { background: var(--cream); }
+  .founder-grid { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 56px; align-items: start; margin-top: 8px; }
+  .founder-photo { aspect-ratio: 4 / 5; border-radius: 20px; overflow: hidden; background: var(--slate-deep); position: relative; }
+  .founder-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; display: block; }
+  .founder-photo .tab { position: absolute; left: 0; bottom: 0; background: var(--gold); color: var(--slate-deep); font-family: var(--display); font-weight: 800; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 16px; border-top-right-radius: 12px; }
+  .founder-name { font-family: var(--display); font-weight: 800; font-size: clamp(30px, 4vw, 42px); color: var(--slate-deep); letter-spacing: -0.02em; line-height: 1.05; }
+  .founder-role { font-family: var(--display); font-weight: 700; font-size: 15px; color: var(--gold); margin-top: 8px; }
+  .founder-pos { font-family: var(--body); font-style: italic; font-size: 20px; line-height: 1.45; color: var(--ink-soft); margin-top: 22px; max-width: 600px; }
+  .founder-prose { font-size: 18px; line-height: 1.66; color: var(--ink); margin-top: 22px; max-width: 600px; }
+  .founder-prose strong { font-weight: 600; color: var(--slate-deep); }
+  .cred-list { list-style: none; margin: 30px 0 0; padding: 0; }
+  .cred-list li { position: relative; padding: 13px 0 13px 24px; border-top: 1px solid var(--rule-soft); font-size: 16px; line-height: 1.5; color: var(--ink); }
+  .cred-list li:first-child { border-top: none; }
+  .cred-list li::before { content: ''; position: absolute; left: 0; top: 21px; width: 9px; height: 2px; background: var(--gold); }
+  .cred-list li b { font-weight: 600; color: var(--slate-deep); }
+  .linkedin-btn { display: inline-flex; align-items: center; gap: 9px; margin-top: 32px; background: var(--slate); color: var(--cream); font-family: var(--display); font-weight: 700; font-size: 14px; padding: 12px 22px; border-radius: 100px; text-decoration: none; transition: background 0.2s, color 0.2s; }
+  .linkedin-btn:hover { background: var(--slate-deep); color: var(--mint); }
+  .linkedin-btn svg { width: 17px; height: 17px; fill: currentColor; }
+
+  /* CONTACT */
+  .contact { background: var(--slate-deeper); color: var(--cream); padding: 130px 0; text-align: center; }
+  .contact .eyebrow { color: var(--gold-bright); }
+  .contact h2 { font-family: var(--display); font-size: clamp(34px, 4.6vw, 56px); font-weight: 800; line-height: 1.08; letter-spacing: -0.025em; color: var(--cream); margin-bottom: 24px; max-width: 760px; margin-left: auto; margin-right: auto; }
+  .contact h2 em { font-family: var(--body); font-style: italic; font-weight: 400; color: var(--mint); }
+  .contact p { font-size: 20px; line-height: 1.6; color: var(--cream); opacity: 0.85; max-width: 600px; margin: 0 auto 38px; }
+  .contact-link { display: inline-block; background: var(--mint); color: var(--slate-deep); font-family: var(--display); font-weight: 700; font-size: 16px; padding: 17px 34px; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+  .contact-link:hover { background: var(--cream); }
+
+  /* FOOTER */
+  footer { background: var(--slate-deeper); color: var(--cream); padding: 0 0 48px; }
+  .footer-inner { border-top: 1px solid rgba(184,229,222,0.14); padding-top: 36px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px; }
+  .footer-logo { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--cream); display: flex; align-items: baseline; }
+  .footer-logo .lo-light { font-weight: 400; font-size: 12px; color: var(--gold-bright); margin-right: 4px; transform: translateY(-5px); display: inline-block; }
+  .footer-logo .lo-mx, .footer-logo .lo-dot { color: var(--gold-bright); }
+  .footer-meta { font-family: var(--display); font-size: 13px; color: var(--mint-dim); display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .footer-meta a { color: var(--mint); text-decoration: none; }
+  .footer-meta a:hover { color: var(--gold-bright); }
+
+  @media (max-width: 920px) {
+    .nav-inner { padding: 14px 20px; gap: 14px; }
+    .nav-links { gap: 0; }
+    .nav-links a:not(.cta) { display: none; }
+    .nav-links a.cta { padding: 9px 16px; font-size: 13px; }
+    .logo img { height: 30px; }
+    .wrap, .wrap-narrow { padding: 0 22px; }
+    section { padding: 80px 0; }
+    .hero { padding: 130px 0 90px; }
+    .hero-lede { font-size: 19px; }
+    .section-lede { font-size: 19px; }
+    .gap-prose p { font-size: 19px; }
+    .mx-lede { font-size: 19px; }
+    .mx-panel { padding: 38px 22px; }
+    .mx-triad { gap: 0; }
+    .mx-term { padding: 4px 10px; min-width: 0; }
+    .mx-abbr { font-size: 32px; }
+    .mx-term .name { font-size: 10px; letter-spacing: 0.03em; margin-top: 12px; }
+    .mx-statement { font-size: 19px; }
+    .svc-grid { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; gap: 32px; }
+    .founder-grid { grid-template-columns: 1fr; gap: 36px; }
+    .founder-photo { max-width: 360px; }
+    .hero-meta { grid-template-columns: 1fr 1fr; gap: 24px 32px; margin-top: 44px; padding-top: 30px; }
+    .principle p { font-size: 16.5px; }
   }
-  .footer-inner {
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  .footer-logo {
-    filter: brightness(0) invert(1);
-    margin-bottom: 1rem;
-  }
-  .footer p {
-    font-size: 0.85rem;
-    color: var(--muted);
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+    .gap-demand, .gap-capacity { stroke-dashoffset: 0 !important; }
+    .gap-area { opacity: 0.12 !important; }
   }
 </style>
 </head>
@@ -216,70 +226,219 @@
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-logo">
-      <img src="clevermx-logo.png" alt="that's clevermx." height="40">
-    </a>
-    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
-      <span></span><span></span><span></span>
-    </button>
+    <a href="#" class="logo"><img src="clevermx_logo.png" alt="that's clevermx"></a>
     <ul class="nav-links">
-      <li><a href="#what-i-do">What I do</a></li>
-      <li><a href="#how-i-work">How I work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#gap">The gap</a></li>
+      <li><a href="#mx">Marketer Experience</a></li>
+      <li><a href="#services">What we do</a></li>
+      <li><a href="#founder">Founder</a></li>
+      <li><a href="#contact" class="cta">Get in touch</a></li>
     </ul>
   </div>
 </nav>
 
-<section class="hero">
-  <div class="hero-inner">
-    <h1>Marketing operations for businesses that need it to work.</h1>
-    <p>clevermx is a marketing operations practice. I help marketing teams get their operations right, particularly when the stakes are high and things need to actually function.</p>
-  </div>
-</section>
-
-<section class="section" id="what-i-do">
-  <div class="section-inner">
-    <h2 class="section-title">What I <span class="accent">do</span></h2>
-    <p>I work on marketing operations. That means the infrastructure, data, processes, and systems that sit underneath a marketing function and determine whether it runs well or badly. Most of the time, it runs badly. Not because people are incompetent, but because nobody has made it a priority.</p>
-    <p>Right now, my focus is IPO readiness. When a business is preparing to list, marketing suddenly comes under a level of scrutiny it has never faced before. The data needs to be clean. The reporting needs to be credible. The narrative needs to hold together. Sales and marketing need to be visibly aligned. The team needs to be structured for what comes next, not what got you here. I help marketing functions get to that standard.</p>
-    <p>Outside of that specialism, I work across the full scope of marketing operations: tech stack, data architecture, process design, reporting, and team structure. The common thread is making marketing functions work properly.</p>
-  </div>
-</section>
-
-<section class="section" id="how-i-work">
-  <div class="section-inner">
-    <h2 class="section-title">How I <span class="accent">work</span></h2>
-    <p>I sit inside the team. I am not producing a report from the outside, or presenting recommendations from a distance. I work alongside the people who actually have to run marketing operations, and I help them fix things while the business keeps moving.</p>
-    <p>Engagements are typically short. A few months, not a few years. The goal is to get things working, hand them over properly, and leave. I am not trying to build a dependency.</p>
-    <p>This is a small practice, deliberately. One consultant, not a team of twelve. That means you get the person you spoke to, not a junior associate with a branded slide template. It also means I only take on work where I can genuinely be useful.</p>
-  </div>
-</section>
-
-<section class="section" id="about">
-  <div class="section-inner">
-    <h2 class="section-title">About <span class="accent">clevermx</span></h2>
-    <p>clevermx was founded by someone who spent years doing this work inside businesses, not advising on it from outside. That background shapes everything about how the practice operates: a bias towards practical work over strategic theatre, and a strong preference for things that actually get done.</p>
-    <p>The name is short for clever marketing operations. The "mx" is the point.</p>
-  </div>
-</section>
-
-<section class="section" id="contact">
-  <div class="section-inner">
-    <h2 class="section-title">Get in <span class="accent">touch</span></h2>
-    <p>If you want to talk about marketing operations, send me an email.</p>
-    <p style="margin-top: 1.5rem;">
-      <a href="mailto:hello@thatsclevermx.com" class="contact-email">hello@thatsclevermx.com</a>
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-eyebrow">Marketing operations consultancy</div>
+    <h1>Marketing changed faster than the <em>operation</em> underneath it.</h1>
+    <p class="hero-lede">
+      More channels, more tools, more data, more pressure to prove every pound. What marketing is asked to deliver has raced ahead, while the engine that has to deliver it, the process, the technology, the team, was left to catch up on its own. clevermx rebuilds that engine.
     </p>
+    <a href="#contact" class="hero-cta">Start a conversation</a>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="label">Focus</span><span class="value">Marketing operations</span></div>
+      <div class="hero-meta-item"><span class="label">Framework</span><span class="value">Marketer Experience</span></div>
+      <div class="hero-meta-item"><span class="label">Engagements</span><span class="value">Fractional and advisory</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- THE GAP: signature visual -->
+<section id="gap" class="gap-section">
+  <div class="wrap">
+    <div class="eyebrow">The gap</div>
+    <h1 class="section-title">The expectations went up. The <em>operation</em> did not keep pace.</h1>
+    <hr class="gold-rule">
+
+    <div class="gap-figure" id="gapFigure">
+      <svg viewBox="0 0 820 400" role="img" aria-label="A chart showing what marketing is asked to do rising steeply over time, while what the operation can support rises slowly, with a widening gap between them.">
+        <line class="gap-axis" x1="70" y1="50" x2="70" y2="340"></line>
+        <line class="gap-axis" x1="70" y1="340" x2="780" y2="340"></line>
+        <path class="gap-area" d="M70,322 C300,300 520,150 780,60 L780,250 C520,288 300,312 70,322 Z"></path>
+        <path class="gap-line gap-capacity" d="M70,322 C300,312 520,288 780,250"></path>
+        <path class="gap-line gap-demand" d="M70,322 C300,300 520,150 780,60"></path>
+        <text class="gap-label demand" x="500" y="120">What marketing is asked to do</text>
+        <text class="gap-label cap" x="500" y="300">What the operation can support</text>
+        <text class="gap-label mid" x="610" y="210">the gap</text>
+        <text class="gap-tick" x="70" y="362">Then</text>
+        <text class="gap-tick" x="748" y="362">Now</text>
+      </svg>
+    </div>
+
+    <div class="gap-prose">
+      <p>
+        Every marketer knows this feeling. You were hired to do marketing and ended up running a tech stack nobody fully maps, defending numbers finance does not quite trust, and chasing a channel mix that changes every quarter. Then AI moved the goalposts again. None of it came with more time, a bigger team, or an operation built to carry it. <strong>The gap in the middle is where good marketing quietly breaks, and where the work begins.</strong>
+      </p>
+    </div>
   </div>
 </section>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <img src="clevermx-logo.png" alt="that's clevermx." height="32" class="footer-logo">
-    <p>&copy; 2026 clevermx. All rights reserved.</p>
+<!-- MARKETER EXPERIENCE -->
+<section id="mx" class="mx">
+  <div class="wrap">
+    <div class="eyebrow">The idea behind the name</div>
+    <h1 class="section-title">The mx is for <em>Marketer Experience.</em></h1>
+    <p class="mx-lede">
+      Businesses pour everything into how the customer experiences them, and how the user experiences the product. Almost nobody designs the experience of the people inside marketing: the team working in a stack nobody fully maps, stitching data together by hand, and being asked to prove every pound while the tools shift under their feet. <strong>That experience is what decides whether marketing actually delivers.</strong> clevermx calls it Marketer Experience, and the whole practice is built around fixing it.
+    </p>
+
+    <div class="mx-panel">
+      <div class="mx-triad">
+        <div class="mx-term"><div class="mx-abbr">CX</div><div class="name">Customer experience</div></div>
+        <div class="mx-term"><div class="mx-abbr">UX</div><div class="name">User experience</div></div>
+        <div class="mx-term is-mx"><div class="mx-abbr">MX</div><div class="name">Marketer experience</div></div>
+      </div>
+      <p class="mx-statement">
+        Everyone resources the first two. The third is left to cope. <em>Design the marketer's experience as deliberately as you design the customer's, and the output looks after itself.</em>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="services">
+  <div class="wrap">
+    <div class="eyebrow">What we do</div>
+    <h1 class="section-title">Six ways to <em>close the gap.</em></h1>
+    <p class="section-lede">Different starting points, the same job: a marketing function that can keep pace with what is now asked of it.</p>
+
+    <div class="svc-grid">
+      <div class="svc">
+        <span class="svc-kicker">Where you stand</span>
+        <h3>Audits</h3>
+        <p>An honest, unflinching read on where your marketing operation actually is today. No grading on a curve. Everything else starts from knowing the truth.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-kicker">Where you're going</span>
+        <h3>Strategy</h3>
+        <p>A marketing operation needs a plan, not just a backlog. Where the function is heading, what it will be judged on, and what has to be true for it to get there.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-kicker">How it holds up</span>
+        <h3>Process</h3>
+        <p>The difference between a function that performs on its best week and one that performs every week. Ways of working that hold up when someone is off.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-kicker">What you run on</span>
+        <h3>Technology</h3>
+        <p>A stack that earns its place. Rationalised, documented and joined up, costing a sensible share of the budget instead of quietly running the show.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-kicker">Who does the work</span>
+        <h3>Training</h3>
+        <p>Levelling up the team you have. The operational skills, tools and habits that turn a group of marketers into a function trusted with the numbers.</p>
+      </div>
+      <div class="svc">
+        <span class="svc-kicker">What the business expects</span>
+        <h3>Education</h3>
+        <p>Helping the wider business understand what modern marketing is and is not, so leadership stops asking for the impossible and starts backing the right things.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section id="how" class="how">
+  <div class="wrap">
+    <div class="how-grid">
+      <div>
+        <div class="eyebrow">How we work</div>
+        <h1 class="section-title">Embedded with your team, <em>not parachuted over it.</em></h1>
+        <hr class="gold-rule">
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <h4>Close to <span>the work.</span></h4>
+          <p>We get into your team and your data and build alongside them, rather than running things from a distance and posting a report at the end of the month.</p>
+        </div>
+        <div class="principle">
+          <h4>Straight about <span>the numbers.</span></h4>
+          <p>Being plain about what marketing can and cannot do is usually what gets finance and sales to trust the figures. Same question, same answer, a lot less arguing.</p>
+        </div>
+        <div class="principle">
+          <h4>Stronger <span>when we leave.</span></h4>
+          <p>Most engagements are fractional and advisory. The point is a function that stands on its own, not one that depends on us being in the room.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section id="founder" class="founder">
+  <div class="wrap">
+    <div class="eyebrow">The founder</div>
+    <h1 class="section-title">The person <em>behind the practice.</em></h1>
+    <hr class="gold-rule">
+    <div class="founder-grid" style="margin-top:48px;">
+      <div class="founder-photo">
+        <img src="karla.jpg" alt="Karla Wentworth, founder of clevermx">
+      </div>
+      <div>
+        <div class="founder-name">Karla Wentworth</div>
+        <div class="founder-role">Founder, clevermx</div>
+        <p class="founder-pos">One of Europe's leading marketing technology and operations consultants, and the person who named Marketer Experience.</p>
+        <p class="founder-prose">
+          clevermx is founder-led. The thinking, the framework and the standards come from twenty-five years spent inside marketing operations, on the hook for the stack, the data and the numbers. <strong>The practice exists because the gap clevermx closes is the same one Karla kept hitting from the inside.</strong>
+        </p>
+        <ul class="cred-list">
+          <li>Pioneered <b>MX (Marketer Experience)</b>, now used across the industry as a framework</li>
+          <li>25 years in marketing operations and technology leadership</li>
+          <li>Keynote speaker on MarTech, AI and automation, in the UK and internationally</li>
+          <li>Host of the <b>What's MOps Got To Do With It</b> podcast</li>
+          <li>Lean Six Sigma Champion · Prince II certified</li>
+        </ul>
+        <a class="linkedin-btn" href="https://www.linkedin.com/in/karlawentworth/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM0 8h5v16H0zM7.5 8H12v2.2h.07c.63-1.2 2.17-2.46 4.46-2.46C21.2 7.74 24 10 24 14.6V24h-5v-8.4c0-2-.04-4.6-2.8-4.6-2.8 0-3.2 2.18-3.2 4.44V24h-5z"></path></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="wrap-narrow">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Start with a <em>short, honest conversation.</em></h2>
+    <p>If something about your marketing operation is keeping you up, or your team is buried under tools and data instead of doing the work, the most useful first step is a short conversation about where things stand today.</p>
+    <a href="mailto:hello@thatsclevermx.com" class="contact-link">hello@thatsclevermx.com</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-logo"><span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span></div>
+      <div class="footer-meta">
+        <span>Marketing operations consultancy · United Kingdom</span>
+        <a href="https://www.linkedin.com/in/karlawentworth/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
   </div>
 </footer>
+
+<script>
+(function(){
+  var fig = document.getElementById('gapFigure');
+  if (!fig || !('IntersectionObserver' in window)) { if (fig) fig.classList.add('in-view'); return; }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if (e.isIntersecting) { fig.classList.add('in-view'); obs.disconnect(); } });
+  }, { threshold: 0.35 });
+  obs.observe(fig);
+})();
+</script>
 
 </body>
 </html>

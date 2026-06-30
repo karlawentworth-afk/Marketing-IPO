@@ -1,24 +1,19 @@
 # clevermx
 
-Public marketing site for clevermx. Static HTML and CSS, no build step, deploys to Netlify.
-
-## Run it locally
-
-Open index.html in a browser, or serve the folder:
-
-    python3 -m http.server 8000
-
-then visit http://localhost:8000
+The clevermx website. Static HTML and CSS, no build step, deploys to Netlify.
 
 ## Structure
 
-- index.html, homepage
-- workstream-numbers.html, A, the numbers
-- workstream-operations.html, B, the operations spine
-- workstream-narrative.html, C, the narrative
-- workstream-alignment.html, D, sales and marketing alignment
-- workstream-team.html, E, team and capability
-- 404.html, not-found page
+- index.html and root pages: the public marketing operations consultancy site (findable on Google).
+- m-ipo/: a private, unlisted resource on pre-IPO marketing readiness, sent to a client by direct link. Every page is noindexed and the section is never linked from the main site.
+- 404.html: site-wide not-found page.
+- robots.txt: allows crawling so the noindex on /m-ipo/ is honored.
+
+## Run it locally
+
+    python3 -m http.server 8000
+
+then visit http://localhost:8000 (main site) and http://localhost:8000/m-ipo/ (the section).
 
 ## Deploy
 
@@ -26,4 +21,4 @@ Push to main. Netlify builds nothing and publishes the repo root.
 
 ## Before editing
 
-Read CLAUDE.md. It holds the locked design system, the house style rules, the playbook depth dial, and the confidentiality rule that keeps client detail off the public site.
+Read CLAUDE.md. It holds the two-part structure, the locked design system, the house style, the confidentiality rule, and the noindex rule that keeps the m-IPO section out of search.

@@ -1,6 +1,4 @@
+# Crawling is allowed so the noindex tag on /m-ipo/ pages is seen and honored.
+# The m-ipo section is kept out of search by that noindex tag plus never linking to it.
 User-agent: *
 Allow: /
-
-Disallow: /m-ipo/
-
-Sitemap: https://thatsclevermx.com/sitemap.xml

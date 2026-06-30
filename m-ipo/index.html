@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
+  <meta name="robots" content="noindex, nofollow">
 <title>that's clevermx. Marketing operations for serious moments.</title>
 <meta name="description" content="clevermx is a marketing operations consultancy. We help marketing functions get ready for moments that matter, including IPO readiness.">
 
@@ -67,11 +67,25 @@
     gap: 32px;
   }
   .logo {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--slate);
     text-decoration: none;
+    letter-spacing: -0.02em;
     display: flex;
-    align-items: center;
+    align-items: baseline;
   }
-  .logo img { height: 40px; width: auto; }
+  .logo .lo-light {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--gold);
+    margin-right: 4px;
+    transform: translateY(-6px);
+    display: inline-block;
+  }
+  .logo .lo-mx { color: var(--gold); }
+  .logo .lo-dot { color: var(--gold); }
 
   .nav-links {
     display: flex;
@@ -89,48 +103,48 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--gold); }
-  .has-dropdown {
-    position: relative;
+  .nav-links a.cta {
+    background: var(--slate);
+    color: var(--cream);
+    padding: 10px 20px;
+    border-radius: 100px;
+    transition: all 0.2s;
   }
-  .dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: var(--cream);
-    border: 1px solid var(--rule-soft);
-    border-radius: 8px;
-    padding: 8px 0;
-    min-width: 220px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    list-style: none;
-    z-index: 100;
+  .nav-links a.cta:hover {
+    background: var(--slate-deep);
+    color: var(--mint);
   }
-  .has-dropdown:hover .dropdown {
-    display: block;
+
+  /* === WORKSTREAM TAB STRIP === */
+  .ws-tabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
-  .dropdown li a {
-    display: block;
-    padding: 8px 20px;
+  .ws-tabs::-webkit-scrollbar { display: none; }
+  .ws-tab {
     font-family: var(--display);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 13px;
     color: var(--ink-soft);
     text-decoration: none;
-    transition: color 0.2s, background 0.2s;
+    white-space: nowrap;
+    padding: 8px 14px;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 7px;
+    transition: background 0.2s, color 0.2s;
   }
-  .dropdown li a:hover {
-    color: var(--gold);
-    background: var(--cream-warm);
-  }
-  .dd-letter {
-    display: inline-block;
-    font-weight: 800;
-    font-size: 11px;
-    color: var(--gold);
-    margin-right: 8px;
-    letter-spacing: 0.05em;
-  }
+  .ws-tab:hover { background: var(--cream-warm); color: var(--slate-deep); }
+  .ws-tab .tab-letter { font-weight: 800; color: var(--gold); font-size: 12px; }
+  .ws-tab.current { background: var(--slate-deep); color: var(--cream); }
+  .ws-tab.current .tab-letter { color: var(--gold-bright); }
 
   /* === LAYOUT === */
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 40px; }
@@ -813,6 +827,8 @@
   /* === RESPONSIVE === */
   @media (max-width: 900px) {
     .nav-inner { padding: 12px 16px; gap: 12px; }
+    .ws-tab { padding: 7px 11px; font-size: 12px; }
+    .ws-tab .tab-letter { font-size: 11px; }
     .logo { font-size: 19px; }
     .wrap, .wrap-narrow { padding: 0 24px; }
     section { padding: 80px 0; }
@@ -848,23 +864,17 @@
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="logo">
-      <img src="../clevermx-logo.png" alt="that's clevermx." height="40">
+    <a href="/" class="logo">
+      <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="#whole-ipo">The whole picture</a></li>
-      <li><a href="#marketing-place">Marketing's place</a></li>
-      <li class="has-dropdown">
-        <a href="#workstreams">The five workstreams</a>
-        <ul class="dropdown">
-          <li><a href="workstream-numbers.html"><span class="dd-letter">A</span>The numbers</a></li>
-          <li><a href="workstream-operations.html"><span class="dd-letter">B</span>Operations spine</a></li>
-          <li><a href="workstream-narrative.html"><span class="dd-letter">C</span>Narrative</a></li>
-          <li><a href="workstream-alignment.html"><span class="dd-letter">D</span>Sales and marketing</a></li>
-          <li><a href="workstream-team.html"><span class="dd-letter">E</span>Team</a></li>
-        </ul>
-      </li>
-    </ul>
+    <div class="ws-tabs">
+      <a href="index.html" class="ws-tab overview current">Overview</a>
+      <a href="workstream-numbers.html" class="ws-tab"><span class="tab-letter">A</span>The numbers</a>
+      <a href="workstream-operations.html" class="ws-tab"><span class="tab-letter">B</span>Operations spine</a>
+      <a href="workstream-narrative.html" class="ws-tab"><span class="tab-letter">C</span>Narrative</a>
+      <a href="workstream-alignment.html" class="ws-tab"><span class="tab-letter">D</span>Sales and marketing</a>
+      <a href="workstream-team.html" class="ws-tab"><span class="tab-letter">E</span>Team</a>
+    </div>
   </div>
 </nav>
 
@@ -1260,6 +1270,9 @@
   </div>
 </footer>
 
+<script>
+(function(){var bar=document.querySelector('.ws-tabs');var cur=document.querySelector('.ws-tab.current');if(!bar||!cur)return;var r=cur.getBoundingClientRect(),b=bar.getBoundingClientRect();bar.scrollLeft+=(r.left-b.left)-(b.width/2)+(r.width/2);})();
+</script>
 
 </body>
 </html>
