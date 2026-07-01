@@ -67,25 +67,11 @@
     gap: 32px;
   }
   .logo {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 22px;
-    color: var(--slate);
     text-decoration: none;
-    letter-spacing: -0.02em;
     display: flex;
-    align-items: baseline;
+    align-items: center;
   }
-  .logo .lo-light {
-    font-weight: 400;
-    font-size: 14px;
-    color: var(--gold);
-    margin-right: 4px;
-    transform: translateY(-6px);
-    display: inline-block;
-  }
-  .logo .lo-mx { color: var(--gold); }
-  .logo .lo-dot { color: var(--gold); }
+  .logo img { height: 40px; width: auto; }
 
   .nav-links {
     display: flex;
@@ -819,22 +805,10 @@
     gap: 24px;
   }
   .footer-logo {
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: 20px;
-    color: var(--cream);
     display: flex;
-    align-items: baseline;
+    align-items: center;
   }
-  .footer-logo .lo-light {
-    font-weight: 400;
-    font-size: 12px;
-    color: var(--gold-bright);
-    margin-right: 4px;
-    transform: translateY(-5px);
-    display: inline-block;
-  }
-  .footer-logo .lo-mx, .footer-logo .lo-dot { color: var(--gold-bright); }
+  .footer-logo img { height: 32px; width: auto; filter: brightness(0) invert(1); }
   .footer-meta {
     font-family: var(--display);
     font-size: 13px;
@@ -846,7 +820,7 @@
     .nav-inner { padding: 12px 16px; gap: 12px; }
     .ws-tab { padding: 7px 11px; font-size: 12px; }
     .ws-tab .tab-letter { font-size: 11px; }
-    .logo { font-size: 19px; }
+
     .wrap, .wrap-narrow { padding: 0 24px; }
     section { padding: 80px 0; }
     .hero { padding: 130px 0 90px; }
@@ -882,7 +856,7 @@
 <nav class="nav">
   <div class="nav-inner">
     <a href="/" class="logo">
-      <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
+      <img src="../clevermx_logo.png" alt="that's clevermx." height="40">
     </a>
     <div class="ws-tabs">
       <a href="index.html" class="ws-tab overview current">Overview</a>
@@ -1279,7 +1253,7 @@
   <div class="wrap">
     <div class="footer-inner">
       <div class="footer-logo">
-        <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
+        <img src="../clevermx_logo.png" alt="that's clevermx." height="32">
       </div>
       <div class="footer-meta">
         Marketing operations, IPO readiness, transaction preparation · United Kingdom
