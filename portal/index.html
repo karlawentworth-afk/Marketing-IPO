@@ -212,16 +212,17 @@
 /* ===========  CONFIG  =========== */
 const SB_URL='https://ipnuehlrctbjezrxrkev.supabase.co';
 const SB_KEY='sb_publishable_-Y57ziciMZv0wx0ehD2xng_fVeozNk2';
-const VERSION='v4';
+const VERSION='v5';
 const LOGO='https://thatsclevermx.com/clevermx_logo.png';
 let sb=null;
 try{ sb = window.supabase.createClient(SB_URL, SB_KEY); }catch(e){ console.error(e); }
 
 const WS_DEFS=[
-  {key:'provable',letter:'1',title:'Provable claims',desc:'Every public claim is evidenced, or it comes down. Verification.'},
-  {key:'controlled',letter:'2',title:'Controlled communications',desc:'Nothing said that breaks the rules; financial promotions approved or exempt. Section 21, publicity guidelines, MAR.'},
-  {key:'story',letter:'3',title:'One consistent story',desc:'The same claims everywhere, tied to the numbers, holding up under scrutiny. Prospectus consistency, the equity story.'},
-  {key:'function',letter:'4',title:'A function that stands scrutiny',desc:'The data, controls and people behind all of it, able to run at public-company cadence.'},
+  {key:'numbers',letter:'1',title:'Numbers & data',desc:'The measurement spine: attribution, CAC and pipeline reconciled to what finance can sign, from one source of truth.'},
+  {key:'story',letter:'2',title:'Story & evidence',desc:'One consistent, evidenced story everywhere a buyer looks, with the claims and customer proof to back it.'},
+  {key:'people',letter:'3',title:'People & capability',desc:'A named marketing-ops owner, reduced key-person risk, and a team that can report at public-company cadence.'},
+  {key:'comms',letter:'4',title:'Controlled comms',desc:'Every public word provable and signed off: financial promotion, publicity, quiet-period and disclosure discipline.'},
+  {key:'tech',letter:'5',title:'Tech & governance',desc:'The martech and AI estate documented, governed and lawful, with controlled, auditable access.'},
 ];
 
 /* ===========  CLIENT FORM HINTS  =========== */
@@ -239,36 +240,38 @@ const GOV_HINTS={
   comms:"How reporting works. Channel, meeting rhythm, who is in the room, how issues get escalated."
 };
 
-/* ===========  STARTER REQUIREMENTS PER REQUIREMENT AREA  ===========
-   The four areas are the fixed, sourced spine. Each requirement carries the
-   rule it flows from (source) and a plain delivery label saying who owns it.
+/* ===========  STARTER REQUIREMENTS PER AREA  ===========
+   The five marketing areas are the headers. Each requirement carries the
+   rule it flows from (source), kept verbatim, plus a plain delivery label.
    The labels are yours to rename or merge. Outputs and tasks stay client-specific. */
 const REQ_TEMPLATES={
-  provable:[
-    {t:"Every public marketing claim has documentary evidence behind it and a named owner. A claims register exists.",label:"Evidence & story",source:"Verification: unverifiable statements must be deleted or amended, and all IPO materials must be consistent with the prospectus. Objective claims also need substantiation under the ASA / CAP Code."},
-    {t:"Customer evidence is verifiable: references permissioned, case studies factual, logos you are cleared to use.",label:"Evidence & story",source:"Same verification standard. Permission to use a customer name or logo has to be real and on file."},
-    {t:"The marketing numbers (CAC, LTV, pipeline, attribution) reconcile to what finance can sign, with the method written down.",label:"The numbers",source:"Public marketing figures cannot contradict the financial information in the prospectus. Verification applies to numbers as much as words."},
-    {t:"Anything stale or unsupportable has been removed from the website and public materials.",label:"Public surface",source:"The company website is published information, reviewed and scrubbed as the listing approaches. The FCA can require a breaching website to be taken down."},
-  ],
-  controlled:[
-    {t:"Publicity guidelines are in place: what marketing can and cannot say, and who signs things off.",label:"Public surface",source:"It is customary for publicity guidelines to be put in place early to keep pre-prospectus marketing within the rules."},
-    {t:"Anything that could count as a financial promotion goes through an FCA-authorised approver or a clear exemption.",label:"Public surface",source:"FSMA section 21: an invitation or inducement to invest must be made or approved by an FCA-authorised person, or be exempt. Breach is a criminal offence."},
-    {t:"The website and social presence are scrubbed to match what is filed, and kept that way.",label:"Public surface",source:"Public information is controlled and must be consistent with the prospectus. The FCA can require breaching sites be taken down."},
-    {t:"Spokespeople are briefed and controlled, with one clear line on who speaks to whom.",label:"Public surface",source:"Publicity control and consistency of public statements. Near a float the safe answer to many questions is to say nothing."},
-    {t:"There is a process for handling price-sensitive information once listed (MAR readiness).",label:"The function",source:"UK Market Abuse Regulation: disclosure of inside information, insider lists and a dealing code apply from admission."},
+  numbers:[
+    {t:"The marketing numbers (CAC, LTV, pipeline, attribution) reconcile to what finance can sign, with the method written down.",label:"Attribution & CAC",source:"Public marketing figures cannot contradict the financial information in the prospectus. Verification applies to numbers as much as words."},
+    {t:"There is one source of truth for marketing performance, and the numbers reconcile.",label:"Single source of truth",source:"Underpins provable, consistent numbers. Two departments with two numbers is the thing this prevents."},
   ],
   story:[
-    {t:"One approved message framework, consistent across website, sales, PR and investor materials.",label:"Evidence & story",source:"All IPO materials are vetted for consistency with the prospectus. Inconsistency across surfaces reads to investors as risk."},
-    {t:"Positioning is evidenced, not asserted, so it survives a competent challenge.",label:"Evidence & story",source:"Verification of objective claims. Where the company sits has to be argued with sources, not adjectives."},
-    {t:"The story ties to the numbers: every claim of momentum traces to something finance can stand behind.",label:"Evidence & story",source:"Consistency with the financial disclosures in the prospectus."},
-    {t:"Marketing's input to the equity story and investor materials is ready when the bankers and IR need it.",label:"Evidence & story",source:"The equity story is led by the sponsor, brokers and IR. Early investor meetings need a finessed, verifiable story. Marketing contributes, it does not own this."},
+    {t:"Every public marketing claim has documentary evidence behind it and a named owner. A claims register exists.",label:"Claims register",source:"Verification: unverifiable statements must be deleted or amended, and all IPO materials must be consistent with the prospectus. Objective claims also need substantiation under the ASA / CAP Code."},
+    {t:"Customer evidence is verifiable: references permissioned, case studies factual, logos you are cleared to use.",label:"Customer evidence",source:"Same verification standard. Permission to use a customer name or logo has to be real and on file."},
+    {t:"One approved message framework, consistent across website, sales, PR and investor materials.",label:"Message framework",source:"All IPO materials are vetted for consistency with the prospectus. Inconsistency across surfaces reads to investors as risk."},
+    {t:"Positioning is evidenced, not asserted, so it survives a competent challenge.",label:"Positioning",source:"Verification of objective claims. Where the company sits has to be argued with sources, not adjectives."},
+    {t:"The story ties to the numbers: every claim of momentum traces to something finance can stand behind.",label:"Story to numbers",source:"Consistency with the financial disclosures in the prospectus."},
+    {t:"Marketing's input to the equity story and investor materials is ready when the bankers and IR need it.",label:"Equity story",source:"The equity story is led by the sponsor, brokers and IR. Early investor meetings need a finessed, verifiable story. Marketing contributes, it does not own this."},
   ],
-  function:[
-    {t:"Martech and data are documented and governed, with controlled, auditable access.",label:"The function",source:"Diligence and public-company governance expect controlled, auditable access to any system that touches reported numbers."},
-    {t:"There is one source of truth for marketing performance, and the numbers reconcile.",label:"The numbers",source:"Underpins provable, consistent numbers. Two departments with two numbers is the thing this prevents."},
-    {t:"Marketing contact data is held lawfully: a clear lawful basis and consent records.",label:"The function",source:"UK GDPR. A listing sharpens scrutiny of how personal data is held and used."},
-    {t:"Marketing operations has a named owner, and key-person risk is reduced.",label:"The function",source:"Capability and diligence. The function has to keep running without single points of failure."},
-    {t:"The team can produce accurate, on-time reporting at public-company cadence.",label:"The function",source:"Ongoing obligations under the DTRs and MAR set a reporting rhythm a listed company has to keep."},
+  people:[
+    {t:"Marketing operations has a named owner, and key-person risk is reduced.",label:"Ownership & key-person",source:"Capability and diligence. The function has to keep running without single points of failure."},
+    {t:"The team can produce accurate, on-time reporting at public-company cadence.",label:"Reporting cadence",source:"Ongoing obligations under the DTRs and MAR set a reporting rhythm a listed company has to keep."},
+  ],
+  comms:[
+    {t:"Anything stale or unsupportable has been removed from the website and public materials.",label:"Public surface",source:"The company website is published information, reviewed and scrubbed as the listing approaches. The FCA can require a breaching website to be taken down."},
+    {t:"Publicity guidelines are in place: what marketing can and cannot say, and who signs things off.",label:"Publicity guidelines",source:"It is customary for publicity guidelines to be put in place early to keep pre-prospectus marketing within the rules."},
+    {t:"Anything that could count as a financial promotion goes through an FCA-authorised approver or a clear exemption.",label:"Financial promotion",source:"FSMA section 21: an invitation or inducement to invest must be made or approved by an FCA-authorised person, or be exempt. Breach is a criminal offence."},
+    {t:"The website and social presence are scrubbed to match what is filed, and kept that way.",label:"Public surface",source:"Public information is controlled and must be consistent with the prospectus. The FCA can require breaching sites be taken down."},
+    {t:"Spokespeople are briefed and controlled, with one clear line on who speaks to whom.",label:"Spokespeople",source:"Publicity control and consistency of public statements. Near a float the safe answer to many questions is to say nothing."},
+    {t:"There is a process for handling price-sensitive information once listed (MAR readiness).",label:"Disclosure (MAR)",source:"UK Market Abuse Regulation: disclosure of inside information, insider lists and a dealing code apply from admission."},
+  ],
+  tech:[
+    {t:"Martech and data are documented and governed, with controlled, auditable access.",label:"Martech & access",source:"Diligence and public-company governance expect controlled, auditable access to any system that touches reported numbers."},
+    {t:"Marketing contact data is held lawfully: a clear lawful basis and consent records.",label:"Lawful data",source:"UK GDPR. A listing sharpens scrutiny of how personal data is held and used."},
   ],
 };
 function seedRows(orgId){const rows=[];WS_DEFS.forEach(w=>{(REQ_TEMPLATES[w.key]||[]).forEach((item,i)=>rows.push({org_id:orgId,ws:w.key,title:item.t,sort:i,label:item.label,source:item.source}));});return rows;}
@@ -277,31 +280,33 @@ function seedRows(orgId){const rows=[];WS_DEFS.forEach(w=>{(REQ_TEMPLATES[w.key]
    The obvious first action under each requirement, aligned to REQ_TEMPLATES by sort index.
    These are starting points to delete or rewrite, so a new client never opens to an empty screen. */
 const TASK_TEMPLATES={
-  provable:[
+  numbers:[
+    ["Agree with finance which marketing numbers they will and will not sign."],
+    ["Identify where the single marketing performance number will come from."],
+  ],
+  story:[
     ["List every claim made on the website and in the main sales deck.","Set up the claims register: claim, evidence, owner, where the evidence lives."],
     ["Pull every customer name, logo and case study in use, and check we hold written permission for each."],
-    ["Agree with finance which marketing numbers they will and will not sign."],
-    ["Audit the website and public materials for claims we can no longer stand behind."],
+    ["Gather the positioning from website, sales deck and investor materials and compare them."],
+    ["For each positioning claim, note the evidence behind it, or flag that there is none."],
+    ["Check every momentum claim against a number finance can stand behind."],
+    ["Ask the programme when marketing's input to the equity story is needed, and in what form."],
   ],
-  controlled:[
+  people:[
+    ["Name the marketing operations owner and note where key-person risk sits."],
+    ["Agree the reporting rhythm marketing will need to hit once listed."],
+  ],
+  comms:[
+    ["Audit the website and public materials for claims we can no longer stand behind."],
     ["Ask the sponsor or lawyers for the publicity guidelines, or flag that they are needed."],
     ["Map who approves outbound marketing now, and where an FCA-authorised sign-off will be needed."],
     ["Inventory every public channel: website, social accounts, anywhere the company speaks."],
     ["List who speaks publicly for the company and agree one approval line."],
     ["Confirm who owns the inside-information process once listed."],
   ],
-  story:[
-    ["Gather the positioning from website, sales deck and investor materials and compare them."],
-    ["For each positioning claim, note the evidence behind it, or flag that there is none."],
-    ["Check every momentum claim against a number finance can stand behind."],
-    ["Ask the programme when marketing's input to the equity story is needed, and in what form."],
-  ],
-  function:[
+  tech:[
     ["Document the martech stack: every tool, what it does, who has access."],
-    ["Identify where the single marketing performance number will come from."],
     ["Confirm the lawful basis and consent records for the marketing contact database."],
-    ["Name the marketing operations owner and note where key-person risk sits."],
-    ["Agree the reporting rhythm marketing will need to hit once listed."],
   ],
 };
 function taskRowsFor(seededReqs){const rows=[];(seededReqs||[]).forEach(r=>{const list=(TASK_TEMPLATES[r.ws]||[])[r.sort]||[];list.forEach(w=>rows.push({requirement_id:r.id,what:w,status:'todo'}));});return rows;}
@@ -466,7 +471,7 @@ function dashboard(){
     <div class="detail-grid">${detail('Sector',o.sector)}${detail('Funding',o.funding)}${detail('Scale',o.headcount)}${detail('Target',o.target)}</div>
   </div>
   ${tools}
-  <div class="section-head"><h3>The four requirements</h3><div class="overall">Overall readiness ${overall()}%</div></div>
+  <div class="section-head"><h3>The five areas</h3><div class="overall">Overall readiness ${overall()}%</div></div>
   <div class="ws-grid">${WS_DEFS.map(wsCard).join('')}</div>`;
 }
 function detail(k,v){return `<div class="detail"><div class="k">${k}</div><div class="v">${esc(v||'—')}</div></div>`;}
