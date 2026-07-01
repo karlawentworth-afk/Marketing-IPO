@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-<title>Workstream A · The numbers · that's clevermx.</title>
-<meta name="description" content="Workstream A of marketing's pre-IPO readiness: CAC, LTV, payback, attribution and marketing-sourced revenue. The data layer that feeds finance's disclosed KPIs and survives the reporting accountants' challenge.">
+<title>Tech and governance &middot; that's clevermx.</title>
+<meta name="description" content="Tech and governance: the martech and AI estate, controlled and auditable access, and lawful data handling under GDPR. The infrastructure layer that keeps marketing defensible.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -807,6 +807,54 @@
     html { scroll-behavior: auto; }
     *, *::before, *::after { transition: none !important; animation: none !important; }
   }
+
+  /* === STANDARD CARDS (qualitative gold standard) === */
+  .standard-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .standard-card {
+    background: var(--cream);
+    border: 1px solid var(--rule-soft);
+    border-top: 6px solid var(--gold);
+    border-radius: 16px;
+    padding: 32px 28px;
+    box-shadow: 0 1px 0 rgba(26, 47, 44, 0.04);
+  }
+  .standard-card .label {
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .standard-card h4 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--slate-deep);
+    margin-bottom: 14px;
+    line-height: 1.25;
+  }
+  .standard-card p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .standard-note {
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 24px;
+    font-weight: 600;
+  }
+  @media (max-width: 900px) {
+    .standard-cards { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -818,11 +866,11 @@
     </a>
     <div class="ws-tabs">
       <a href="index.html" class="ws-tab overview">Overview</a>
-      <a href="workstream-numbers.html" class="ws-tab current"><span class="tab-letter">A</span>The numbers</a>
-      <a href="workstream-operations.html" class="ws-tab"><span class="tab-letter">B</span>Operations spine</a>
-      <a href="workstream-narrative.html" class="ws-tab"><span class="tab-letter">C</span>Narrative</a>
-      <a href="workstream-alignment.html" class="ws-tab"><span class="tab-letter">D</span>Sales and marketing</a>
-      <a href="workstream-team.html" class="ws-tab"><span class="tab-letter">E</span>Team</a>
+      <a href="numbers-and-data.html" class="ws-tab"><span class="tab-letter">1</span>Numbers and data</a>
+      <a href="story-and-evidence.html" class="ws-tab"><span class="tab-letter">2</span>Story and evidence</a>
+      <a href="people-and-capability.html" class="ws-tab"><span class="tab-letter">3</span>People and capability</a>
+      <a href="controlled-comms.html" class="ws-tab"><span class="tab-letter">4</span>Controlled comms</a>
+      <a href="tech-and-governance.html" class="ws-tab current"><span class="tab-letter">5</span>Tech and governance</a>
     </div>
     <a href="/portal/" class="nav-signin">Sign in</a>
   </div>
@@ -830,278 +878,250 @@
 
 <header class="hero">
   <div class="wrap hero-inner">
-    <a href="index.html#workstreams" class="back-link"><span class="arrow">←</span> The five marketing workstreams</a>
-    <div class="hero-eyebrow"><span class="letter">A</span> Workstream A · Commercial readiness · Tier two</div>
-    <h1>The <em>numbers.</em></h1>
-    <p class="hero-lede">
-      CAC, LTV, payback, attribution, marketing-sourced revenue. This is the data layer that feeds finance's disclosed KPIs and has to hold up when the reporting accountants pull on it. It is also where most marketing functions discover their numbers were never built to be looked at this closely.
-    </p>
+    <a href="index.html#workstreams" class="back-link"><span class="arrow">&larr;</span> The five areas</a>
+    <div class="hero-eyebrow"><span class="letter">5</span> Area 5 &middot; Tech and governance</div>
+    <h1>Tech and <em>governance.</em></h1>
+    <p class="hero-lede">The martech and AI estate, controlled and auditable access, and lawful data under GDPR. The layer that decides whether everything above it is defensible or just optimistic.</p>
     <div class="hero-meta">
       <div class="hero-meta-item">
-        <span class="label">What it feeds</span>
-        <span class="value">Finance's audited KPI disclosures</span>
+        <span class="label">What it carries</span>
+        <span class="value">Every number marketing reports</span>
       </div>
       <div class="hero-meta-item">
-        <span class="label">Evidence floor</span>
-        <span class="value">Eight quarters of consistent data</span>
+        <span class="label">The quiet killer</span>
+        <span class="value">Data nobody can trace</span>
       </div>
       <div class="hero-meta-item">
         <span class="label">The real test</span>
-        <span class="value">Does it reconcile to the audited P&amp;L</span>
+        <span class="value">Can you show where a number came from</span>
       </div>
     </div>
   </div>
 </header>
 
-<!-- ============== GOLD STANDARD ============== -->
 <section class="benchmarks">
   <div class="wrap">
     <div class="eyebrow">What good looks like</div>
-    <h1 class="section-title">Numbers that <em>reconcile,</em> not numbers that impress.</h1>
-    <p class="section-lede">
-      The gold standard here is boring on purpose. Marketing and finance answer the same question the same way, every headline figure traces back to a system someone can open, and the unit economics survive a stranger asking how they were built.
-    </p>
+    <h1 class="section-title">Infrastructure you never have to <em>apologise for.</em></h1>
+    <p class="section-lede">Nobody gets excited about a data pipeline. But the spine is what lets every number above it be trusted, and these are the operating targets a gold-standard function holds itself to.</p>
     <hr class="gold-rule">
-
-    <div class="prose">
-      <p class="large">
-        Before an investor pays a multiple, someone independent checks whether your growth is efficient or just expensive. They do it with four or five numbers that have become the shared language of the market. You do not have to hit every benchmark. You do have to know where you sit against each one, and be able to explain it without flinching.
-      </p>
-    </div>
-
     <div class="stat-grid">
       <div class="stat-cell">
-        <div class="figure">3:1</div>
-        <h4>LTV to CAC</h4>
-        <p>The ratio investors reach for first. Below it and you are buying growth inefficiently. Far above it and you are probably underinvesting.</p>
+        <div class="figure">&lt;5%</div>
+        <h4>MarTech as % of budget</h4>
+        <p>The stack earns its place. Spend much above this and the tools are running you, not the other way round.</p>
       </div>
       <div class="stat-cell">
-        <div class="figure">12-18<span> mo</span></div>
-        <h4>CAC payback</h4>
-        <p>The band the market expects a B2B business to recover acquisition cost in. Drift past it and the growth model gets questioned.</p>
+        <div class="figure">1</div>
+        <h4>System of record</h4>
+        <p>One source of truth for the numbers that matter, not a federation of spreadsheets that disagree politely.</p>
       </div>
       <div class="stat-cell">
-        <div class="figure">40<span>+</span></div>
-        <h4>Rule of 40</h4>
-        <p>Growth rate plus profit margin. The single figure that frames whether your growth is worth what it costs to buy.</p>
+        <div class="figure">5 day</div>
+        <h4>Monthly close</h4>
+        <p>The numbers are ready early enough in the month to be useful, every month, through the same routine.</p>
       </div>
       <div class="stat-cell">
-        <div class="figure">7.7<span>%</span></div>
-        <h4>Marketing as % of revenue</h4>
-        <p>Gartner's cross-industry average. A sanity check on whether spend is in a normal range, never a target to chase.</p>
+        <div class="figure">8 qtr</div>
+        <h4>Lineage retained</h4>
+        <p>You can trace any reported number back two years without launching an archaeology project to find it.</p>
       </div>
     </div>
-    <p class="benchmark-note">The numbers move by sector and stage. The discipline of knowing yours, and defending it, does not.</p>
+    <p class="benchmark-note">These are operating targets, not laws of physics. The point is holding a standard, not hitting a magic figure.</p>
   </div>
 </section>
 
-<!-- ============== CONDITIONS ============== -->
 <section class="conditions">
   <div class="wrap">
     <div class="eyebrow">What has to be true</div>
-    <h1 class="section-title">Four conditions the numbers <em>have to meet.</em></h1>
-    <p class="section-lede">
-      These are not nice-to-haves. They are the state a marketing function's data has to be in before it walks into formal scrutiny. Miss one and the whole workstream is exposed.
-    </p>
+    <h1 class="section-title">Four conditions the spine <em>has to meet.</em></h1>
+    <p class="section-lede">The spine is where the other workstreams either stand up or quietly subside. These are the states it has to be in before any number leaves the building.</p>
     <hr class="gold-rule">
-
     <div class="conditions-list">
       <div class="condition">
         <div class="num">01</div>
         <div>
-          <h4>One number, one source</h4>
-          <p>Marketing and finance produce the same answer to the same question. CAC, LTV, pipeline, attribution. No second set of numbers living in a deck somewhere.</p>
+          <h4>MarTech under five percent</h4>
+          <p>Every tool earns its place, the architecture is documented, and there are no shadow systems doing important work that nobody officially knows about.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">02</div>
         <div>
-          <h4>Eight quarters of clean data</h4>
-          <p>Two years minimum, built on one consistent methodology. Reporting accountants and bookrunners are not checking a snapshot. They are checking whether the trend can be trusted.</p>
+          <h4>Data lineage you can trace</h4>
+          <p>Every reported number walks back to a source system without a leap of faith in the middle. If you cannot show the path, you cannot defend the number.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">03</div>
         <div>
-          <h4>Documented attribution</h4>
-          <p>The method is written down, short enough to read in one sitting, applied the same way every month, and reconciled against the audited financials at close.</p>
+          <h4>A close that actually closes</h4>
+          <p>Monthly, on a set date, through the same process. Not a quarterly scramble that depends on one person being available and caffeinated.</p>
         </div>
       </div>
       <div class="condition">
         <div class="num">04</div>
         <div>
-          <h4>Defensible unit economics</h4>
-          <p>CAC carries its full cost, LTV comes off real retention curves rather than hope, payback sits within benchmark. The method survives someone competent pushing on it.</p>
+          <h4>Governance and access documented</h4>
+          <p>Who can change what, who signs off, and a log that shows it happened. Diligence looks hard at who had their hands on the numbers.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============== ARTEFACTS ============== -->
 <section class="artefacts">
   <div class="wrap">
     <div class="eyebrow">What has to exist</div>
-    <h1 class="section-title">Things you could <em>pull out of a drawer.</em></h1>
-    <p class="section-lede">
-      A capability you can describe is not the same as an artefact someone can inspect. By the time bookrunners arrive, the numbers workstream has to have produced concrete, finished things. These are them.
-    </p>
+    <h1 class="section-title">What diligence will <em>ask to see.</em></h1>
+    <p class="section-lede">When the reporting accountants reach the operations workstream, they are not interested in assurances. They want documents. By the time they ask, these have to exist.</p>
     <hr class="gold-rule">
-
     <div class="artefact-list">
       <div class="artefact-row">
         <div class="artefact-mark">01</div>
         <div>
-          <h4>KPI definitions register</h4>
-          <p>Every reported marketing number, defined once, with its owning source system and the calculation behind it. The document that ends the argument about whose figure is right.</p>
+          <h4>Stack inventory and architecture map</h4>
+          <p>Every tool, what it does, what it costs, and how data moves between them. The picture that ends the &lsquo;wait, we pay for that?&rsquo; conversation.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">02</div>
         <div>
-          <h4>Unit economics methodology</h4>
-          <p>Fully-loaded CAC, LTV from actual retention, payback period. Written so a reporting accountant can follow every step without a meeting to explain it.</p>
+          <h4>Data lineage documentation</h4>
+          <p>The path each key number takes from where it is captured to where it is reported. Written down, not held in one person&rsquo;s memory.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">03</div>
         <div>
-          <h4>Attribution methodology document</h4>
-          <p>The model, its rules, and its honest limits, set out in two pages. Long enough to be real, short enough that nobody can claim it is unknowable.</p>
+          <h4>Monthly close calendar and process</h4>
+          <p>The dated, repeatable routine that produces the numbers, so the close is a process and not an act of heroism.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">04</div>
         <div>
-          <h4>Marketing-sourced revenue reconciliation</h4>
-          <p>Marketing's revenue claim tied back to closed-won in the CRM and to the audited P&amp;L, refreshed at month-end. The bridge between what marketing says it did and what finance can sign.</p>
+          <h4>Governance and access register</h4>
+          <p>Roles, permissions, change control and sign-off rights, kept current and matching what the systems actually allow.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">05</div>
         <div>
-          <h4>Eight-quarter restated dataset</h4>
-          <p>Two years of history rebuilt onto the single agreed methodology, with every restatement documented and dated. The proof that the trend is real and not redrawn to flatter.</p>
+          <h4>Vendor and contract schedule</h4>
+          <p>Renewal dates, owners, and data-processing terms for every tool. The list legal will need and marketing usually cannot produce.</p>
         </div>
       </div>
       <div class="artefact-row">
         <div class="artefact-mark">06</div>
         <div>
-          <h4>Monthly close pack</h4>
-          <p>The working papers and sign-offs that show the numbers were produced through a process, not assembled the night before. The thing that turns a figure into evidence.</p>
+          <h4>System reconciliation log</h4>
+          <p>Where systems are checked against each other, when, and what the check found. Proof the numbers are watched, not just generated.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============== EVIDENCE QUANTUM ============== -->
 <section class="evidence">
   <div class="wrap">
     <div class="eyebrow">Evidence quantum</div>
-    <h1 class="section-title">Evidence is what survives the <em>challenge.</em></h1>
-    <p class="section-lede">
-      A number existing is not the same as a number being provable. Evidence quantum is the weight and kind of proof each claim has to carry before it is allowed into a disclosure. Here is what each claim actually costs to make.
-    </p>
+    <h1 class="section-title">The spine is <em>proven in worked examples.</em></h1>
+    <p class="section-lede">You cannot assert your way through this workstream. Every claim about the infrastructure has to be demonstrable on demand, usually by picking something at random and following it through.</p>
     <hr class="gold-rule">
-
     <div class="claim-list">
       <div class="claim-row">
         <div class="claim-said">
           <span class="who">What marketing says</span>
-          "Our CAC is X."
+          &ldquo;Our stack is under control.&rdquo;
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          A fully-loaded cost build that includes the cost most people leave out, extracted from the source systems, broken out month by month, and reconciled to the ledger. Not a media-spend figure wearing a CAC label.
+          An inventory with cost per tool set against budget, an architecture map showing how data flows, and nothing turning up on the bank statement that is missing from the list.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          "Marketing sourced Y of revenue."
+          &ldquo;The numbers are traceable.&rdquo;
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          Opportunity-level data with documented attribution rules, tied to closed-won in the CRM and through to the audited P&amp;L. The rules have to be the same ones used last quarter and the quarter before.
+          A worked example on demand: pick any reported figure, walk it back to its source on paper, and find no gaps where a number simply appears.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          "Payback is Z months."
+          &ldquo;We close monthly.&rdquo;
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          Cohort-level retention behaviour, not a single blended assumption applied across everyone. The shape of the curve is the argument, and the curve has to come from real data.
+          Twelve consecutive dated close packs, not three good ones and a promise. Consistency through quiet months and busy ones is the actual claim.
         </div>
       </div>
       <div class="claim-row">
         <div class="claim-said">
-          "The trend is reliable."
+          &ldquo;Access is governed.&rdquo;
         </div>
         <div class="claim-proof">
           <span class="who">What has to back it</span>
-          Eight quarters built on one methodology, with every restatement logged and dated. If the method changed halfway through, the trend is decoration, and a good adviser will say so.
+          A permissions register that matches what the systems really allow, with a change log that someone genuinely keeps rather than reconstructs the night before.
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============== TASKS ============== -->
 <section class="tasks">
   <div class="wrap">
-    <div class="eyebrow">How the work gets done</div>
+    <div class="eyebrow">The work, named</div>
     <h1 class="section-title">The tasks, <em>named in full.</em></h1>
-    <p class="section-lede">
-      This is the methodology, not the method. Every task in the numbers workstream is named here. How each one is actually done, the models, the allocation logic, the order of operations, is the work itself, and it stays off the page.
-    </p>
+    <p class="section-lede">The tasks that make up the operations spine are named here in full. How each one is actually done, the tooling choices, the lineage mapping, the close design, is the work itself, and it stays off the page.</p>
     <hr class="gold-rule">
-
     <div class="task-list">
       <div class="task-row">
         <div class="task-num">1</div>
         <div>
-          <h4>Define the numbers once</h4>
-          <p>Agree a single definition and a single owning source for every reported marketing figure, signed off by finance, not just by marketing.</p>
+          <h4>Inventory the stack and map the architecture</h4>
+          <p>Build the full picture of tools, costs and data flows, so decisions stop being made blind and the duplicate tools become obvious.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>KPI definitions register</span>
-            <span class="chip"><b>Evidence</b>Source mapping per metric</span>
-            <span class="chip"><b>Owner</b>Marketing ops, signed by finance</span>
+            <span class="chip"><b>Artefact</b>Stack inventory and map</span>
+            <span class="chip"><b>Evidence</b>Cost per tool vs budget</span>
+            <span class="chip"><b>Owner</b>Marketing ops</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">2</div>
         <div>
-          <h4>Rebuild CAC fully loaded</h4>
-          <p>Move from a spend-based number to a cost-based one that carries everything it should, so the figure stops shrinking the moment someone looks under it.</p>
+          <h4>Document data lineage for every reported number</h4>
+          <p>Trace each key figure from capture to report and write the path down, so traceability is a document rather than a memory.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Unit economics methodology</span>
-            <span class="chip"><b>Evidence</b>Cost build, ledger-reconciled</span>
-            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
+            <span class="chip"><b>Artefact</b>Lineage documentation</span>
+            <span class="chip"><b>Evidence</b>Source-to-report trace</span>
+            <span class="chip"><b>Owner</b>Marketing ops with data</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">3</div>
         <div>
-          <h4>Derive LTV from real retention</h4>
-          <p>Replace the assumed lifetime value with one built off actual cohort behaviour, so the most quoted number in the deck is also the most defensible.</p>
+          <h4>Rationalise MarTech under five percent</h4>
+          <p>Cut and consolidate the stack to what earns its place, freeing budget and removing the tools quietly creating risk.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Cohort LTV model</span>
-            <span class="chip"><b>Evidence</b>Retention curves from source data</span>
-            <span class="chip"><b>Owner</b>Marketing ops with finance</span>
+            <span class="chip"><b>Artefact</b>Rationalised stack</span>
+            <span class="chip"><b>Evidence</b>Spend against budget</span>
+            <span class="chip"><b>Owner</b>Marketing ops</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">4</div>
         <div>
-          <h4>Establish and reconcile marketing-sourced revenue</h4>
-          <p>Stand up the bridge from marketing activity to closed-won revenue to the audited P&amp;L, and run it every month so it is never a one-off heroic effort.</p>
+          <h4>Stand up a dated monthly close</h4>
+          <p>Put the numbers on a fixed monthly rhythm with a defined process, so the close stops depending on one person&rsquo;s diary.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Revenue reconciliation</span>
-            <span class="chip"><b>Evidence</b>CRM to P&amp;L tie-out</span>
+            <span class="chip"><b>Artefact</b>Close calendar and process</span>
+            <span class="chip"><b>Evidence</b>Consecutive close packs</span>
             <span class="chip"><b>Owner</b>Marketing ops with finance</span>
           </div>
         </div>
@@ -1109,23 +1129,23 @@
       <div class="task-row">
         <div class="task-num">5</div>
         <div>
-          <h4>Document attribution to a two-page standard</h4>
-          <p>Write the model down properly: what it does, what it cannot do, and why it is the right call. Short, honest, and the same every month.</p>
+          <h4>Define governance and access control</h4>
+          <p>Set who can change what and who signs off, and make the register match reality rather than aspiration.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Attribution methodology</span>
-            <span class="chip"><b>Evidence</b>Consistent monthly application</span>
-            <span class="chip"><b>Owner</b>Marketing ops</span>
+            <span class="chip"><b>Artefact</b>Governance register</span>
+            <span class="chip"><b>Evidence</b>Permissions match systems</span>
+            <span class="chip"><b>Owner</b>Marketing ops with IT</span>
           </div>
         </div>
       </div>
       <div class="task-row">
         <div class="task-num">6</div>
         <div>
-          <h4>Restate eight quarters onto one methodology</h4>
-          <p>Rebuild two years of history so the trend is consistent end to end, with every adjustment logged. This is the slow task, and the one that cannot be done in a hurry at the end.</p>
+          <h4>Establish system reconciliation</h4>
+          <p>Build the routine checks between systems so disagreements are caught and logged, not discovered by a bookrunner.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Restated dataset</span>
-            <span class="chip"><b>Evidence</b>Dated restatement log</span>
+            <span class="chip"><b>Artefact</b>Reconciliation log</span>
+            <span class="chip"><b>Evidence</b>Dated cross-system checks</span>
             <span class="chip"><b>Owner</b>Marketing ops</span>
           </div>
         </div>
@@ -1133,15 +1153,48 @@
       <div class="task-row">
         <div class="task-num">7</div>
         <div>
-          <h4>Stand up the monthly close</h4>
-          <p>Put the numbers on a repeatable monthly rhythm with working papers and sign-offs, so the data stays true between now and the listing rather than going stale.</p>
+          <h4>Put change control on the spine</h4>
+          <p>Make changes to the infrastructure logged and deliberate, so the spine stays documented as it evolves instead of drifting.</p>
           <div class="task-chips">
-            <span class="chip"><b>Artefact</b>Monthly close pack</span>
-            <span class="chip"><b>Evidence</b>Working papers and sign-off trail</span>
-            <span class="chip"><b>Owner</b>Marketing ops, reviewed by finance</span>
+            <span class="chip"><b>Artefact</b>Change log</span>
+            <span class="chip"><b>Evidence</b>Maintained record of changes</span>
+            <span class="chip"><b>Owner</b>Marketing ops</span>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="ws-pagination">
+  <div class="wrap">
+    <div class="eyebrow">The five areas</div>
+    <div class="ws-nav-grid">
+      <a href="numbers-and-data.html" class="ws-nav-item">
+        <div class="ws-nav-letter">1</div>
+        <div class="ws-nav-name">Numbers and data</div>
+        <span class="ws-nav-tag">Area 1</span>
+      </a>
+      <a href="story-and-evidence.html" class="ws-nav-item">
+        <div class="ws-nav-letter">2</div>
+        <div class="ws-nav-name">Story and evidence</div>
+        <span class="ws-nav-tag">Area 2</span>
+      </a>
+      <a href="people-and-capability.html" class="ws-nav-item">
+        <div class="ws-nav-letter">3</div>
+        <div class="ws-nav-name">People and capability</div>
+        <span class="ws-nav-tag">Area 3</span>
+      </a>
+      <a href="controlled-comms.html" class="ws-nav-item">
+        <div class="ws-nav-letter">4</div>
+        <div class="ws-nav-name">Controlled comms</div>
+        <span class="ws-nav-tag">Area 4</span>
+      </a>
+      <a href="tech-and-governance.html" class="ws-nav-item current">
+        <div class="ws-nav-letter">5</div>
+        <div class="ws-nav-name">Tech and governance</div>
+        <span class="ws-nav-tag">Area 5 &middot; Current</span>
+      </a>
     </div>
   </div>
 </section>
@@ -1153,7 +1206,7 @@
         <span class="lo-light">that's</span>clever<span class="lo-mx">mx</span><span class="lo-dot">.</span>
       </a>
       <div class="footer-meta">
-        Workstream A of five · Marketing operations, IPO readiness · United Kingdom
+        Area 5 of five &middot; Tech and governance &middot; United Kingdom
       </div>
     </div>
   </div>
