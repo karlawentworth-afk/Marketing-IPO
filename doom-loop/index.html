@@ -98,6 +98,18 @@ body{
 .ctac .p{font-size:15px;line-height:1.55;color:var(--cream-dim);margin-top:8px;max-width:420px;margin-left:auto;margin-right:auto;}
 .ctac a{display:inline-block;margin-top:16px;font-family:var(--sans);font-weight:800;font-size:15px;color:var(--green);background:var(--gold);text-decoration:none;padding:12px 26px;border-radius:999px;transition:background .15s ease;}
 .ctac a:hover{background:var(--gold-bright);}
+.leadform{max-width:420px;margin:18px auto 0;display:grid;gap:10px;}
+.leadform input[type=text],.leadform input[type=email]{width:100%;font-family:var(--sans);font-size:15px;color:var(--cream);background:var(--green);border:1px solid var(--cream-faint);border-radius:12px;padding:12px 14px;}
+.leadform input::placeholder{color:rgba(250,246,236,.5);}
+.leadform input:focus{outline:none;border-color:var(--gold);}
+.leadform button{font-family:var(--sans);font-weight:800;font-size:15px;color:var(--green);background:var(--gold);border:none;padding:12px 26px;border-radius:999px;cursor:pointer;transition:background .15s ease;}
+.leadform button:hover{background:var(--gold-bright);}
+.leadform button[disabled]{opacity:.6;cursor:default;}
+.leadform .fine{font-size:12.5px;line-height:1.5;color:rgba(250,246,236,.55);}
+.leadform .hp{position:absolute;left:-9999px;}
+.leadthanks{margin-top:16px;}
+.ctac a.altmail{background:none;color:rgba(250,246,236,.7);padding:0;font-weight:700;font-size:13px;text-decoration:underline;margin-top:12px;}
+.ctac a.altmail:hover{background:none;color:var(--cream);}
 .ctac .who{font-family:var(--sans);font-weight:700;font-size:12.5px;letter-spacing:.3px;color:rgba(250,246,236,.55);margin-top:16px;}
 .restart{display:block;margin:22px auto 0;background:none;border:none;color:rgba(250,246,236,.55);font-family:var(--sans);font-weight:700;font-size:13px;cursor:pointer;letter-spacing:.2px;}
 .restart:hover{color:var(--cream);}
@@ -117,7 +129,7 @@ body{
   <section class="screen on" id="intro">
     <div class="eyebrow">The two-minute check</div>
     <h1 class="intro-h">Is your marketing<br><span class="i">stuck in the loop?</span></h1>
-    <p class="intro-sub">Ten honest questions about how your marketing function is really treated. No sign-up, no email, just your score and what it means.</p>
+    <p class="intro-sub">Ten honest questions about how your marketing function is really treated. No sign-up needed. Your score and what it means show straight away.</p>
     <div class="research">
       <div class="lab">The research behind it</div>
       <div class="rstat"><span class="rn">84%</span><span class="rt">of companies are caught in the brand doom loop</span></div>
@@ -147,8 +159,21 @@ body{
     <p class="line">Recognising the problem is the easy part. Being ready to make the case is what separates the leaders who break the loop from the ones who keep blaming the market.</p>
     <div class="ctac">
       <div class="h" id="ctaH">Worth a conversation?</div>
-      <p class="p" id="ctaP">If your score made you wince, that is exactly what we help fix at CleverMX. Send me your score and let's talk, no pitch.</p>
-      <a href="mailto:karla.wentworth@thatsclevermx.com?subject=My%20Doom%20Loop%20score">Message me your score</a>
+      <p class="p" id="ctaP">If your score made you wince, that is exactly what we help fix at CleverMX. Leave your details and I will send you your result, plus a few honest thoughts on what to do about it. No pitch.</p>
+          <form class="leadform" id="q_lead" name="doom-loop-score" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="doom-loop-score">
+            <input type="hidden" name="page" value="doom-loop">
+            <input type="hidden" name="score" id="q_fScore" value="">
+            <input type="hidden" name="band" id="q_fBand" value="">
+            <p class="hp"><label>Leave this empty <input name="bot-field"></label></p>
+            <input type="text" name="name" placeholder="Your name" required autocomplete="name">
+            <input type="email" name="email" placeholder="Work email" required autocomplete="email">
+            <input type="text" name="company" placeholder="Company (optional)" autocomplete="organization">
+            <button type="submit" id="q_fBtn">Send me my result</button>
+            <p class="fine">I will only use this to send your result and follow up once. No mailing list unless you ask.</p>
+          </form>
+          <div class="leadthanks" id="q_thanks" hidden><div class="h">Thank you.</div><p class="p">Your result is on its way. I read every one of these myself, so expect a proper reply, not an autoresponder.</p></div>
+          <a class="altmail" href="mailto:hello@thatsclevermx.com?subject=My%20Doom%20Loop%20score">Or just email me</a>
       <div class="who">Karla Wentworth &middot; CleverMX</div>
     </div>
     <button class="restart" id="restart">Take it again</button>
@@ -225,6 +250,8 @@ body{
     document.getElementById('bandTitle').textContent=band.t;
     document.getElementById('bandCopy').textContent=band.c;
     document.getElementById('ctaH').textContent=band.h+'?';
+    document.getElementById('q_fScore').value=total;
+    document.getElementById('q_fBand').value=band.t;
     // count up
     var n=document.getElementById('scoreN'), cur=0;
     var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -235,6 +262,15 @@ body{
 
   document.getElementById('start').addEventListener('click',function(){ idx=0;scores=[];show(elQuiz);renderQ(); });
   document.getElementById('restart').addEventListener('click',function(){ idx=0;scores=[];show(elIntro); });
+  var lead=document.getElementById('q_lead');
+  lead.addEventListener('submit',function(e){
+    e.preventDefault();
+    var btn=document.getElementById('q_fBtn'); btn.disabled=true; btn.textContent='Sending...';
+    var body=new URLSearchParams(new FormData(lead)).toString();
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); lead.hidden=true; document.getElementById('q_thanks').hidden=false; })
+      .catch(function(){ btn.disabled=false; btn.textContent='Send me my result'; lead.querySelector('.fine').textContent='Sorry, that did not send. Please email hello@thatsclevermx.com instead.'; });
+  });
 })();
 </script>
 </body>
