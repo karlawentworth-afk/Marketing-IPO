@@ -1,3 +1,9 @@
 [build]
   publish = "."
   command = ""
+
+[[headers]]
+  for = "/bench/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    X-Robots-Tag = "noindex"
